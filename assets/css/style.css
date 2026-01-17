@@ -1,27 +1,31 @@
 /* =========================================
-   1. VARIÁVEIS & TEMA (O Coração do White-Label)
+   1. VARIÁVEIS & TEMA (Fallback System)
    ========================================= */
 :root {
-    /* -- CORES GERAIS (Serão sobrescritas pelo _theme.js) -- */
-    --primary-color: #6366f1;   /* Cor principal da marca (padrão) */
-    --primary-dark: #4f46e5;    /* Cor de hover/active */
-    --bg-color: #f3f4f6;        /* Cor de fundo do app (cinza claro) */
-    --surface-color: #ffffff;   /* Cor dos cards (branco) */
-    --text-primary: #111827;    /* Texto preto quase total */
-    --text-secondary: #6b7280;  /* Texto cinza para descrições */
-    --border-color: #e5e7eb;    /* Bordas sutis */
+    /* ESTRATÉGIA DE CORES:
+       Começamos com CINZA (Neutro). 
+       O arquivo _theme.js vai sobrescrever isso para a cor da marca (Verde/Azul/Etc).
+       Se o site continuar cinza, sabemos que houve erro no carregamento do tema.
+    */
+    --primary-color: #9ca3af;   /* Cinza neutro */
+    --primary-dark: #6b7280;    /* Cinza escuro */
+    --bg-color: #f3f4f6;        /* Fundo padrão */
+    --surface-color: #ffffff;   /* Branco */
+    --text-primary: #111827;    /* Preto suave */
+    --text-secondary: #6b7280;  /* Cinza texto */
+    --border-color: #e5e7eb;    /* Borda sutil */
 
-    /* -- CORES DAS PLATAFORMAS (Fixas) -- */
-    --color-olx: #6e0ad6;       /* Roxo OLX */
-    --color-fb: #1877f2;        /* Azul Facebook */
-    --color-ml: #ffe600;        /* Amarelo ML */
-    --color-insta: #e1306c;     /* Rosa Instagram */
+    /* -- CORES FIXAS DAS PLATAFORMAS (Não mudam com o tema) -- */
+    --color-olx: #6e0ad6;       /* Roxo */
+    --color-fb: #1877f2;        /* Azul */
+    --color-ml: #ffe600;        /* Amarelo */
+    --color-insta: #e1306c;     /* Rosa */
 
     /* -- DIMENSÕES & ESPAÇAMENTOS -- */
     --nav-height: 70px;         /* Altura da barra inferior */
     --header-height: 60px;      /* Altura do topo */
-    --radius-md: 12px;          /* Arredondamento padrão */
-    --radius-lg: 20px;          /* Arredondamento maior */
+    --radius-md: 12px;          
+    --radius-lg: 20px;          
 
     /* -- FONTE -- */
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -34,17 +38,20 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    -webkit-tap-highlight-color: transparent; /* Remove flash azul no toque (mobile) */
+    -webkit-tap-highlight-color: transparent; /* Remove flash azul no toque mobile */
 }
 
 body {
     font-family: var(--font-family);
     background-color: var(--bg-color);
     color: var(--text-primary);
-    padding-top: var(--header-height);     /* Espaço para o header fixo */
-    padding-bottom: calc(var(--nav-height) + 20px); /* Espaço para a nav fixa */
-    overflow-x: hidden; /* Evita scroll lateral indesejado */
-    transition: background-color 0.3s ease; /* Suaviza a troca de tema */
+    
+    /* Espaçamento para não ficar atrás dos elementos fixos */
+    padding-top: var(--header-height);     
+    padding-bottom: calc(var(--nav-height) + 20px); 
+    
+    overflow-x: hidden; /* Evita scroll lateral na página inteira */
+    transition: background-color 0.4s ease; /* Transição suave quando o tema carregar */
 }
 
 a { text-decoration: none; color: inherit; }
@@ -65,11 +72,11 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     align-items: center;
     padding: 0 20px;
     z-index: 1000;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Sombra suave */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .app-logo-img {
-    height: 32px; /* Tamanho fixo para não quebrar o layout */
+    height: 32px;
     object-fit: contain;
 }
 
@@ -92,8 +99,9 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
    ========================================= */
 .app-content {
     padding: 20px;
-    max-width: 600px; /* Limita largura em telas grandes (desktop) */
-    margin: 0 auto;   /* Centraliza no desktop */
+    max-width: 600px; /* Limita largura em desktop */
+    margin: 0 auto;   /* Centraliza em desktop */
+    width: 100%;
 }
 
 /* Títulos */
@@ -101,7 +109,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .page-title { font-size: 22px; font-weight: 700; }
 .subtitle { color: var(--text-secondary); font-size: 14px; margin-top: 4px; }
 
-/* Seções Gerais */
+/* Cabeçalhos de Seção */
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -113,51 +121,50 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .link-action { color: var(--primary-color); font-size: 13px; font-weight: 500; }
 
 /* =========================================
-   5. METRICS SCROLLER (CORRIGIDO)
+   5. METRICS SCROLLER (Com Fix de Margem)
    ========================================= */
 .metrics-scroller {
     display: flex;
     gap: 15px;
     overflow-x: auto;
     
-    /* Aumentei o padding vertical para a sombra não cortar */
-    padding: 10px 20px; 
+    /* Padding interno para as sombras não cortarem */
+    padding: 10px 20px;
     
-    /* Margem negativa para o scroll ir até a borda da tela */
+    /* Margem negativa para encostar na borda da tela */
     margin: 0 -20px; 
     
-    scroll-snap-type: x mandatory; /* Efeito magnético */
+    scroll-snap-type: x mandatory; /* Efeito magnético ao rolar */
 }
 
-/* --- O HACK DO SCROLL --- 
-   Cria um elemento invisível no final para forçar o espaçamento direito */
+/* HACK: Elemento invisível no final para garantir o espaçamento direito */
 .metrics-scroller::after {
     content: '';
     display: block;
-    min-width: 5px; /* Tamanho do respiro no final */
+    min-width: 20px; /* O mesmo tamanho do padding lateral */
     height: 1px;
 }
 
-/* Esconde scrollbar (Chrome/Safari) */
+/* Esconde scrollbar nativa */
 .metrics-scroller::-webkit-scrollbar { display: none; }
 
 .metric-card {
-    flex: 0 0 140px; /* Largura fixa */
+    flex: 0 0 140px; /* Largura fixa do card */
     background: var(--surface-color);
     padding: 15px;
     border-radius: var(--radius-md);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Sombra melhorada */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    transition: background-color 0.3s ease;
 }
 
-/* Card Destaque (Primeiro card geralmente) */
+/* Card Destaque */
 .metric-card.highlight {
     background: var(--primary-color);
     color: #fff;
-    transition: background-color 0.3s ease;
 }
 .metric-card.highlight .card-info span { color: rgba(255,255,255, 0.8); }
 
@@ -167,7 +174,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .card-info strong { font-size: 16px; font-weight: 700; }
 
 /* =========================================
-   6. GRÁFICO FAKE (CSS Only)
+   6. GRÁFICO FAKE
    ========================================= */
 .chart-card {
     background: var(--surface-color);
@@ -179,7 +186,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .fake-chart-container {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end; /* Alinha as barras embaixo */
+    align-items: flex-end;
     height: 150px;
     padding-top: 20px;
 }
@@ -196,7 +203,6 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     width: 100%;
     border-radius: 4px 4px 0 0;
     opacity: 0.8;
-    transition: height 1s ease-out; /* Animação suave ao carregar */
 }
 
 .chart-bar-group span { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
@@ -210,7 +216,6 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     gap: 12px;
 }
 
-/* Item do Produto (Será gerado pelo JS) */
 .product-item {
     background: var(--surface-color);
     padding: 12px;
@@ -247,7 +252,6 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .status-active { background: #dcfce7; color: #166534; }
 .status-paused { background: #fef9c3; color: #854d0e; }
 
-/* Texto de carregamento */
 .loading-text {
     text-align: center;
     color: var(--text-secondary);
@@ -256,7 +260,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 }
 
 /* =========================================
-   8. BARRA DE NAVEGAÇÃO (Bottom Nav)
+   8. BARRA DE NAVEGAÇÃO INFERIOR
    ========================================= */
 .bottom-navbar {
     position: fixed;
@@ -266,7 +270,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     height: var(--nav-height);
     background: var(--surface-color);
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 Colunas (Espaço pro FAB no meio) */
+    grid-template-columns: repeat(5, 1fr); /* 5 Colunas iguais */
     align-items: center;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
     z-index: 900;
@@ -281,17 +285,16 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     color: var(--text-secondary);
     font-size: 10px;
     height: 100%;
-    text-decoration: none;
+    transition: color 0.3s;
 }
 
-.nav-item i { font-size: 24px; transition: 0.2s; }
+.nav-item i { font-size: 24px; transition: transform 0.2s; }
 
-/* Estado Ativo (Página Atual) */
 .nav-item.active { color: var(--primary-color); }
 .nav-item.active i { transform: translateY(-2px); }
 
 /* =========================================
-   9. FAB BUTTON (Botão Flutuante Central)
+   9. FAB (Botão Flutuante Central)
    ========================================= */
 .nav-fab-container {
     position: relative;
@@ -303,7 +306,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 
 .fab-button {
     position: absolute;
-    top: -25px; /* Sobe para sair da barra */
+    top: -25px; /* Eleva o botão para sair da barra */
     width: 56px;
     height: 56px;
     background-color: var(--primary-color);
@@ -313,14 +316,14 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4); /* Sombra colorida */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
     transition: transform 0.2s, background-color 0.3s;
 }
 
-.fab-button:active { transform: scale(0.9); } /* Efeito de clique */
+.fab-button:active { transform: scale(0.9); }
 
 /* =========================================
-   10. MODAL (Bottom Sheet)
+   10. MODAL (Bottom Sheet Animation)
    ========================================= */
 .modal-overlay {
     position: fixed;
@@ -328,10 +331,10 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5); /* Fundo escuro transparente */
+    background: rgba(0,0,0,0.5);
     z-index: 2000;
     display: flex;
-    align-items: flex-end; /* Conteúdo no rodapé */
+    align-items: flex-end; /* Alinha o modal no chão */
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -340,29 +343,30 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .modal-content {
     background: var(--surface-color);
     width: 100%;
-    max-width: 600px; /* Limite desktop */
+    max-width: 600px;
     margin: 0 auto;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     padding: 24px;
-    transform: translateY(100%); /* Começa escondido lá embaixo */
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); /* Animação suave (Spring) */
-    max-height: 85vh; /* Ocupa no máximo 85% da tela */
+    
+    /* Estado inicial: Escondido lá embaixo */
+    transform: translateY(100%); 
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    max-height: 85vh;
     overflow-y: auto;
 }
 
-/* Classes para controlar visibilidade via JS */
+/* Classes controladas via JS */
 .modal-overlay.visible { opacity: 1; visibility: visible; }
 .modal-overlay.visible .modal-content { transform: translateY(0); }
-.modal-overlay.hidden { display: none; } /* Fallback */
+.modal-overlay.hidden { display: none; }
 
-/* Cabeçalho do Modal */
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
-.modal-header h2 { font-size: 18px; }
 
 .btn-icon {
     width: 32px;
@@ -375,7 +379,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     font-size: 18px;
 }
 
-/* Grid de Categorias (Dentro do Modal) */
+/* Grid de Categorias */
 .category-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
