@@ -1,16 +1,13 @@
 /* ============================================================
- * FUNCTIONS.JS - O "CÉREBRO" DO FRONTEND
+ * FUNCTIONS.JS - Lógica Principal
  * ============================================================
- * Responsável pela interatividade, navegação e manipulação do DOM.
  */
 
-// --- 1. GERADOR DE NAVEGAÇÃO (Bottom Navigation) ---
-
+// 1. RENDERIZA A NAVEGAÇÃO INFERIOR
 function renderBottomNav(activePage) {
     const container = document.getElementById('bottom-nav-container');
     if (!container) return;
 
-    // Função auxiliar para marcar o ícone ativo
     const isActive = (page) => page === activePage ? 'active' : '';
 
     container.innerHTML = `
@@ -19,23 +16,19 @@ function renderBottomNav(activePage) {
             <i class="ph ph-house"></i>
             <span>Início</span>
         </a>
-        
         <a href="#" class="nav-item ${isActive('estoque')}">
             <i class="ph ph-package"></i>
             <span>Estoque</span>
         </a>
-
         <div class="nav-fab-container">
             <button class="fab-button" onclick="toggleModal('modal-new-ad')">
                 <i class="ph ph-plus"></i>
             </button>
         </div>
-
         <a href="#" class="nav-item ${isActive('leads')}">
             <i class="ph ph-chat-circle"></i>
             <span>Leads</span>
         </a>
-
         <a href="#" class="nav-item ${isActive('config')}">
             <i class="ph ph-gear"></i>
             <span>Config</span>
@@ -44,55 +37,80 @@ function renderBottomNav(activePage) {
     `;
 }
 
-
-// --- 2. CONTROLE DE MODAIS (Abrir e Fechar Telas) ---
-
+// 2. CONTROLE DE MODAL
 function toggleModal(modalId) {
     const modal = document.getElementById(modalId);
     if (!modal) return;
 
     if (modal.classList.contains('hidden')) {
-        // ABRIR
         modal.classList.remove('hidden');
-        // Pequeno delay para permitir que o navegador processe o display:block antes da opacidade
-        setTimeout(() => {
-            modal.classList.add('visible');
-        }, 10);
+        setTimeout(() => modal.classList.add('visible'), 10);
     } else {
-        // FECHAR
         modal.classList.remove('visible');
-        // Espera a animação do CSS (0.3s) terminar para esconder de vez
-        setTimeout(() => {
-            modal.classList.add('hidden');
-        }, 300);
+        setTimeout(() => modal.classList.add('hidden'), 300);
     }
 }
 
-
-// --- 3. SIMULADOR DE SELEÇÃO DE CATEGORIA ---
-
-function selectCategory(categoryType) {
-    alert(`Demonstração: Você escolheu a categoria "${categoryType}". \n\nNo sistema final, isso carregaria os campos específicos.`);
-    // Aqui fecharíamos o modal ou iríamos para o passo 2
-    toggleModal('modal-new-ad');
-}
-
-
-// --- 4. INICIALIZAÇÃO DE DADOS (Preenche Nome e KPIs) ---
-
+// 3. INICIALIZA O DASHBOARD (PREENCHE DADOS)
 function initDashboard() {
-    // Busca dados do _config.js (se ele foi carregado)
+    console.log("🔄 Iniciando Dashboard...");
+
+    // A. Preencher Dados do Usuário (_config.js)
     if (typeof appConfig !== 'undefined') {
-        // Preenche o nome do usuário
         const nameEl = document.getElementById('user-first-name');
         const avatarEl = document.getElementById('user-avatar-header');
         
         if (nameEl) nameEl.textContent = appConfig.user.firstName;
         if (avatarEl) avatarEl.textContent = appConfig.user.avatarInitials;
+        console.log("✅ Usuário carregado:", appConfig.user.firstName);
+    } else {
+        console.error("❌ Erro: appConfig não encontrado. Verifique o _config.js");
     }
-    
-    // (Opcional) Poderia buscar dados do mock_db.js aqui também
+
+    // B. Preencher KPIs (mock_db.js)
+    if (typeof statsDB !== 'undefined') {
+        document.getElementById('kpi-sales').textContent = `R$ ${statsDB.salesToday.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+        document.getElementById('kpi-active-ads').textContent = statsDB.activeAds;
+        document.getElementById('kpi-messages').textContent = statsDB.messages;
+    }
+
+    // C. Preencher Lista de Feed (mock_db.js)
+    const feedList = document.getElementById('dashboard-feed-list');
+    if (feedList && typeof productsDB !== 'undefined') {
+        feedList.innerHTML = ''; // Limpa o "Carregando..."
+        
+        productsDB.forEach(prod => {
+            // Cria o HTML de cada item
+            const itemHTML = `
+                <div class="product-item">
+                    <div class="prod-thumb">
+                        <i class="ph ${prod.image}"></i>
+                    </div>
+                    <div class="prod-info">
+                        <div class="prod-title">${prod.title}</div>
+                        <div class="prod-price">R$ ${prod.price.toLocaleString('pt-BR')}</div>
+                    </div>
+                    <div class="prod-status ${prod.status === 'active' ? 'status-active' : 'status-paused'}">
+                        ${prod.status === 'active' ? 'Ativo' : 'Pausado'}
+                    </div>
+                </div>
+            `;
+            feedList.innerHTML += itemHTML;
+        });
+        console.log("✅ Feed atualizado com", productsDB.length, "itens.");
+    }
 }
 
-// Executa assim que a página terminar de carregar
-window.addEventListener('DOMContentLoaded', initDashboard);
+function selectCategory(cat) {
+    alert('Selecionado: ' + cat);
+    toggleModal('modal-new-ad');
+}
+
+// 4. DISPARADORES
+document.addEventListener('DOMContentLoaded', () => {
+    // Garante que o Theme rode (caso não tenha rodado ainda)
+    if (typeof applyTheme === 'function') applyTheme();
+    
+    // Inicia os dados
+    initDashboard();
+});
