@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ffffff">
+    
+    <title>Estoque | Koda White-Label</title>
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .search-bar-container {
+            background: var(--surface-color);
+            padding: 15px 20px;
+            position: sticky;
+            top: var(--header-height); /* Cola logo abaixo do header */
+            z-index: 90;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input-group i {
+            position: absolute;
+            left: 15px;
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 12px 12px 45px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            padding: 15px 20px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .filter-pill {
+            padding: 8px 16px;
+            border-radius: 100px;
+            background: #e5e7eb;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid transparent;
+        }
+
+        .filter-pill.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-left">
+            <a href="dashboard.html">
+                <i class="ph ph-arrow-left" style="font-size: 24px; color: var(--text-primary);"></i>
+            </a>
+            <span style="margin-left: 10px; font-weight: 700; font-size: 18px;">Estoque Unificado</span>
+        </div>
+        <div class="header-right">
+            <div class="user-avatar-small" id="user-avatar-header">--</div>
+        </div>
+    </header>
+
+    <main class="app-content" style="padding: 0; max-width: 100%;">
+        
+        <div class="search-bar-container">
+            <div class="search-input-group">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" class="search-input" placeholder="Buscar por placa, título ou código...">
+            </div>
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-pill active">Todos</button>
+            <button class="filter-pill">Ativos (3)</button>
+            <button class="filter-pill">Pausados (1)</button>
+            <button class="filter-pill">Sem Estoque</button>
+        </div>
+
+        <section class="feed-list" id="full-inventory-list" style="padding: 0 20px;">
+            <p class="loading-text">Carregando estoque...</p>
+        </section>
+
+        <div class="spacer-bottom"></div>
+    </main>
+
+    <div id="modal-new-ad" class="modal-overlay hidden">
+        <div class="modal-content bottom-sheet">
+            <div class="modal-header">
+                <h2>Adicionar Novo Item</h2>
+                <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="helper-text">O que você deseja cadastrar hoje?</p>
+                <div class="category-grid">
+                    <button class="cat-card" onclick="selectCategory('veiculos')">
+                        <div class="cat-icon"><i class="ph ph-car"></i></div>
+                        <span>Veículos</span>
+                    </button>
+                    <button class="cat-card" onclick="selectCategory('imoveis')">
+                        <div class="cat-icon"><i class="ph ph-house"></i></div>
+                        <span>Imóveis</span>
+                    </button>
+                    <button class="cat-card" onclick="selectCategory('eletronicos')">
+                        <div class="cat-icon"><i class="ph ph-device-mobile"></i></div>
+                        <span>Eletrônicos</span>
+                    </button>
+                    <button class="cat-card" onclick="selectCategory('agro')">
+                        <div class="cat-icon"><i class="ph ph-plant"></i></div>
+                        <span>Agro</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bottom-nav-container"></div>
+
+    <script src="assets/js/_config.js"></script> 
+    <script src="assets/js/mock_db.js"></script>
+    <script src="assets/js/_theme.js"></script>
+    <script src="assets/js/functions.js"></script>
+
+    <script>
+        // Inicialização Específica desta Página
+        
+        // 1. Renderiza Barra (Marca 'estoque' como ativo)
+        renderBottomNav('estoque'); 
+        
+        // 2. Aplica Tema
+        if (typeof applyTheme === 'function') applyTheme();
+
+        // 3. Função Específica para Carregar Lista Completa
+        function loadFullInventory() {
+            const listEl = document.getElementById('full-inventory-list');
+            
+            if (listEl && typeof productsDB !== 'undefined') {
+                listEl.innerHTML = ''; // Limpa
+                
+                // Aqui poderíamos ter um loop maior ou duplicar dados para parecer que tem muito item
+                // Vamos duplicar o array para dar volume visual
+                const fullList = [...productsDB, ...productsDB, ...productsDB];
+
+                fullList.forEach(prod => {
+                    const itemHTML = `
+                        <div class="product-item">
+                            <div class="prod-thumb">
+                                <i class="ph ${prod.image}"></i>
+                            </div>
+                            <div class="prod-info">
+                                <div class="prod-title">${prod.title}</div>
+                                <div class="prod-price">R$ ${prod.price.toLocaleString('pt-BR')}</div>
+                                <div style="font-size: 11px; color: #999; margin-top: 4px;">
+                                    Em: ${prod.platforms.join(', ')}
+                                </div>
+                            </div>
+                            <div class="actions">
+                                <button style="padding: 8px; color: var(--text-secondary);">
+                                    <i class="ph ph-dots-three-vertical" style="font-size: 20px;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    listEl.innerHTML += itemHTML;
+                });
+            }
+        }
+
+        // Carrega a lista ao iniciar
+        document.addEventListener('DOMContentLoaded', loadFullInventory);
+
+    </script>
+</body>
+</html>
