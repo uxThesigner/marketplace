@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="theme-color" content="#ffffff">
+    
+    <title>Dashboard | Koda White-Label</title>
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-left">
+            <img id="app-logo" src="" alt="Logo" class="app-logo-img">
+        </div>
+        <div class="header-right">
+            <div class="user-avatar-small" id="user-avatar-header">--</div>
+        </div>
+    </header>
+
+    <main class="app-content">
+        
+        <section class="welcome-section">
+            <h1 class="page-title">Olá, <span id="user-first-name">...</span></h1>
+            <p class="subtitle">Visão geral dos seus negócios.</p>
+        </section>
+
+        <section class="metrics-scroller">
+            <div class="metric-card highlight">
+                <div class="card-icon"><i class="ph ph-currency-dollar"></i></div>
+                <div class="card-info">
+                    <span>Vendas Hoje</span>
+                    <strong id="kpi-sales">R$ 0,00</strong>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="card-icon"><i class="ph ph-megaphone"></i></div>
+                <div class="card-info">
+                    <span>Anúncios Ativos</span>
+                    <strong id="kpi-active-ads">--</strong>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="card-icon"><i class="ph ph-chat-centered-text"></i></div>
+                <div class="card-info">
+                    <span>Mensagens</span>
+                    <strong id="kpi-messages">0</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="performance-section">
+            <div class="section-header">
+                <h3>Desempenho por Canal</h3>
+            </div>
+            <div class="chart-card">
+                <div class="fake-chart-container">
+                    <div class="chart-bar-group">
+                        <div class="bar" style="height: 40%; background-color: var(--color-olx)"></div>
+                        <span>OLX</span>
+                    </div>
+                    <div class="chart-bar-group">
+                        <div class="bar" style="height: 75%; background-color: var(--color-fb)"></div>
+                        <span>Face</span>
+                    </div>
+                    <div class="chart-bar-group">
+                        <div class="bar" style="height: 30%; background-color: var(--color-ml)"></div>
+                        <span>ML</span>
+                    </div>
+                    <div class="chart-bar-group">
+                        <div class="bar" style="height: 60%; background-color: var(--color-insta)"></div>
+                        <span>Insta</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="recent-feed">
+            <div class="section-header">
+                <h3>Últimos Cadastrados</h3>
+                <a href="estoque.html" class="link-action">Ver todos</a>
+            </div>
+
+            <div id="dashboard-feed-list" class="feed-list">
+                <p class="loading-text">Carregando dados...</p>
+            </div>
+        </section>
+
+        <div class="spacer-bottom"></div>
+    </main>
+
+    <div id="modal-new-ad" class="modal-overlay hidden">
+        <div class="modal-content bottom-sheet">
+            <div class="modal-header">
+                <h2>O que vamos anunciar?</h2>
+                <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <p class="helper-text">Selecione a categoria para carregar o modelo.</p>
+                
+                <div class="category-grid">
+                    <button class="cat-card" onclick="selectCategory('veiculos')">
+                        <div class="cat-icon"><i class="ph ph-car"></i></div>
+                        <span>Veículos</span>
+                    </button>
+                    <button class="cat-card" onclick="selectCategory('imoveis')">
+                        <div class="cat-icon"><i class="ph ph-house"></i></div>
+                        <span>Imóveis</span>
+                    </button>
+                    <button class="cat-card" onclick="selectCategory('eletronicos')">
+                        <div class="cat-icon"><i class="ph ph-device-mobile"></i></div>
+                        <span>Eletrônicos</span>
+                    </button>
+                    <button class="cat-card" onclick="selectCategory('agro')">
+                        <div class="cat-icon"><i class="ph ph-plant"></i></div>
+                        <span>Agro</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bottom-nav-container"></div>
+
+
+    <script src="assets/js/_config.js"></script> 
+    <script src="assets/js/_theme.js"></script>
+    <script src="assets/js/mock_db.js"></script>
+    <script src="assets/js/functions.js"></script>
+
+    <script>
+        // 1. Renderiza a barra de navegação marcando 'home' como ativo
+        renderBottomNav('home');
+        
+        // 2. Aplica o tema do cliente (cores/logo)
+        applyTheme();
+
+        // 3. (Futuro) Aqui chamaremos a função para carregar os dados do dashboard
+        // loadDashboardData(); 
+    </script>
+</body>
+</html>
