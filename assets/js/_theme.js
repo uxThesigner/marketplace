@@ -1,36 +1,47 @@
+/* ============================================================
+ * _THEME.JS - VERSÃO DE DEBUG
+ * ============================================================
+ */
+console.log("🚀 ARQUIVO _THEME.JS FOI CARREGADO COM SUCESSO!");
+
 const appTheme = {
     colors: {
-        primary: "#4D5D53",      // Verde Koda
-        primaryDark: "#3A463F",  
-        secondary: "#8C9E93",    
-        surface: "#FFFFFF",      
-        background: "#F2F4F3"    
+        primary: "#4D5D53",      // Verde Koda (Obrigatório)
+        primaryDark: "#3A463F",  // Verde Escuro
+        bg: "#F2F4F3",           // Fundo
+        surface: "#FFFFFF"       // Cards
     },
     assets: {
-        // Logo gerada dinamicamente
-        logoUrl: "https://placehold.co/400x120/4D5D53/ffffff?text=Koda+Shop&font=montserrat",
-        fontFamily: "'Inter', sans-serif"
+        // Logo Koda Shop
+        logoUrl: "https://placehold.co/400x120/4D5D53/ffffff?text=Koda+Shop&font=montserrat"
     }
 };
 
 function applyTheme() {
-    console.log("🎨 Iniciando motor de tema...");
+    console.log("🎨 Iniciando aplicação das cores...");
+    
+    // 1. Pega o elemento raiz do HTML
     const root = document.documentElement;
 
-    // 1. Aplica as cores na raiz (CSS Variables)
+    // 2. Força a mudança das variáveis CSS
     root.style.setProperty('--primary-color', appTheme.colors.primary);
     root.style.setProperty('--primary-dark', appTheme.colors.primaryDark);
-    root.style.setProperty('--bg-color', appTheme.colors.background);
-
-    // 2. Tenta aplicar a logo (Verifica se o elemento existe primeiro)
+    root.style.setProperty('--bg-color', appTheme.colors.bg);
+    
+    // 3. Troca a logo (se existir na tela)
     const logoEl = document.getElementById('app-logo');
     if (logoEl) {
         logoEl.src = appTheme.assets.logoUrl;
-        console.log("✅ Logo aplicada.");
+        console.log("✅ Logo Trocada para Koda Shop.");
     } else {
-        console.warn("⚠️ Elemento 'app-logo' não encontrado ainda.");
+        console.warn("⚠️ Elemento da Logo ainda não existe na tela.");
     }
+
+    console.log("✅ Cores aplicadas: ", appTheme.colors.primary);
 }
 
-// GARANTIA: Só roda quando o HTML estiver 100% pronto
-document.addEventListener('DOMContentLoaded', applyTheme);
+// Tenta rodar imediatamente (caso o script esteja no final do body)
+applyTheme();
+
+// E garante rodar de novo quando a página terminar de carregar tudo
+document.addEventListener("DOMContentLoaded", applyTheme);
