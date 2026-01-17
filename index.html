@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ffffff">
+    
+    <title>Login | Koda White-Label</title>
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        body {
+            /* Centraliza tudo na tela */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .login-card {
+            background: var(--surface-color);
+            padding: 30px 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .brand-logo-login {
+            height: 40px;
+            margin-bottom: 24px;
+            object-fit: contain;
+        }
+
+        .login-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-color);
+            font-size: 14px;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary-color);
+            background: #fff;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+            background-color: var(--primary-dark);
+        }
+
+        .forgot-pass {
+            display: block;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .powered-by {
+            margin-top: 40px;
+            font-size: 11px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        
+        <div class="login-card">
+            <img id="app-logo" src="" alt="Logo da Empresa" class="brand-logo-login">
+            
+            <h1 class="login-title">Bem-vindo de volta</h1>
+            <p class="login-subtitle">Acesse seu painel de controle unificado.</p>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label class="input-label">E-mail</label>
+                    <input type="email" class="input-field" placeholder="exemplo@koda.com" value="paulo@kodashop.com">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Senha</label>
+                    <input type="password" class="input-field" placeholder="••••••••" value="123456">
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Entrar no Sistema
+                </button>
+            </form>
+
+            <a href="#" class="forgot-pass">Esqueceu sua senha?</a>
+        </div>
+
+        <div class="powered-by">
+            Tecnologia White-Label Koda System
+        </div>
+    </div>
+
+    <script src="assets/js/_config.js"></script>
+    <script src="assets/js/_theme.js"></script>
+
+    <script>
+        // Função simples para simular login
+        function handleLogin(e) {
+            e.preventDefault(); // Impede o formulário de recarregar a página
+            
+            const btn = document.querySelector('.btn-primary');
+            const originalText = btn.innerText;
+
+            // Feedback visual de carregamento
+            btn.innerText = "Autenticando...";
+            btn.style.opacity = "0.7";
+
+            // Simula delay de rede (1.5 segundos)
+            setTimeout(() => {
+                // Redireciona para o Dashboard
+                window.location.href = "dashboard.html";
+            }, 1500);
+        }
+
+        // Garante que o tema seja aplicado
+        if (typeof applyTheme === 'function') {
+            applyTheme();
+        }
+    </script>
+</body>
+</html>
