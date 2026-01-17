@@ -1,0 +1,390 @@
+/* =========================================
+   1. VARIÁVEIS & TEMA (O Coração do White-Label)
+   ========================================= */
+:root {
+    /* -- CORES GERAIS (Serão sobrescritas pelo _theme.js) -- */
+    --primary-color: #6366f1;   /* Cor principal da marca */
+    --primary-dark: #4f46e5;    /* Cor de hover/active */
+    --bg-color: #f3f4f6;        /* Cor de fundo do app (cinza claro) */
+    --surface-color: #ffffff;   /* Cor dos cards (branco) */
+    --text-primary: #111827;    /* Texto preto quase total */
+    --text-secondary: #6b7280;  /* Texto cinza para descrições */
+    --border-color: #e5e7eb;    /* Bordas sutis */
+    
+    /* -- CORES DAS PLATAFORMAS (Fixas) -- */
+    --color-olx: #6e0ad6;       /* Roxo OLX */
+    --color-fb: #1877f2;        /* Azul Facebook */
+    --color-ml: #ffe600;        /* Amarelo ML */
+    --color-insta: #e1306c;     /* Rosa Instagram */
+    
+    /* -- DIMENSÕES & ESPAÇAMENTOS -- */
+    --nav-height: 70px;         /* Altura da barra inferior */
+    --header-height: 60px;      /* Altura do topo */
+    --radius-md: 12px;          /* Arredondamento padrão */
+    --radius-lg: 20px;          /* Arredondamento maior */
+    
+    /* -- FONTE -- */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* =========================================
+   2. RESET & BASE
+   ========================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent; /* Remove flash azul no toque (mobile) */
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    padding-top: var(--header-height);     /* Espaço para o header fixo */
+    padding-bottom: calc(var(--nav-height) + 20px); /* Espaço para a nav fixa */
+    overflow-x: hidden; /* Evita scroll lateral indesejado */
+}
+
+a { text-decoration: none; color: inherit; }
+button { border: none; outline: none; background: none; font-family: inherit; cursor: pointer; }
+
+/* =========================================
+   3. HEADER FIXO
+   ========================================= */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--surface-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Sombra suave */
+}
+
+.app-logo-img {
+    height: 32px; /* Tamanho fixo para não quebrar o layout */
+    object-fit: contain;
+}
+
+.user-avatar-small {
+    width: 36px;
+    height: 36px;
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    border: 2px solid var(--border-color);
+}
+
+/* =========================================
+   4. CONTEÚDO PRINCIPAL
+   ========================================= */
+.app-content {
+    padding: 20px;
+    max-width: 600px; /* Limita largura em telas grandes (desktop) */
+    margin: 0 auto;   /* Centraliza no desktop */
+}
+
+/* Títulos */
+.welcome-section { margin-bottom: 24px; }
+.page-title { font-size: 22px; font-weight: 700; }
+.subtitle { color: var(--text-secondary); font-size: 14px; margin-top: 4px; }
+
+/* Seções Gerais */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-top: 30px;
+}
+.section-header h3 { font-size: 16px; font-weight: 600; }
+.link-action { color: var(--primary-color); font-size: 13px; font-weight: 500; }
+
+/* =========================================
+   5. METRICS SCROLLER (Carrossel Horizontal)
+   ========================================= */
+.metrics-scroller {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px; /* Espaço para scrollbar não colar */
+    scroll-snap-type: x mandatory; /* Efeito magnético */
+    margin: 0 -20px; /* Quebra as margens do container pai */
+    padding-left: 20px; /* Restaura o padding visual */
+    padding-right: 20px;
+}
+
+/* Esconde scrollbar (Chrome/Safari) */
+.metrics-scroller::-webkit-scrollbar { display: none; }
+
+.metric-card {
+    flex: 0 0 140px; /* Largura fixa */
+    background: var(--surface-color);
+    padding: 15px;
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Card Destaque (Primeiro card geralmente) */
+.metric-card.highlight {
+    background: var(--primary-color);
+    color: #fff;
+}
+.metric-card.highlight .card-info span { color: rgba(255,255,255, 0.8); }
+
+.card-icon { font-size: 24px; }
+.card-info { display: flex; flex-direction: column; }
+.card-info span { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+.card-info strong { font-size: 16px; font-weight: 700; }
+
+/* =========================================
+   6. GRÁFICO FAKE (CSS Only)
+   ========================================= */
+.chart-card {
+    background: var(--surface-color);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.fake-chart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* Alinha as barras embaixo */
+    height: 150px;
+    padding-top: 20px;
+}
+
+.chart-bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 15%;
+}
+
+.bar {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    opacity: 0.8;
+    transition: height 1s ease-out; /* Animação suave ao carregar */
+}
+
+.chart-bar-group span { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
+
+/* =========================================
+   7. LISTA DE FEED (Produtos)
+   ========================================= */
+.feed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Item do Produto (Será gerado pelo JS) */
+.product-item {
+    background: var(--surface-color);
+    padding: 12px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.prod-thumb {
+    width: 50px;
+    height: 50px;
+    background-color: #eee;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #999;
+}
+
+.prod-info { flex: 1; }
+.prod-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.prod-price { font-size: 13px; color: var(--primary-color); font-weight: 700; }
+
+.prod-status {
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.status-active { background: #dcfce7; color: #166534; }
+.status-paused { background: #fef9c3; color: #854d0e; }
+
+/* Texto de carregamento */
+.loading-text {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 14px;
+    padding: 20px;
+}
+
+/* =========================================
+   8. BARRA DE NAVEGAÇÃO (Bottom Nav)
+   ========================================= */
+.bottom-navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background: var(--surface-color);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 Colunas (Espaço pro FAB no meio) */
+    align-items: center;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    z-index: 900;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: var(--text-secondary);
+    font-size: 10px;
+    height: 100%;
+}
+
+.nav-item i { font-size: 24px; transition: 0.2s; }
+
+/* Estado Ativo (Página Atual) */
+.nav-item.active { color: var(--primary-color); }
+.nav-item.active i { transform: translateY(-2px); }
+
+/* =========================================
+   9. FAB BUTTON (Botão Flutuante Central)
+   ========================================= */
+.nav-fab-container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fab-button {
+    position: absolute;
+    top: -25px; /* Sobe para sair da barra */
+    width: 56px;
+    height: 56px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    color: white;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4); /* Sombra colorida */
+    transition: transform 0.2s;
+}
+
+.fab-button:active { transform: scale(0.9); } /* Efeito de clique */
+
+/* =========================================
+   10. MODAL (Bottom Sheet)
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5); /* Fundo escuro transparente */
+    z-index: 2000;
+    display: flex;
+    align-items: flex-end; /* Conteúdo no rodapé */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-content {
+    background: var(--surface-color);
+    width: 100%;
+    max-width: 600px; /* Limite desktop */
+    margin: 0 auto;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 24px;
+    transform: translateY(100%); /* Começa escondido lá embaixo */
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); /* Animação suave (Spring) */
+    max-height: 85vh; /* Ocupa no máximo 85% da tela */
+    overflow-y: auto;
+}
+
+/* Classes para controlar visibilidade via JS */
+.modal-overlay.visible { opacity: 1; visibility: visible; }
+.modal-overlay.visible .modal-content { transform: translateY(0); }
+.modal-overlay.hidden { display: none; } /* Fallback */
+
+/* Cabeçalho do Modal */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.modal-header h2 { font-size: 18px; }
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--bg-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+/* Grid de Categorias (Dentro do Modal) */
+.category-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.cat-card {
+    background: var(--bg-color);
+    padding: 15px;
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid transparent;
+    transition: 0.2s;
+}
+
+.cat-card:active {
+    background: #e5e7eb;
+    transform: scale(0.98);
+}
+
+.cat-icon {
+    font-size: 28px;
+    color: var(--primary-color);
+}
