@@ -3,26 +3,26 @@
    ========================================= */
 :root {
     /* -- CORES GERAIS (Serão sobrescritas pelo _theme.js) -- */
-    --primary-color: #6366f1;   /* Cor principal da marca */
+    --primary-color: #6366f1;   /* Cor principal da marca (padrão) */
     --primary-dark: #4f46e5;    /* Cor de hover/active */
     --bg-color: #f3f4f6;        /* Cor de fundo do app (cinza claro) */
     --surface-color: #ffffff;   /* Cor dos cards (branco) */
     --text-primary: #111827;    /* Texto preto quase total */
     --text-secondary: #6b7280;  /* Texto cinza para descrições */
     --border-color: #e5e7eb;    /* Bordas sutis */
-    
+
     /* -- CORES DAS PLATAFORMAS (Fixas) -- */
     --color-olx: #6e0ad6;       /* Roxo OLX */
     --color-fb: #1877f2;        /* Azul Facebook */
     --color-ml: #ffe600;        /* Amarelo ML */
     --color-insta: #e1306c;     /* Rosa Instagram */
-    
+
     /* -- DIMENSÕES & ESPAÇAMENTOS -- */
     --nav-height: 70px;         /* Altura da barra inferior */
     --header-height: 60px;      /* Altura do topo */
     --radius-md: 12px;          /* Arredondamento padrão */
     --radius-lg: 20px;          /* Arredondamento maior */
-    
+
     /* -- FONTE -- */
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -44,6 +44,7 @@ body {
     padding-top: var(--header-height);     /* Espaço para o header fixo */
     padding-bottom: calc(var(--nav-height) + 20px); /* Espaço para a nav fixa */
     overflow-x: hidden; /* Evita scroll lateral indesejado */
+    transition: background-color 0.3s ease; /* Suaviza a troca de tema */
 }
 
 a { text-decoration: none; color: inherit; }
@@ -112,17 +113,29 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .link-action { color: var(--primary-color); font-size: 13px; font-weight: 500; }
 
 /* =========================================
-   5. METRICS SCROLLER (Carrossel Horizontal)
+   5. METRICS SCROLLER (CORRIGIDO)
    ========================================= */
 .metrics-scroller {
     display: flex;
     gap: 15px;
     overflow-x: auto;
-    padding-bottom: 10px; /* Espaço para scrollbar não colar */
+    
+    /* Aumentei o padding vertical para a sombra não cortar */
+    padding: 10px 20px; 
+    
+    /* Margem negativa para o scroll ir até a borda da tela */
+    margin: 0 -20px; 
+    
     scroll-snap-type: x mandatory; /* Efeito magnético */
-    margin: 0 -20px; /* Quebra as margens do container pai */
-    padding-left: 20px; /* Restaura o padding visual */
-    padding-right: 20px;
+}
+
+/* --- O HACK DO SCROLL --- 
+   Cria um elemento invisível no final para forçar o espaçamento direito */
+.metrics-scroller::after {
+    content: '';
+    display: block;
+    min-width: 5px; /* Tamanho do respiro no final */
+    height: 1px;
 }
 
 /* Esconde scrollbar (Chrome/Safari) */
@@ -133,7 +146,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     background: var(--surface-color);
     padding: 15px;
     border-radius: var(--radius-md);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Sombra melhorada */
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
@@ -144,6 +157,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .metric-card.highlight {
     background: var(--primary-color);
     color: #fff;
+    transition: background-color 0.3s ease;
 }
 .metric-card.highlight .card-info span { color: rgba(255,255,255, 0.8); }
 
@@ -267,6 +281,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     color: var(--text-secondary);
     font-size: 10px;
     height: 100%;
+    text-decoration: none;
 }
 
 .nav-item i { font-size: 24px; transition: 0.2s; }
@@ -299,7 +314,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4); /* Sombra colorida */
-    transition: transform 0.2s;
+    transition: transform 0.2s, background-color 0.3s;
 }
 
 .fab-button:active { transform: scale(0.9); } /* Efeito de clique */
