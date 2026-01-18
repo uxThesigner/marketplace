@@ -13,6 +13,19 @@
 </head>
 <body>
 
+    <script>
+        (function() {
+            const savedMode = localStorage.getItem('koda_theme_mode');
+            if (savedMode === 'dark') document.body.classList.add('dark-mode');
+            
+            const savedColor = localStorage.getItem('koda_theme_color');
+            if (savedColor) {
+                document.documentElement.style.setProperty('--primary-color', savedColor);
+                document.documentElement.style.setProperty('--primary-dark', savedColor);
+            }
+        })();
+    </script>
+
     <header class="app-header">
         <div class="header-left">
             <img id="app-logo" src="" alt="Logo" class="app-logo-img">
@@ -53,8 +66,7 @@
                     <strong id="kpi-messages">0</strong>
                 </div>
             </div>
-            
-            </section>
+        </section>
 
         <section class="performance-section">
             <div class="section-header">
