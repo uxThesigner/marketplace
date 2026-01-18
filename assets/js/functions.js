@@ -1,105 +1,68 @@
 /* ============================================================
- * FUNCTIONS.JS - Cérebro com Tradução Completa (Dashboard/Leads/Ads)
+ * FUNCTIONS.JS - Cérebro Corrigido (Bug do Modal + Novas Traduções)
  * ============================================================
  */
 
-// --- 0. DICIONÁRIO DE TRADUÇÃO EXPANDIDO ---
+// --- 0. DICIONÁRIO DE TRADUÇÃO ---
 const translations = {
     "pt": {
         // Navegação
         "nav_home": "Início", "nav_ads": "Anúncios", "nav_leads": "Leads", "nav_config": "Config",
         
-        // Dashboard (Home)
+        // Dashboard
         "welcome_sub": "Visão geral dos seus negócios.",
-        "metric_sales": "Vendas Hoje",
-        "metric_active": "Anúncios Ativos",
-        "metric_msgs": "Mensagens",
-        "chart_title": "Desempenho por Canal",
-        "feed_title": "Últimos Cadastrados",
-        "feed_view_all": "Ver todos",
-        "loading": "Carregando dados...",
+        "metric_sales": "Vendas Hoje", "metric_active": "Anúncios Ativos", "metric_msgs": "Mensagens",
+        "chart_title": "Desempenho por Canal", "feed_title": "Últimos Cadastrados", "feed_view_all": "Ver todos", "loading": "Carregando dados...",
         
-        // Leads
-        "leads_title": "Central de Leads",
-        "filter_all": "Todos", "filter_unread": "Não Lidos", "filter_hot": "Quentes 🔥",
-        "ctx_interest": "Interesse em:",
-        "time_yesterday": "Ontem",
+        // Leads e Ads
+        "leads_title": "Central de Leads", "filter_all": "Todos", "filter_unread": "Não Lidos", "filter_hot": "Quentes 🔥", "ctx_interest": "Interesse em:", "time_yesterday": "Ontem",
+        "ads_title": "Anúncios", "search_placeholder": "Buscar por placa, título ou código...", "filter_active": "Ativos", "filter_paused": "Pausados", "filter_nostock": "Sem Estoque", "status_active": "Ativo", "status_paused": "Pausado", "txt_on": "Em:",
 
-        // Estoque / Anúncios
-        "ads_title": "Anúncios",
-        "search_placeholder": "Buscar por placa, título ou código...",
-        "filter_active": "Ativos", "filter_paused": "Pausados", "filter_nostock": "Sem Estoque",
-        "status_active": "Ativo", "status_paused": "Pausado",
-        "txt_on": "Em:",
-
-        // Config e Modais
+        // Configuração (ATUALIZADO)
         "page_config_title": "Configurações",
-        "sec_account": "Conta", "item_company": "Dados da Empresa", "item_sub": "Assinatura & Faturas",
-        "sec_app": "Aplicativo", "item_notif": "Notificações", "item_darkmode": "Modo Escuro",
-        "item_theme": "Cores de Detalhe", "item_lang": "Idioma (Language)", "item_help": "Ajuda e Suporte",
+        "sec_account": "Conta", 
+        "sub_status_label": "Status:", "sub_active": "Ativo",
+        "sub_next_invoice": "Próxima Fatura:", "sub_method": "Pagamento:",
+        "item_company": "Dados da Empresa", "item_sub": "Histórico de Faturas", "item_team": "Gerenciar Equipe",
+        "sec_app": "Aplicativo", "item_notif": "Notificações", "item_darkmode": "Modo Escuro", "item_theme": "Cores de Detalhe", "item_lang": "Idioma (Language)", "item_help": "Ajuda e Suporte",
         "btn_logout": "Sair do Sistema",
-        "modal_theme_title": "Escolha sua Vibe", "modal_lang_title": "Selecione o Idioma",
-        "modal_new_title": "Adicionar Novo Item", "modal_new_sub": "O que você deseja cadastrar hoje?"
+        "modal_theme_title": "Escolha sua Vibe", "modal_lang_title": "Selecione o Idioma", "modal_new_title": "Adicionar Novo Item", "modal_new_sub": "O que você deseja cadastrar hoje?"
     },
     "en": {
         "nav_home": "Home", "nav_ads": "Listings", "nav_leads": "Leads", "nav_config": "Settings",
         "welcome_sub": "Overview of your business.",
-        "metric_sales": "Sales Today",
-        "metric_active": "Active Ads",
-        "metric_msgs": "Messages",
-        "chart_title": "Performance by Channel",
-        "feed_title": "Recent Listings",
-        "feed_view_all": "View all",
-        "loading": "Loading data...",
+        "metric_sales": "Sales Today", "metric_active": "Active Ads", "metric_msgs": "Messages",
+        "chart_title": "Performance by Channel", "feed_title": "Recent Listings", "feed_view_all": "View all", "loading": "Loading...",
         
-        "leads_title": "Leads Center",
-        "filter_all": "All", "filter_unread": "Unread", "filter_hot": "Hot 🔥",
-        "ctx_interest": "Interested in:",
-        "time_yesterday": "Yesterday",
-
-        "ads_title": "My Listings",
-        "search_placeholder": "Search by plate, title or ID...",
-        "filter_active": "Active", "filter_paused": "Paused", "filter_nostock": "Out of Stock",
-        "status_active": "Active", "status_paused": "Paused",
-        "txt_on": "On:",
+        "leads_title": "Leads Center", "filter_all": "All", "filter_unread": "Unread", "filter_hot": "Hot 🔥", "ctx_interest": "Interested in:", "time_yesterday": "Yesterday",
+        "ads_title": "My Listings", "search_placeholder": "Search...", "filter_active": "Active", "filter_paused": "Paused", "filter_nostock": "No Stock", "status_active": "Active", "status_paused": "Paused", "txt_on": "On:",
 
         "page_config_title": "Settings",
-        "sec_account": "Account", "item_company": "Company Data", "item_sub": "Subscription & Billing",
-        "sec_app": "Application", "item_notif": "Notifications", "item_darkmode": "Dark Mode",
-        "item_theme": "Accent Colors", "item_lang": "Language", "item_help": "Help & Support",
+        "sec_account": "Account", 
+        "sub_status_label": "Status:", "sub_active": "Active",
+        "sub_next_invoice": "Next Invoice:", "sub_method": "Payment:",
+        "item_company": "Company Data", "item_sub": "Invoice History", "item_team": "Manage Team",
+        "sec_app": "Application", "item_notif": "Notifications", "item_darkmode": "Dark Mode", "item_theme": "Accent Colors", "item_lang": "Language", "item_help": "Help & Support",
         "btn_logout": "Logout",
-        "modal_theme_title": "Choose your Vibe", "modal_lang_title": "Select Language",
-        "modal_new_title": "Add New Item", "modal_new_sub": "What are you listing today?"
+        "modal_theme_title": "Choose Vibe", "modal_lang_title": "Select Language", "modal_new_title": "Add New", "modal_new_sub": "What are you listing?"
     },
     "es": {
         "nav_home": "Inicio", "nav_ads": "Anuncios", "nav_leads": "Clientes", "nav_config": "Ajustes",
-        "welcome_sub": "Resumen de su negocio.",
-        "metric_sales": "Ventas Hoy",
-        "metric_active": "Activos",
-        "metric_msgs": "Mensajes",
-        "chart_title": "Rendimiento por Canal",
-        "feed_title": "Recientes",
-        "feed_view_all": "Ver todos",
-        "loading": "Cargando datos...",
+        "welcome_sub": "Resumen de negocio.",
+        "metric_sales": "Ventas Hoy", "metric_active": "Activos", "metric_msgs": "Mensajes",
+        "chart_title": "Rendimiento", "feed_title": "Recientes", "feed_view_all": "Ver todos", "loading": "Cargando...",
 
-        "leads_title": "Central de Clientes",
-        "filter_all": "Todos", "filter_unread": "No Leídos", "filter_hot": "Calientes 🔥",
-        "ctx_interest": "Interesado en:",
-        "time_yesterday": "Ayer",
-
-        "ads_title": "Mis Anuncios",
-        "search_placeholder": "Buscar por placa, título o ID...",
-        "filter_active": "Activos", "filter_paused": "Pausados", "filter_nostock": "Sin Stock",
-        "status_active": "Activo", "status_paused": "Pausado",
-        "txt_on": "En:",
+        "leads_title": "Clientes", "filter_all": "Todos", "filter_unread": "No Leídos", "filter_hot": "Fuego 🔥", "ctx_interest": "Interés en:", "time_yesterday": "Ayer",
+        "ads_title": "Mis Anuncios", "search_placeholder": "Buscar...", "filter_active": "Activos", "filter_paused": "Pausados", "filter_nostock": "Sin Stock", "status_active": "Activo", "status_paused": "Pausado", "txt_on": "En:",
 
         "page_config_title": "Configuración",
-        "sec_account": "Cuenta", "item_company": "Datos de Empresa", "item_sub": "Suscripción y Pagos",
-        "sec_app": "Aplicación", "item_notif": "Notificaciones", "item_darkmode": "Modo Oscuro",
-        "item_theme": "Colores de Detalle", "item_lang": "Idioma", "item_help": "Ayuda y Soporte",
-        "btn_logout": "Cerrar Sesión",
-        "modal_theme_title": "Elige tu Estilo", "modal_lang_title": "Seleccionar Idioma",
-        "modal_new_title": "Agregar Nuevo", "modal_new_sub": "¿Qué vas a publicar hoy?"
+        "sec_account": "Cuenta", 
+        "sub_status_label": "Estado:", "sub_active": "Activo",
+        "sub_next_invoice": "Prox. Factura:", "sub_method": "Método:",
+        "item_company": "Datos Empresa", "item_sub": "Historial Facturas", "item_team": "Gestionar Equipo",
+        "sec_app": "Aplicación", "item_notif": "Notificaciones", "item_darkmode": "Modo Oscuro", "item_theme": "Colores", "item_lang": "Idioma", "item_help": "Ayuda",
+        "btn_logout": "Salir",
+        "modal_theme_title": "Elige Estilo", "modal_lang_title": "Idioma", "modal_new_title": "Nuevo Item", "modal_new_sub": "¿Qué publicarás?"
     }
 };
 
@@ -116,11 +79,10 @@ function initApp() {
         const logoEl = document.getElementById('app-logo');
         if (logoEl && typeof appTheme !== 'undefined') logoEl.src = appTheme.assets.logoUrl;
     }
-
     loadDashboardData();
 }
 
-// --- 2. GERENCIADOR DE PREFERÊNCIAS ---
+// --- 2. GERENCIADOR DE PREFERÊNCIAS (CORRIGIDO) ---
 function loadSavedPreferences() {
     const savedColor = localStorage.getItem('koda_theme_color');
     if (savedColor) changeAppTheme(savedColor);
@@ -145,8 +107,14 @@ function changeAppTheme(colorHex) {
     root.style.setProperty('--primary-color', colorHex);
     root.style.setProperty('--primary-dark', colorHex);
     localStorage.setItem('koda_theme_color', colorHex);
+    
+    // --- CORREÇÃO DO BUG DO MODAL ---
+    // Só tentamos fechar o modal se ele realmente existir E estiver visível (aberto).
+    // Isso impede que ele abra sozinho ao carregar a página.
     const modal = document.getElementById('modal-theme-select');
-    if(modal) toggleModal('modal-theme-select');
+    if(modal && modal.classList.contains('visible')) {
+        toggleModal('modal-theme-select');
+    }
 }
 
 function toggleDarkMode() {
@@ -162,7 +130,6 @@ function toggleDarkMode() {
     }
 }
 
-// Helper: Pega texto traduzido via JS (para uso dentro de loops)
 function getTrans(key) {
     const lang = localStorage.getItem('koda_lang') || 'pt';
     return translations[lang][key] || key;
@@ -171,14 +138,12 @@ function getTrans(key) {
 function changeAppLanguage(langCode) {
     if (!translations[langCode]) return;
     
-    // 1. Traduz elementos estáticos (HTML)
     const elementsToTranslate = document.querySelectorAll('[data-i18n]');
     elementsToTranslate.forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[langCode][key]) el.textContent = translations[langCode][key];
     });
 
-    // 2. Atualiza placeholders de inputs
     const inputsToTranslate = document.querySelectorAll('[data-i18n-placeholder]');
     inputsToTranslate.forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
@@ -186,10 +151,7 @@ function changeAppLanguage(langCode) {
     });
 
     localStorage.setItem('koda_lang', langCode);
-    
-    // 3. Força recarregamento de dados dinâmicos (para traduzir a lista de produtos)
     loadDashboardData();
-    // Se estiver na tela de estoque, recarrega a lista completa
     if (typeof loadFullInventory === 'function') loadFullInventory();
 }
 
@@ -204,9 +166,7 @@ function loadDashboardData() {
         if (feedList && typeof productsDB !== 'undefined') {
             feedList.innerHTML = '';
             productsDB.forEach(prod => {
-                // TRADUÇÃO DINÂMICA AQUI:
                 const statusLabel = prod.status === 'active' ? getTrans('status_active') : getTrans('status_paused');
-                
                 const itemHTML = `
                     <div class="product-item">
                         <div class="prod-thumb"><i class="ph ${prod.image}"></i></div>
