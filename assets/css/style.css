@@ -2,33 +2,40 @@
    1. VARIÁVEIS & TEMA (Fallback System)
    ========================================= */
 :root {
-    /* ESTRATÉGIA DE CORES:
-       Começamos com CINZA (Neutro). 
-       O arquivo _theme.js vai sobrescrever isso para a cor da marca (Verde/Azul/Etc).
-       Se o site continuar cinza, sabemos que houve erro no carregamento do tema.
-    */
-    --primary-color: #9ca3af;   /* Cinza neutro */
-    --primary-dark: #6b7280;    /* Cinza escuro */
-    --bg-color: #f3f4f6;        /* Fundo padrão */
-    --surface-color: #ffffff;   /* Branco */
-    --text-primary: #111827;    /* Preto suave */
-    --text-secondary: #6b7280;  /* Cinza texto */
-    --border-color: #e5e7eb;    /* Borda sutil */
+    /* --- MODO CLARO (Padrão) --- */
+    --bg-color: #f3f4f6;        
+    --surface-color: #ffffff;   
+    --text-primary: #111827;    
+    --text-secondary: #6b7280;  
+    --border-color: #e5e7eb;    
 
-    /* -- CORES FIXAS DAS PLATAFORMAS (Não mudam com o tema) -- */
-    --color-olx: #6e0ad6;       /* Roxo */
-    --color-fb: #1877f2;        /* Azul */
-    --color-ml: #ffe600;        /* Amarelo */
-    --color-insta: #e1306c;     /* Rosa */
+    /* A cor de destaque (Accent) começa Cinza mas será mudada pelo JS */
+    --primary-color: #9ca3af;   
+    --primary-dark: #6b7280;    
 
-    /* -- DIMENSÕES & ESPAÇAMENTOS -- */
-    --nav-height: 70px;         /* Altura da barra inferior */
-    --header-height: 60px;      /* Altura do topo */
+    /* Cores Fixas das Plataformas */
+    --color-olx: #6e0ad6;       
+    --color-fb: #1877f2;        
+    --color-ml: #ffe600;        
+    --color-insta: #e1306c;     
+
+    /* Dimensões & Fontes */
+    --nav-height: 70px;         
+    --header-height: 60px;      
     --radius-md: 12px;          
     --radius-lg: 20px;          
-
-    /* -- FONTE -- */
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* --- MODO ESCURO (Ativado via classe no body) --- */
+body.dark-mode {
+    --bg-color: #111827;       /* Fundo quase preto */
+    --surface-color: #1F2937;  /* Cartões cinza escuro */
+    --text-primary: #F9FAFB;   /* Texto quase branco */
+    --text-secondary: #9CA3AF; /* Texto cinza claro */
+    --border-color: #374151;   /* Borda escura */
+    
+    /* Nota: A --primary-color não muda aqui, ela brilha no escuro! */
 }
 
 /* =========================================
@@ -38,7 +45,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    -webkit-tap-highlight-color: transparent; /* Remove flash azul no toque mobile */
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -46,12 +53,12 @@ body {
     background-color: var(--bg-color);
     color: var(--text-primary);
     
-    /* Espaçamento para não ficar atrás dos elementos fixos */
+    /* Espaçamento para Header e Nav Fixas */
     padding-top: var(--header-height);     
     padding-bottom: calc(var(--nav-height) + 20px); 
     
-    overflow-x: hidden; /* Evita scroll lateral na página inteira */
-    transition: background-color 0.4s ease; /* Transição suave quando o tema carregar */
+    overflow-x: hidden; 
+    transition: background-color 0.4s ease, color 0.4s ease; /* Suaviza troca Dark Mode */
 }
 
 a { text-decoration: none; color: inherit; }
@@ -73,6 +80,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     padding: 0 20px;
     z-index: 1000;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: background-color 0.4s ease;
 }
 
 .app-logo-img {
@@ -99,8 +107,8 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
    ========================================= */
 .app-content {
     padding: 20px;
-    max-width: 600px; /* Limita largura em desktop */
-    margin: 0 auto;   /* Centraliza em desktop */
+    max-width: 600px;
+    margin: 0 auto;
     width: 100%;
 }
 
@@ -121,35 +129,29 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .link-action { color: var(--primary-color); font-size: 13px; font-weight: 500; }
 
 /* =========================================
-   5. METRICS SCROLLER (Com Fix de Margem)
+   5. METRICS SCROLLER (Com Fix)
    ========================================= */
 .metrics-scroller {
     display: flex;
     gap: 15px;
     overflow-x: auto;
-    
-    /* Padding interno para as sombras não cortarem */
     padding: 10px 20px;
-    
-    /* Margem negativa para encostar na borda da tela */
     margin: 0 -20px; 
-    
-    scroll-snap-type: x mandatory; /* Efeito magnético ao rolar */
+    scroll-snap-type: x mandatory; 
 }
 
-/* HACK: Elemento invisível no final para garantir o espaçamento direito */
+/* Elemento fantasma para espaçamento final */
 .metrics-scroller::after {
     content: '';
     display: block;
-    min-width: 20px; /* O mesmo tamanho do padding lateral */
+    min-width: 20px;
     height: 1px;
 }
 
-/* Esconde scrollbar nativa */
 .metrics-scroller::-webkit-scrollbar { display: none; }
 
 .metric-card {
-    flex: 0 0 140px; /* Largura fixa do card */
+    flex: 0 0 140px;
     background: var(--surface-color);
     padding: 15px;
     border-radius: var(--radius-md);
@@ -158,10 +160,9 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     display: flex;
     flex-direction: column;
     gap: 10px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.4s ease;
 }
 
-/* Card Destaque */
 .metric-card.highlight {
     background: var(--primary-color);
     color: #fff;
@@ -181,6 +182,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     padding: 20px;
     border-radius: var(--radius-md);
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: background-color 0.4s ease;
 }
 
 .fake-chart-container {
@@ -208,7 +210,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .chart-bar-group span { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
 
 /* =========================================
-   7. LISTA DE FEED (Produtos)
+   7. LISTA DE FEED / PRODUTOS
    ========================================= */
 .feed-list {
     display: flex;
@@ -224,18 +226,19 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     align-items: center;
     gap: 15px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    transition: background-color 0.4s ease;
 }
 
 .prod-thumb {
     width: 50px;
     height: 50px;
-    background-color: #eee;
+    background-color: var(--bg-color); /* Ajustado para Dark Mode */
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    color: #999;
+    color: var(--text-secondary);
 }
 
 .prod-info { flex: 1; }
@@ -251,6 +254,10 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 }
 .status-active { background: #dcfce7; color: #166534; }
 .status-paused { background: #fef9c3; color: #854d0e; }
+
+/* No modo escuro, ajustamos os status para não ficarem neon demais */
+body.dark-mode .status-active { background: #064e3b; color: #a7f3d0; }
+body.dark-mode .status-paused { background: #713f12; color: #fde047; }
 
 .loading-text {
     text-align: center;
@@ -270,10 +277,11 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     height: var(--nav-height);
     background: var(--surface-color);
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 Colunas iguais */
+    grid-template-columns: repeat(5, 1fr);
     align-items: center;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
     z-index: 900;
+    transition: background-color 0.4s ease;
 }
 
 .nav-item {
@@ -289,12 +297,11 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 }
 
 .nav-item i { font-size: 24px; transition: transform 0.2s; }
-
 .nav-item.active { color: var(--primary-color); }
 .nav-item.active i { transform: translateY(-2px); }
 
 /* =========================================
-   9. FAB (Botão Flutuante Central)
+   9. FAB (Botão Central)
    ========================================= */
 .nav-fab-container {
     position: relative;
@@ -306,7 +313,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 
 .fab-button {
     position: absolute;
-    top: -25px; /* Eleva o botão para sair da barra */
+    top: -25px;
     width: 56px;
     height: 56px;
     background-color: var(--primary-color);
@@ -316,14 +323,14 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s, background-color 0.3s;
 }
 
 .fab-button:active { transform: scale(0.9); }
 
 /* =========================================
-   10. MODAL (Bottom Sheet Animation)
+   10. MODAIS & OVERLAYS
    ========================================= */
 .modal-overlay {
     position: fixed;
@@ -334,7 +341,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     background: rgba(0,0,0,0.5);
     z-index: 2000;
     display: flex;
-    align-items: flex-end; /* Alinha o modal no chão */
+    align-items: flex-end;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -347,16 +354,12 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     margin: 0 auto;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     padding: 24px;
-    
-    /* Estado inicial: Escondido lá embaixo */
     transform: translateY(100%); 
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s;
     max-height: 85vh;
     overflow-y: auto;
 }
 
-/* Classes controladas via JS */
 .modal-overlay.visible { opacity: 1; visibility: visible; }
 .modal-overlay.visible .modal-content { transform: translateY(0); }
 .modal-overlay.hidden { display: none; }
@@ -377,9 +380,105 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     align-items: center;
     justify-content: center;
     font-size: 18px;
+    color: var(--text-primary);
+    transition: background-color 0.4s;
 }
 
-/* Grid de Categorias */
+/* =========================================
+   11. COMPONENTES DE CONFIGURAÇÃO (Perfil, Cores, etc.)
+   ========================================= */
+
+/* Perfil */
+.profile-card {
+    background: var(--surface-color);
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    transition: background-color 0.4s ease;
+}
+
+.profile-avatar-large {
+    width: 80px; height: 80px;
+    background: var(--bg-color); color: var(--primary-color);
+    font-size: 32px; font-weight: 700; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 15px auto;
+    border: 3px solid var(--surface-color);
+    box-shadow: 0 0 0 2px var(--primary-color);
+    transition: border-color 0.4s;
+}
+
+.profile-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.profile-email { font-size: 14px; color: var(--text-secondary); }
+
+.plan-badge {
+    display: inline-block; margin-top: 12px; padding: 6px 12px;
+    background: var(--bg-color); /* Ajustado */
+    color: var(--text-primary);
+    border-radius: 20px; font-size: 12px; font-weight: 600;
+}
+
+/* Lista de Configurações */
+.settings-group {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    overflow: hidden; margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.4s, border-color 0.4s;
+}
+
+.settings-item {
+    display: flex; align-items: center; padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer; transition: background 0.2s;
+}
+.settings-item:last-child { border-bottom: none; }
+.settings-item:active { background: var(--bg-color); }
+
+.settings-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--bg-color); color: var(--primary-color);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-right: 15px;
+    transition: background-color 0.4s;
+}
+.settings-text { flex: 1; font-size: 14px; font-weight: 500; }
+.settings-arrow { color: var(--text-secondary); font-size: 16px; }
+
+/* Chavinha Dark Mode (Toggle) */
+.toggle-icon { font-size: 28px; color: var(--text-secondary); transition: 0.3s; }
+.toggle-icon.active-toggle { color: var(--primary-color); }
+
+/* Botão Logout */
+.btn-logout {
+    width: 100%; padding: 16px; background: #fee2e2; color: #ef4444;
+    font-weight: 600; border-radius: var(--radius-md); font-size: 14px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.version-text { text-align: center; margin-top: 20px; font-size: 12px; color: var(--text-secondary); }
+
+/* Grid de Temas (Cores) */
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px; margin-top: 15px;
+}
+.theme-option {
+    width: 45px; height: 45px; border-radius: 50%;
+    margin: 0 auto; cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border: 2px solid var(--surface-color);
+}
+.theme-option:active { transform: scale(0.9); }
+
+/* Lista de Idiomas */
+.lang-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.lang-option { padding: 15px; background: var(--bg-color); border-radius: var(--radius-md); display: flex; align-items: center; gap: 15px; font-weight: 600; color: var(--text-primary); transition: background-color 0.4s; }
+.lang-option.selected { border: 1px solid var(--primary-color); }
+
+/* Grid de Categorias (Modal Novo Anúncio) */
 .category-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -395,11 +494,11 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
     align-items: center;
     gap: 10px;
     border: 1px solid transparent;
-    transition: 0.2s;
+    transition: 0.2s, background-color 0.4s;
 }
 
 .cat-card:active {
-    background: #e5e7eb;
+    background: var(--border-color);
     transform: scale(0.98);
 }
 
