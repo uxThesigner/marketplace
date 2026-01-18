@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ffffff">
-    
-    <title>Estoque | Koda White-Label</title>
-    
+
+    <title>Anúncios | Koda White-Label</title>
+
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
         .search-bar-container {
@@ -66,7 +66,7 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
     </style>
-    
+
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
@@ -76,7 +76,7 @@
             <a href="dashboard.html">
                 <i class="ph ph-arrow-left" style="font-size: 24px; color: var(--text-primary);"></i>
             </a>
-            <span style="margin-left: 10px; font-weight: 700; font-size: 18px;">Estoque Unificado</span>
+            <span style="margin-left: 10px; font-weight: 700; font-size: 18px;">Anúncios</span>
         </div>
         <div class="header-right">
             <div class="user-avatar-small" id="user-avatar-header">--</div>
@@ -84,7 +84,7 @@
     </header>
 
     <main class="app-content" style="padding: 0; max-width: 100%;">
-        
+
         <div class="search-bar-container">
             <div class="search-input-group">
                 <i class="ph ph-magnifying-glass"></i>
@@ -100,7 +100,7 @@
         </div>
 
         <section class="feed-list" id="full-inventory-list" style="padding: 0 20px;">
-            <p class="loading-text">Carregando estoque...</p>
+            <p class="loading-text">Carregando anúncios...</p>
         </section>
 
         <div class="spacer-bottom"></div>
@@ -140,32 +140,30 @@
 
     <div id="bottom-nav-container"></div>
 
-    <script src="assets/js/_config.js"></script> 
+    <script src="assets/js/config.js"></script> 
     <script src="assets/js/mock_db.js"></script>
-    <script src="assets/js/_theme.js"></script>
+    <script src="assets/js/theme.js"></script>
     <script src="assets/js/functions.js"></script>
 
     <script>
         // Inicialização Específica desta Página
-        
+
         // 1. Renderiza Barra (Marca 'estoque' como ativo)
         renderBottomNav('estoque'); 
-        
+
         // 2. Aplica Tema
         if (typeof applyTheme === 'function') applyTheme();
 
-        // 3. Função Específica para Carregar Lista Completa
+        // 3. Função Específica para Carregar Lista
         function loadFullInventory() {
             const listEl = document.getElementById('full-inventory-list');
-            
+
             if (listEl && typeof productsDB !== 'undefined') {
                 listEl.innerHTML = ''; // Limpa
-                
-                // Aqui poderíamos ter um loop maior ou duplicar dados para parecer que tem muito item
-                // Vamos duplicar o array para dar volume visual
-                const fullList = [...productsDB, ...productsDB, ...productsDB];
 
-                fullList.forEach(prod => {
+                // 4. LÓGICA CORRIGIDA: Usa o productsDB direto (sem duplicar com ...fullList)
+                // Agora mostra apenas o que realmente existe no mock_db.js
+                productsDB.forEach(prod => {
                     const itemHTML = `
                         <div class="product-item">
                             <div class="prod-thumb">
