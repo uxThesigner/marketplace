@@ -52,8 +52,8 @@
             <div class="chat-item" onclick="alert('Abrir chat: Marcos')">
                 <div class="chat-avatar-area">
                     <img src="https://i.pravatar.cc/150?u=1" class="chat-avatar" alt="User">
-                    <div class="platform-badge" style="background: #25D366;">
-                        <i class="ph ph-whatsapp-logo"></i>
+                    <div class="platform-badge" style="background: #25D366; color: white;">
+                        <i class="ph ph-whatsapp-logo" style="font-weight: bold;"></i>
                     </div>
                 </div>
                 <div class="chat-info">
@@ -130,8 +130,8 @@
             <div class="chat-item">
                 <div class="chat-avatar-area">
                     <img src="https://i.pravatar.cc/150?u=8" class="chat-avatar" alt="User">
-                    <div class="platform-badge" style="background: #25D366;">
-                        <i class="ph ph-whatsapp-logo"></i>
+                    <div class="platform-badge" style="background: #25D366; color: white;">
+                        <i class="ph ph-whatsapp-logo" style="font-weight: bold;"></i>
                     </div>
                 </div>
                 <div class="chat-info">
@@ -154,21 +154,53 @@
     <div id="modal-new-ad" class="modal-overlay hidden">
         <div class="modal-content bottom-sheet">
             <div class="modal-header">
-                <h2 data-i18n="modal_new_title">Criar Anúncio</h2>
+                <div style="display:flex; align-items:center;">
+                    <i id="btn-back-step" class="ph ph-arrow-left btn-back-modal" onclick="backToCategories()"></i>
+                    <h2 id="modal-title-text" data-i18n="modal_new_title">Criar Anúncio</h2>
+                </div>
                 <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
                     <i class="ph ph-x"></i>
                 </button>
             </div>
+
             <div class="modal-body">
-                <p class="helper-text" style="margin-bottom: 20px;" data-i18n="modal_new_sub">Selecione a categoria:</p>
-                <div class="new-ad-grid">
-                   <div class="new-ad-item" onclick="selectCategory('veiculos')"><div class="icon-box style-car"><i class="ph ph-car-profile"></i></div><span class="new-ad-label">Veículos</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('imoveis')"><div class="icon-box style-house"><i class="ph ph-house-line"></i></div><span class="new-ad-label">Imóveis</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('eletronicos')"><div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div><span class="new-ad-label">Eletrônicos</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('agro')"><div class="icon-box style-agro"><i class="ph ph-plant"></i></div><span class="new-ad-label">Agro</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('servicos')"><div class="icon-box style-service"><i class="ph ph-wrench"></i></div><span class="new-ad-label">Serviços</span></div>
-                   <div class="new-ad-item" onclick="alert('Importar CSV')"><div class="icon-box style-import"><i class="ph ph-download-simple"></i></div><span class="new-ad-label">Importar</span></div>
+                
+                <div id="step-category-select" class="modal-step active">
+                    <p class="helper-text" style="margin-bottom: 20px;" data-i18n="modal_new_sub">Selecione a categoria do produto:</p>
+                    <div class="new-ad-grid">
+                        <div class="new-ad-item" onclick="selectCategory('veiculos')"><div class="icon-box style-car"><i class="ph ph-car-profile"></i></div><span class="new-ad-label">Veículos</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('imoveis')"><div class="icon-box style-house"><i class="ph ph-house-line"></i></div><span class="new-ad-label">Imóveis</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('eletronicos')"><div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div><span class="new-ad-label">Eletrônicos</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('agro')"><div class="icon-box style-agro"><i class="ph ph-plant"></i></div><span class="new-ad-label">Agro</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('servicos')"><div class="icon-box style-service"><i class="ph ph-wrench"></i></div><span class="new-ad-label">Serviços</span></div>
+                        <div class="new-ad-item" onclick="alert('Importar via XML/CSV em breve.')"><div class="icon-box style-import"><i class="ph ph-download-simple"></i></div><span class="new-ad-label">Importar</span></div>
+                    </div>
                 </div>
+
+                <div id="step-ad-form" class="modal-step">
+                    <label class="modal-form-label">Fotos do Anúncio</label>
+                    <div class="photo-upload-container">
+                        <div class="photo-box"><i class="ph ph-camera-plus"></i></div>
+                        <div class="photo-box has-image"><img src="https://via.placeholder.com/150" alt="Thumb"></div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label class="modal-form-label">Título do Anúncio</label>
+                        <input type="text" class="modal-input" placeholder="Ex: Fiat Argo 1.0 Drive...">
+                    </div>
+
+                    <div id="dynamic-fields-area"></div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label class="modal-form-label">Descrição</label>
+                        <textarea class="modal-input" rows="3" placeholder="Detalhes adicionais..."></textarea>
+                    </div>
+
+                    <button class="btn-publish" onclick="toggleModal('modal-new-ad'); alert('Anúncio Criado com Sucesso!');">
+                        Publicar Agora
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -181,6 +213,7 @@
     <script src="assets/js/functions.js"></script>
 
     <script>
+        // Renderiza a barra marcando 'leads' como ativo
         renderBottomNav('leads'); 
     </script>
 </body>
