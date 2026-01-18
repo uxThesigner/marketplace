@@ -14,7 +14,7 @@ const translations = {
         "leads_title": "Central de Leads", "filter_all": "Todos", "filter_unread": "Não Lidos", "filter_hot": "Quentes 🔥", "ctx_interest": "Interesse em:", "time_yesterday": "Ontem",
         "ads_title": "Meus Anúncios", "search_placeholder": "Buscar por placa, título ou código...", 
         "filter_active": "Ativos", "filter_paused": "Pausados", "filter_nostock": "Sem Estoque", 
-        "status_active": "Ativo", "status_paused": "Pausado", "txt_on": "Em:",
+        "status_active": "Ativo", "status_paused": "Pausado", "status_sold": "Vendido", "status_rejected": "Reprovado", "status_review": "Em Análise", "status_incomplete": "Incompleto", "txt_on": "Em:",
         "page_config_title": "Configurações", "sec_account": "Conta", "sub_status_label": "Status:", "sub_active": "Ativo", "sub_next_invoice": "Próxima Fatura:", "sub_method": "Pagamento:",
         "item_company": "Dados da Empresa", "item_sub": "Histórico de Faturas", "item_team": "Gerenciar Equipe",
         "sec_app": "Aplicativo", "item_notif": "Notificações", "item_darkmode": "Modo Escuro", "item_theme": "Cores de Detalhe", "item_lang": "Idioma", "item_help": "Ajuda e Suporte",
@@ -30,7 +30,7 @@ const translations = {
         "leads_title": "Leads Center", "filter_all": "All", "filter_unread": "Unread", "filter_hot": "Hot 🔥", "ctx_interest": "Interested in:", "time_yesterday": "Yesterday",
         "ads_title": "My Listings", "search_placeholder": "Search by plate, title or ID...",
         "filter_active": "Active", "filter_paused": "Paused", "filter_nostock": "Out of Stock",
-        "status_active": "Active", "status_paused": "Paused", "txt_on": "On:",
+        "status_active": "Active", "status_paused": "Paused", "status_sold": "Sold", "status_rejected": "Rejected", "status_review": "In Review", "status_incomplete": "Incomplete", "txt_on": "On:",
         "page_config_title": "Settings", "sec_account": "Account", "sub_status_label": "Status:", "sub_active": "Active", "sub_next_invoice": "Next Invoice:", "sub_method": "Payment:",
         "item_company": "Company Data", "item_sub": "Invoice History", "item_team": "Manage Team",
         "sec_app": "Application", "item_notif": "Notifications", "item_darkmode": "Dark Mode", "item_theme": "Accent Colors", "item_lang": "Language", "item_help": "Help & Support",
@@ -46,7 +46,7 @@ const translations = {
         "leads_title": "Central de Clientes", "filter_all": "Todos", "filter_unread": "No Leídos", "filter_hot": "Calientes 🔥", "ctx_interest": "Interesado en:", "time_yesterday": "Ayer",
         "ads_title": "Mis Anuncios", "search_placeholder": "Buscar por placa, título o ID...",
         "filter_active": "Activos", "filter_paused": "Pausados", "filter_nostock": "Sin Stock",
-        "status_active": "Activo", "status_paused": "Pausado", "txt_on": "En:",
+        "status_active": "Activo", "status_paused": "Pausado", "status_sold": "Vendido", "status_rejected": "Rechazado", "status_review": "En Revisión", "status_incomplete": "Incompleto", "txt_on": "En:",
         "page_config_title": "Configuración", "sec_account": "Cuenta", "sub_status_label": "Estado:", "sub_active": "Activo", "sub_next_invoice": "Prox. Factura:", "sub_method": "Método:",
         "item_company": "Datos de Empresa", "item_sub": "Historial Facturas", "item_team": "Gestionar Equipo",
         "sec_app": "Aplicación", "item_notif": "Notificaciones", "item_darkmode": "Modo Oscuro", "item_theme": "Colores de Detalle", "item_lang": "Idioma", "item_help": "Ayuda y Soporte",
@@ -169,7 +169,7 @@ function loadDashboardData() {
     if (feedList && typeof productsDB !== 'undefined') {
         feedList.innerHTML = '';
         productsDB.slice(0, 3).forEach(prod => { // Mostra só os 3 primeiros
-            const statusLabel = prod.status === 'active' ? getTrans('status_active') : getTrans('status_paused');
+            const statusLabel = getTrans('status_' + prod.status) || prod.status;
             feedList.innerHTML += `
                 <div class="product-item">
                     <div class="prod-thumb"><i class="ph ${prod.image}"></i></div>
@@ -177,7 +177,7 @@ function loadDashboardData() {
                         <div class="prod-title">${prod.title}</div>
                         <div class="prod-price">R$ ${prod.price.toLocaleString('pt-BR')}</div>
                     </div>
-                    <div class="prod-status ${prod.status === 'active' ? 'status-active' : 'status-paused'}">${statusLabel}</div>
+                    <div class="prod-status status-${prod.status}">${statusLabel}</div>
                 </div>`;
         });
     }
@@ -224,7 +224,7 @@ function applyInventoryFilters() {
 
     filteredData.forEach(prod => {
         let txtOn = getTrans('txt_on');
-        let statusLabel = prod.status === 'active' ? getTrans('status_active') : getTrans('status_paused');
+        let statusLabel = getTrans('status_' + prod.status) || prod.status;
         
         listEl.innerHTML += `
             <div class="product-item">
@@ -235,7 +235,7 @@ function applyInventoryFilters() {
                     <div class="platform-tag">${txtOn} ${prod.platforms.join(', ')}</div>
                 </div>
                 <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
-                    <div class="prod-status ${prod.status === 'active' ? 'status-active' : 'status-paused'}">${statusLabel}</div>
+                    <div class="prod-status status-${prod.status}">${statusLabel}</div>
                     <div class="actions-btn"><i class="ph ph-dots-three-vertical" style="font-size: 22px;"></i></div>
                 </div>
             </div>`;
