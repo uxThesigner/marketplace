@@ -105,7 +105,7 @@ function renderBottomNav(activePage) {
                 <i class="ph ph-plus"></i>
             </button>
         </div>
-        <a href="#" class="nav-item ${isActive('leads')}">
+        <a href="leads.html" class="nav-item ${isActive('leads')}">
             <i class="ph ph-chat-circle"></i><span>Leads</span>
         </a>
         <a href="#" class="nav-item ${isActive('config')}">
