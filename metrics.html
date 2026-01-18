@@ -11,71 +11,102 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        /* Card de Saldo Principal */
-        .balance-card {
-            background: var(--surface-color); padding: 24px;
-            border-radius: var(--radius-lg); text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid var(--border-color);
-            margin-bottom: 20px;
-        }
-        .balance-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500; }
-        .balance-value { font-size: 32px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.5px; }
-        .balance-growth {
-            display: inline-flex; align-items: center; gap: 4px;
-            font-size: 13px; font-weight: 600; color: #166534; background: #dcfce7;
-            padding: 4px 10px; border-radius: 20px; margin-top: 10px;
-        }
-        body.dark-mode .balance-growth { background: rgba(22, 101, 52, 0.3); color: #86efac; }
-
-        /* Seletor de Período */
+        /* Seletor de Período (Segmented Control) */
         .period-selector {
-            display: flex; background: var(--surface-color);
-            padding: 4px; border-radius: 12px;
-            margin-bottom: 25px; border: 1px solid var(--border-color);
+            display: flex; background: var(--border-color);
+            padding: 4px; border-radius: 14px;
+            margin-bottom: 20px;
         }
         .period-btn {
             flex: 1; padding: 8px; text-align: center;
             font-size: 13px; font-weight: 600; color: var(--text-secondary);
-            border-radius: 8px; transition: 0.3s;
+            border-radius: 10px; transition: 0.3s; cursor: pointer;
         }
         .period-btn.active {
-            background: var(--bg-color); color: var(--text-primary);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background: var(--surface-color); color: var(--text-primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        /* Progresso das Plataformas */
-        .platform-stats {
-            background: var(--surface-color); padding: 20px; border-radius: var(--radius-md);
-            margin-bottom: 25px; border: 1px solid var(--border-color);
+        /* Card Principal (Estilo Fintech) */
+        .balance-card {
+            background: linear-gradient(135deg, var(--surface-color) 0%, var(--bg-color) 100%);
+            padding: 24px; border-radius: 24px;
+            text-align: center; position: relative; overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
         }
-        .stat-row { margin-bottom: 15px; }
-        .stat-row:last-child { margin-bottom: 0; }
-        .stat-header { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
-        .stat-name { font-weight: 600; display: flex; align-items: center; gap: 6px; }
-        .stat-val { color: var(--text-secondary); }
-        .progress-track { width: 100%; height: 6px; background: var(--bg-color); border-radius: 4px; overflow: hidden; }
-        .progress-fill { height: 100%; border-radius: 4px; }
+        /* Efeito de brilho no card */
+        .balance-card::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(var(--primary-rgb), 0.1) 0%, transparent 70%);
+            opacity: 0.5; pointer-events: none;
+        }
+        
+        .balance-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        .balance-value { font-size: 36px; font-weight: 800; color: var(--text-primary); letter-spacing: -1px; margin-bottom: 5px; }
+        
+        .trend-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 6px 12px; border-radius: 20px;
+            font-size: 13px; font-weight: 700;
+            background: rgba(34, 197, 94, 0.1); color: #166534;
+        }
+        body.dark-mode .trend-badge { background: rgba(34, 197, 94, 0.2); color: #86efac; }
 
-        /* Extrato */
-        .transaction-list { display: flex; flex-direction: column; }
-        .trans-item {
+        /* Grid de KPIs Secundários */
+        .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .kpi-card-small {
+            background: var(--surface-color); padding: 16px; border-radius: 16px;
+            border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 5px;
+        }
+        .kpi-title { font-size: 12px; color: var(--text-secondary); }
+        .kpi-val { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+        
+        /* Origem das Vendas (Estilo Anéis) */
+        .platform-ring-container {
+            background: var(--surface-color); padding: 20px; border-radius: 20px;
+            border: 1px solid var(--border-color); margin-bottom: 25px;
+        }
+        .ring-row {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 16px 0; border-bottom: 1px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+        .ring-row:last-child { margin-bottom: 0; }
+        .ring-info { display: flex; align-items: center; gap: 12px; }
+        .ring-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: white;
+        }
+        .ring-details { display: flex; flex-direction: column; }
+        .ring-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+        .ring-percent { font-size: 12px; color: var(--text-secondary); }
+        .ring-bar-bg { width: 100px; height: 6px; background: var(--bg-color); border-radius: 10px; overflow: hidden; }
+        .ring-bar-fill { height: 100%; border-radius: 10px; }
+
+        /* Extrato Clean */
+        .trans-list { display: flex; flex-direction: column; gap: 0; }
+        .trans-item {
+            display: flex; align-items: center; padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
         }
         .trans-item:last-child { border-bottom: none; }
-        .trans-icon {
-            width: 42px; height: 42px; border-radius: 10px;
+        .trans-icon-box {
+            width: 44px; height: 44px; border-radius: 14px;
             background: var(--bg-color); color: var(--text-secondary);
             display: flex; align-items: center; justify-content: center;
             font-size: 20px; margin-right: 15px;
         }
-        .trans-details { flex: 1; }
-        .trans-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
-        .trans-date { font-size: 12px; color: var(--text-secondary); }
-        .trans-amount { text-align: right; }
-        .amount-val { font-size: 14px; font-weight: 700; color: #166534; display: block; }
-        .platform-badge-mini { font-size: 10px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; }
-        body.dark-mode .amount-val { color: #4ade80; }
+        .trans-main { flex: 1; }
+        .trans-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+        .trans-meta { font-size: 12px; color: var(--text-secondary); }
+        .trans-value { font-size: 14px; font-weight: 700; color: var(--text-primary); text-align: right; }
+        .trans-tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--bg-color); color: var(--text-secondary); margin-top: 4px; display: inline-block; }
+        
+        .val-positive { color: #166534; }
+        body.dark-mode .val-positive { color: #4ade80; }
+
     </style>
 </head>
 <body>
@@ -101,7 +132,7 @@
         </div>
         <div class="header-right">
             <button onclick="alert('Exportar PDF')">
-                <i class="ph ph-export" style="font-size: 24px; color: var(--text-secondary);"></i>
+                <i class="ph ph-download-simple" style="font-size: 24px; color: var(--text-secondary);"></i>
             </button>
         </div>
     </header>
@@ -109,58 +140,118 @@
     <main class="app-content">
 
         <div class="period-selector">
-            <div class="period-btn" onclick="filterPeriod(this, '7d')">7 Dias</div>
-            <div class="period-btn" onclick="filterPeriod(this, '15d')">15 Dias</div>
-            <div class="period-btn active" onclick="filterPeriod(this, '30d')">Mês</div>
-            <div class="period-btn" onclick="filterPeriod(this, 'total')">Total</div>
+            <div class="period-btn" onclick="updatePeriod(this, '7d')">7D</div>
+            <div class="period-btn" onclick="updatePeriod(this, '15d')">15D</div>
+            <div class="period-btn active" onclick="updatePeriod(this, '30d')">30D</div>
+            <div class="period-btn" onclick="updatePeriod(this, 'total')">Total</div>
         </div>
 
         <div class="balance-card">
-            <div class="balance-label">Vendas no Período</div>
-            <div class="balance-value">R$ 148.500,00</div>
-            <div class="balance-growth">
-                <i class="ph ph-trend-up"></i> +12.5% vs mês anterior
+            <div class="balance-label">Faturamento Líquido</div>
+            <div class="balance-value" id="main-balance">R$ 148.500</div>
+            <div class="trend-badge">
+                <i class="ph ph-trend-up"></i> +12.5% vs anterior
             </div>
         </div>
 
-        <div class="section-header" style="margin-top: 10px;">
-            <h3>Origem das Vendas</h3>
-        </div>
-        <div class="platform-stats">
-            <div class="stat-row">
-                <div class="stat-header"><span class="stat-name"><i class="ph ph-circle-fill" style="color: var(--color-olx); font-size: 8px;"></i> OLX</span><span class="stat-val">R$ 65.000</span></div>
-                <div class="progress-track"><div class="progress-fill" style="width: 45%; background: var(--color-olx);"></div></div>
+        <div class="kpi-grid">
+            <div class="kpi-card-small">
+                <span class="kpi-title">Ticket Médio</span>
+                <span class="kpi-val">R$ 4.250</span>
             </div>
-            <div class="stat-row">
-                <div class="stat-header"><span class="stat-name"><i class="ph ph-circle-fill" style="color: var(--color-fb); font-size: 8px;"></i> Facebook</span><span class="stat-val">R$ 42.000</span></div>
-                <div class="progress-track"><div class="progress-fill" style="width: 30%; background: var(--color-fb);"></div></div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-header"><span class="stat-name"><i class="ph ph-circle-fill" style="color: var(--color-insta); font-size: 8px;"></i> Instagram</span><span class="stat-val">R$ 28.500</span></div>
-                <div class="progress-track"><div class="progress-fill" style="width: 20%; background: var(--color-insta);"></div></div>
+            <div class="kpi-card-small">
+                <span class="kpi-title">Itens Vendidos</span>
+                <span class="kpi-val">34 un.</span>
             </div>
         </div>
 
         <div class="section-header">
-            <h3>Extrato Recente</h3>
-            <a href="#" class="link-action">Ver tudo</a>
+            <h3>Performance por Canal</h3>
         </div>
-        <div class="transaction-list">
-            <div class="trans-item">
-                <div class="trans-icon"><i class="ph ph-car"></i></div>
-                <div class="trans-details"><div class="trans-title">Fiat Toro Volcano</div><div class="trans-date">Hoje, 10:42</div></div>
-                <div class="trans-amount"><span class="amount-val">+ R$ 110k</span><span class="platform-badge-mini">OLX</span></div>
+        <div class="platform-ring-container">
+            
+            <div class="ring-row">
+                <div class="ring-info">
+                    <div class="ring-icon" style="background: var(--color-olx);"><i class="ph ph-tag"></i></div>
+                    <div class="ring-details">
+                        <span class="ring-name">OLX Pay</span>
+                        <span class="ring-percent">45% das vendas</span>
+                    </div>
+                </div>
+                <div class="ring-bar-bg">
+                    <div class="ring-bar-fill" style="width: 45%; background: var(--color-olx);"></div>
+                </div>
             </div>
-            <div class="trans-item">
-                <div class="trans-icon"><i class="ph ph-device-mobile"></i></div>
-                <div class="trans-details"><div class="trans-title">iPhone 14 Pro</div><div class="trans-date">Ontem, 16:20</div></div>
-                <div class="trans-amount"><span class="amount-val">+ R$ 5.200</span><span class="platform-badge-mini">Insta</span></div>
+
+            <div class="ring-row">
+                <div class="ring-info">
+                    <div class="ring-icon" style="background: var(--color-fb);"><i class="ph ph-facebook-logo"></i></div>
+                    <div class="ring-details">
+                        <span class="ring-name">Facebook</span>
+                        <span class="ring-percent">30% das vendas</span>
+                    </div>
+                </div>
+                <div class="ring-bar-bg">
+                    <div class="ring-bar-fill" style="width: 30%; background: var(--color-fb);"></div>
+                </div>
             </div>
-            <div class="trans-item">
-                <div class="trans-icon"><i class="ph ph-house"></i></div>
-                <div class="trans-details"><div class="trans-title">Aluguel Apto 202</div><div class="trans-date">12/02/2026</div></div>
-                <div class="trans-amount"><span class="amount-val">+ R$ 2.800</span><span class="platform-badge-mini">Zap</span></div>
+
+            <div class="ring-row">
+                <div class="ring-info">
+                    <div class="ring-icon" style="background: var(--color-insta);"><i class="ph ph-instagram-logo"></i></div>
+                    <div class="ring-details">
+                        <span class="ring-name">Instagram</span>
+                        <span class="ring-percent">25% das vendas</span>
+                    </div>
+                </div>
+                <div class="ring-bar-bg">
+                    <div class="ring-bar-fill" style="width: 25%; background: var(--color-insta);"></div>
+                </div>
             </div>
+
+        </div>
+
+        <div class="section-header">
+            <h3>Últimas Transações</h3>
+        </div>
+        <div class="trans-list">
+            
+            <div class="trans-item">
+                <div class="trans-icon-box"><i class="ph ph-car"></i></div>
+                <div class="trans-main">
+                    <div class="trans-title">Fiat Toro Volcano</div>
+                    <div class="trans-meta">Hoje, 10:42 • Paulo S.</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="trans-value val-positive">+ R$ 110k</div>
+                    <span class="trans-tag">OLX</span>
+                </div>
+            </div>
+
+            <div class="trans-item">
+                <div class="trans-icon-box"><i class="ph ph-device-mobile"></i></div>
+                <div class="trans-main">
+                    <div class="trans-title">iPhone 14 Pro</div>
+                    <div class="trans-meta">Ontem, 16:20 • Loja Física</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="trans-value val-positive">+ R$ 5.200</div>
+                    <span class="trans-tag">INSTA</span>
+                </div>
+            </div>
+
+            <div class="trans-item">
+                <div class="trans-icon-box"><i class="ph ph-house"></i></div>
+                <div class="trans-main">
+                    <div class="trans-title">Sinal Aluguel #202</div>
+                    <div class="trans-meta">12 Fev • Pix</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="trans-value val-positive">+ R$ 2.800</div>
+                    <span class="trans-tag">ZAP</span>
+                </div>
+            </div>
+
         </div>
 
         <div class="spacer-bottom"></div>
@@ -169,18 +260,42 @@
     <div id="modal-new-ad" class="modal-overlay hidden">
         <div class="modal-content bottom-sheet">
             <div class="modal-header">
-                <h2 data-i18n="modal_new_title">Criar Anúncio</h2>
-                <button class="btn-icon" onclick="toggleModal('modal-new-ad')"><i class="ph ph-x"></i></button>
+                <div style="display:flex; align-items:center;">
+                    <i id="btn-back-step" class="ph ph-arrow-left btn-back-modal" onclick="backToCategories()"></i>
+                    <h2 id="modal-title-text" data-i18n="modal_new_title">Criar Anúncio</h2>
+                </div>
+                <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
+                    <i class="ph ph-x"></i>
+                </button>
             </div>
             <div class="modal-body">
-                <p class="helper-text" style="margin-bottom: 20px;" data-i18n="modal_new_sub">Selecione a categoria do produto:</p>
-                <div class="new-ad-grid">
-                   <div class="new-ad-item" onclick="selectCategory('veiculos')"><div class="icon-box style-car"><i class="ph ph-car-profile"></i></div><span class="new-ad-label">Veículos</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('imoveis')"><div class="icon-box style-house"><i class="ph ph-house-line"></i></div><span class="new-ad-label">Imóveis</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('eletronicos')"><div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div><span class="new-ad-label">Eletrônicos</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('agro')"><div class="icon-box style-agro"><i class="ph ph-plant"></i></div><span class="new-ad-label">Agro</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('servicos')"><div class="icon-box style-service"><i class="ph ph-wrench"></i></div><span class="new-ad-label">Serviços</span></div>
-                   <div class="new-ad-item" onclick="alert('Importar CSV')"><div class="icon-box style-import"><i class="ph ph-download-simple"></i></div><span class="new-ad-label">Importar</span></div>
+                <div id="step-category-select" class="modal-step active">
+                    <p class="helper-text" style="margin-bottom: 20px;" data-i18n="modal_new_sub">Selecione a categoria:</p>
+                    <div class="new-ad-grid">
+                        <div class="new-ad-item" onclick="selectCategory('veiculos')"><div class="icon-box style-car"><i class="ph ph-car-profile"></i></div><span class="new-ad-label">Veículos</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('imoveis')"><div class="icon-box style-house"><i class="ph ph-house-line"></i></div><span class="new-ad-label">Imóveis</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('eletronicos')"><div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div><span class="new-ad-label">Eletrônicos</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('agro')"><div class="icon-box style-agro"><i class="ph ph-plant"></i></div><span class="new-ad-label">Agro</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('servicos')"><div class="icon-box style-service"><i class="ph ph-wrench"></i></div><span class="new-ad-label">Serviços</span></div>
+                        <div class="new-ad-item" onclick="alert('Importar CSV')"><div class="icon-box style-import"><i class="ph ph-download-simple"></i></div><span class="new-ad-label">Importar</span></div>
+                    </div>
+                </div>
+                <div id="step-ad-form" class="modal-step">
+                    <label class="modal-form-label">Fotos</label>
+                    <div class="photo-upload-container">
+                        <div class="photo-box"><i class="ph ph-camera-plus"></i></div>
+                        <div class="photo-box has-image"><img src="https://via.placeholder.com/150" alt="Thumb"></div>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label class="modal-form-label">Título</label>
+                        <input type="text" class="modal-input" placeholder="Ex: Item à venda...">
+                    </div>
+                    <div id="dynamic-fields-area"></div>
+                    <div style="margin-bottom: 20px;">
+                        <label class="modal-form-label">Descrição</label>
+                        <textarea class="modal-input" rows="3"></textarea>
+                    </div>
+                    <button class="btn-publish" onclick="toggleModal('modal-new-ad'); alert('Publicado!');">Publicar</button>
                 </div>
             </div>
         </div>
@@ -194,18 +309,20 @@
     <script src="assets/js/functions.js"></script>
 
     <script>
-        // Renderiza nav sem destaque (sub-pagina)
+        // Renderiza nav sem destaque
         renderBottomNav('');
 
-        function filterPeriod(el, period) {
+        // Lógica Visual do Seletor
+        function updatePeriod(el, period) {
             document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
             
-            const valEl = document.querySelector('.balance-value');
-            if(period === '7d') valEl.textContent = "R$ 32.400,00";
-            if(period === '15d') valEl.textContent = "R$ 68.100,00";
-            if(period === '30d') valEl.textContent = "R$ 148.500,00";
-            if(period === 'total') valEl.textContent = "R$ 840.250,00";
+            // Simula mudança de dados
+            const bal = document.getElementById('main-balance');
+            if(period === '7d') bal.textContent = "R$ 32.400";
+            if(period === '15d') bal.textContent = "R$ 68.100";
+            if(period === '30d') bal.textContent = "R$ 148.500";
+            if(period === 'total') bal.textContent = "R$ 840.250";
         }
     </script>
 </body>
