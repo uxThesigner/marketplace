@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ffffff">
+    
+    <title>Leads | Koda White-Label</title>
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        .chat-filters {
+            display: flex;
+            gap: 10px;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--surface-color);
+            position: sticky;
+            top: var(--header-height);
+            z-index: 80;
+        }
+
+        .chat-pill {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--bg-color);
+            color: var(--text-secondary);
+            border: 1px solid transparent;
+        }
+
+        .chat-pill.active {
+            background: var(--text-primary);
+            color: white;
+        }
+
+        .chat-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .chat-item:active {
+            background: var(--bg-color);
+        }
+
+        .chat-avatar-area {
+            position: relative;
+            margin-right: 15px;
+        }
+
+        .chat-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #eee;
+            object-fit: cover;
+        }
+
+        /* O ícone da plataforma flutuando sobre o avatar */
+        .platform-badge {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            border: 2px solid var(--surface-color);
+        }
+
+        .chat-info {
+            flex: 1;
+        }
+
+        .chat-header-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .chat-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .chat-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .chat-preview {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .chat-context {
+            font-size: 11px;
+            color: var(--primary-color);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .unread-badge {
+            width: 10px;
+            height: 10px;
+            background: var(--primary-color); /* Muda com o tema */
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+    </style>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-left">
+            <a href="dashboard.html">
+                <i class="ph ph-arrow-left" style="font-size: 24px; color: var(--text-primary);"></i>
+            </a>
+            <span style="margin-left: 10px; font-weight: 700; font-size: 18px;">Central de Leads</span>
+        </div>
+        <div class="header-right">
+            <i class="ph ph-magnifying-glass" style="font-size: 24px; color: var(--text-secondary);"></i>
+        </div>
+    </header>
+
+    <main class="app-content" style="padding: 0; max-width: 100%;">
+        
+        <div class="chat-filters">
+            <button class="chat-pill active">Todos</button>
+            <button class="chat-pill">Não Lidos (3)</button>
+            <button class="chat-pill">Quentes 🔥</button>
+        </div>
+
+        <div class="chat-list">
+            
+            <div class="chat-item" onclick="alert('Demo: Abriria o chat completo.')">
+                <div class="chat-avatar-area">
+                    <img src="https://i.pravatar.cc/150?u=1" class="chat-avatar" alt="User">
+                    <div class="platform-badge" style="background: #25D366;">
+                        <i class="ph ph-whatsapp-logo"></i>
+                    </div>
+                </div>
+                <div class="chat-info">
+                    <div class="chat-header-row">
+                        <span class="chat-name">Marcos Silva</span>
+                        <span class="chat-time">10:42</span>
+                    </div>
+                    <p class="chat-preview">Bom dia, o Fiat Argo ainda está disponível? Tenho interesse...</p>
+                    <p class="chat-context">Interesse em: Fiat Argo 1.0</p>
+                </div>
+                <div class="unread-badge"></div>
+            </div>
+
+            <div class="chat-item">
+                <div class="chat-avatar-area">
+                    <img src="https://i.pravatar.cc/150?u=2" class="chat-avatar" alt="User">
+                    <div class="platform-badge" style="background: var(--color-insta);">
+                        <i class="ph ph-instagram-logo"></i>
+                    </div>
+                </div>
+                <div class="chat-info">
+                    <div class="chat-header-row">
+                        <span class="chat-name">Julia Design</span>
+                        <span class="chat-time">09:15</span>
+                    </div>
+                    <p class="chat-preview">Aceita troca em um MacBook Pro?</p>
+                    <p class="chat-context">Interesse em: iPhone 13 Pro</p>
+                </div>
+                <div class="unread-badge"></div>
+            </div>
+
+            <div class="chat-item">
+                <div class="chat-avatar-area">
+                    <img src="https://i.pravatar.cc/150?u=3" class="chat-avatar" alt="User">
+                    <div class="platform-badge" style="background: var(--color-olx);">
+                        <i class="ph ph-tag"></i>
+                    </div>
+                </div>
+                <div class="chat-info">
+                    <div class="chat-header-row">
+                        <span class="chat-name">Roberto Eng.</span>
+                        <span class="chat-time">Ontem</span>
+                    </div>
+                    <p class="chat-preview">Qual o valor do m² nessa região?</p>
+                    <p class="chat-context">Interesse em: Terreno 10x30</p>
+                </div>
+            </div>
+
+            <div class="chat-item">
+                <div class="chat-avatar-area">
+                    <img src="https://i.pravatar.cc/150?u=4" class="chat-avatar" alt="User">
+                    <div class="platform-badge" style="background: var(--color-fb);">
+                        <i class="ph ph-messenger-logo"></i>
+                    </div>
+                </div>
+                <div class="chat-info">
+                    <div class="chat-header-row">
+                        <span class="chat-name">Carla Vendas</span>
+                        <span class="chat-time">Ontem</span>
+                    </div>
+                    <p class="chat-preview">Disponível?</p>
+                    <p class="chat-context">Interesse em: Gado Nelore</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="spacer-bottom"></div>
+    </main>
+
+    <div id="modal-new-ad" class="modal-overlay hidden">
+        <div class="modal-content bottom-sheet">
+            <div class="modal-header">
+                <h2>Adicionar Novo Item</h2>
+                <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="helper-text">O que você deseja cadastrar hoje?</p>
+                <div class="category-grid">
+                    <button class="cat-card" onclick="selectCategory('veiculos')">
+                        <div class="cat-icon"><i class="ph ph-car"></i></div>
+                        <span>Veículos</span>
+                    </button>
+                    <button class="cat-card" onclick="selectCategory('imoveis')">
+                        <div class="cat-icon"><i class="ph ph-house"></i></div>
+                        <span>Imóveis</span>
+                    </button>
+                    <button class="cat-card" onclick="selectCategory('eletronicos')">
+                        <div class="cat-icon"><i class="ph ph-device-mobile"></i></div>
+                        <span>Eletrônicos</span>
+                    </button>
+                    <button class="cat-card" onclick="selectCategory('agro')">
+                        <div class="cat-icon"><i class="ph ph-plant"></i></div>
+                        <span>Agro</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bottom-nav-container"></div>
+
+    <script src="assets/js/config.js"></script> 
+    <script src="assets/js/mock_db.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/functions.js"></script>
+
+    <script>
+        // 1. Renderiza Barra (Marca 'leads' como ativo)
+        renderBottomNav('leads'); 
+
+        // 2. Aplica Tema (Isso vai pintar as bolinhas de "Não lido" com a cor da Koda)
+        if (typeof applyTheme === 'function') applyTheme();
+    </script>
+</body>
+</html>
