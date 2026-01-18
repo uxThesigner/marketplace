@@ -84,7 +84,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .fab-button:active { transform: scale(0.9); }
 
 /* =========================================
-   4. DASHBOARD (CORRIGIDO)
+   4. DASHBOARD
    ========================================= */
 .welcome-section { margin-bottom: 24px; }
 .page-title { font-size: 22px; font-weight: 700; }
@@ -111,7 +111,6 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 }
 .metric-card:active { transform: scale(0.96); }
 
-/* Cards */
 .metric-card.highlight { background: var(--primary-color); color: #fff; }
 .metric-card.highlight .card-info span { color: rgba(255,255,255, 0.8); }
 .card-icon-bg {
@@ -161,15 +160,54 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 body.dark-mode .chat-context { background: rgba(255, 255, 255, 0.05); }
 
 /* =========================================
-   7. ESTOQUE & DEMAIS
+   7. ESTOQUE & DEMAIS (AJUSTADO: BARRA DE PESQUISA)
    ========================================= */
-.sticky-header-area { position: sticky; top: var(--header-height); z-index: 80; background: var(--surface-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-.search-input { width: 100%; padding: 14px 14px 14px 50px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-color); font-size: 15px; color: var(--text-primary); outline: none; transition: 0.3s; }
-.search-input:focus { border-color: var(--primary-color); background: var(--surface-color); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.sticky-header-area { 
+    position: sticky; top: var(--header-height); z-index: 80; 
+    background: var(--surface-color); border-bottom: 1px solid var(--border-color); 
+    padding-bottom: 10px; 
+}
+
+/* FIX: Barra de Pesquisa Ajustada */
+.search-bar-container {
+    padding: 10px 20px; /* Garante margem segura nas laterais */
+}
+.search-input-group {
+    position: relative; /* Necessário para o ícone absoluto funcionar */
+    width: 100%;
+}
+.search-input-group i { 
+    position: absolute; 
+    left: 16px; 
+    top: 50%; /* Centraliza verticalmente */
+    transform: translateY(-50%); /* Corrige o centro exato */
+    font-size: 20px; 
+    color: var(--text-secondary); 
+    pointer-events: none; 
+}
+
+.search-input { 
+    width: 100%; 
+    padding: 12px 16px 12px 48px; /* Mais compacto (12px) e espaço para ícone (48px) */
+    border-radius: var(--radius-md); 
+    border: 1px solid var(--border-color); 
+    background: var(--bg-color); 
+    font-size: 15px; 
+    color: var(--text-primary); 
+    outline: none; 
+    transition: 0.3s; 
+}
+.search-input:focus { 
+    border-color: var(--primary-color); 
+    background: var(--surface-color); 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+}
+
 .filter-tabs { display: flex; gap: 10px; padding: 5px 20px 10px 20px; overflow-x: auto; scrollbar-width: none; }
 .filter-tabs::-webkit-scrollbar { display: none; }
 .filter-pill { padding: 8px 16px; border-radius: 100px; background: var(--bg-color); color: var(--text-secondary); font-size: 13px; font-weight: 600; border: 1px solid transparent; transition: 0.3s; cursor: pointer; white-space: nowrap; }
 .filter-pill.active { background: var(--primary-color); color: white; }
+
 .product-item { background: var(--surface-color); padding: 16px 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border-color); }
 .prod-thumb { width: 56px; height: 56px; background-color: var(--bg-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--text-secondary); }
 .prod-info { flex: 1; min-width: 0; }
@@ -180,13 +218,12 @@ body.dark-mode .chat-context { background: rgba(255, 255, 255, 0.05); }
 
 .status-active { background: rgba(34, 197, 94, 0.1); color: #166534; } .status-paused { background: rgba(234, 179, 8, 0.1); color: #854d0e; }
 .status-sold { background: rgba(107, 114, 128, 0.1); color: #4b5563; text-decoration: line-through; } .status-rejected { background: rgba(239, 68, 68, 0.1); color: #b91c1c; } .status-review { background: rgba(59, 130, 246, 0.1); color: #1d4ed8; } .status-incomplete { background: rgba(249, 115, 22, 0.1); color: #c2410c; }
-
 body.dark-mode .status-active { background: rgba(34, 197, 94, 0.2); color: #86efac; } body.dark-mode .status-paused { background: rgba(234, 179, 8, 0.2); color: #fde047; } body.dark-mode .platform-tag { background: rgba(255,255,255,0.05); }
 body.dark-mode .status-sold { background: rgba(107, 114, 128, 0.2); color: #9ca3af; } body.dark-mode .status-rejected { background: rgba(239, 68, 68, 0.2); color: #fca5a5; } body.dark-mode .status-review { background: rgba(59, 130, 246, 0.2); color: #93c5fd; } body.dark-mode .status-incomplete { background: rgba(249, 115, 22, 0.2); color: #fdba74; }
 .actions-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); border-radius: 50%; }
 
 /* =========================================
-   8. LOGIN (ESTILO RESTAURADO!)
+   8. LOGIN (ESTILO RESTAURADO)
    ========================================= */
 .login-container { width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; gap: 30px; animation: fadeIn 0.6s ease-out; margin: 0 auto; padding: 40px 20px; }
 .brand-area { text-align: center; }
@@ -194,6 +231,7 @@ body.dark-mode .status-sold { background: rgba(107, 114, 128, 0.2); color: #9ca3
 .brand-tagline { font-size: 14px; color: var(--text-secondary); }
 .login-card { background: var(--surface-color); width: 100%; padding: 30px; border-radius: var(--radius-lg); box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
 
+/* Inputs e Labels GERAIS (Usados no Login e Modal) */
 .input-group { margin-bottom: 20px; position: relative; }
 .input-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
 .input-wrapper { position: relative; display: flex; align-items: center; }
@@ -208,37 +246,13 @@ body.dark-mode .status-sold { background: rgba(107, 114, 128, 0.2); color: #9ca3
 .login-footer a { color: var(--primary-color); font-weight: 600; }
 
 /* =========================================
-   9. MODAIS
+   9. MODAIS & CONFIGS
    ========================================= */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: flex; align-items: flex-end; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
 .modal-content { background: var(--surface-color); width: 100%; max-width: 600px; margin: 0 auto; border-radius: var(--radius-lg) var(--radius-lg) 0 0; padding: 24px; transform: translateY(100%); transition: transform 0.3s; max-height: 85vh; overflow-y: auto; }
 .modal-overlay.visible { opacity: 1; visibility: visible; } .modal-overlay.visible .modal-content { transform: translateY(0); }
 
-.new-ad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 10px; }
-.new-ad-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 15px 5px; background: var(--bg-color); border-radius: 16px; border: 1px solid transparent; cursor: pointer; }
-.icon-box { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
-.style-car { background: #dbeafe; color: #2563eb; } .style-house { background: #ffedd5; color: #ea580c; } .style-device { background: #f3e8ff; color: #9333ea; } .style-agro { background: #dcfce7; color: #166534; } .style-service { background: #e5e7eb; color: #4b5563; } .style-import { background: #fee2e2; color: #dc2626; }
-body.dark-mode .style-car { background: rgba(37, 99, 235, 0.2); color: #60a5fa; } body.dark-mode .style-house { background: rgba(234, 88, 12, 0.2); color: #fdba74; } body.dark-mode .style-device { background: rgba(147, 51, 234, 0.2); color: #c084fc; } body.dark-mode .style-agro { background: rgba(22, 101, 52, 0.2); color: #86efac; } body.dark-mode .style-service { background: rgba(75, 85, 99, 0.3); color: #d1d5db; } body.dark-mode .style-import { background: rgba(220, 38, 38, 0.2); color: #fca5a5; }
-
-/* =========================================
-   10. NOVO ANÚNCIO (SMART FORM)
-   ========================================= */
-.modal-step { display: none; animation: fadeIn 0.3s ease; }
-.modal-step.active { display: block; }
-.photo-upload-container { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
-.photo-box { width: 80px; height: 80px; background: var(--bg-color); border: 1px dashed var(--text-secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; color: var(--primary-color); font-size: 24px; transition: 0.2s; }
-.photo-box:active { background: var(--border-color); } .photo-box.has-image { border-style: solid; border-color: transparent; } .photo-box img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
-.form-row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-.modal-form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-.modal-input { width: 100%; padding: 12px; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; color: var(--text-primary); outline: none; transition: 0.3s; font-family: var(--font-family); }
-.modal-input:focus { border-color: var(--primary-color); background: var(--surface-color); }
-.btn-publish { width: 100%; padding: 16px; background: var(--primary-color); color: white; font-weight: 700; border-radius: 12px; font-size: 16px; margin-top: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-.btn-publish:active { transform: scale(0.98); opacity: 0.9; }
-.btn-back-modal { margin-right: 10px; color: var(--text-primary); font-size: 20px; cursor: pointer; display: none; }
-
-/* =========================================
-   11. CONFIGURAÇÕES (AS CLASSES QUE FALTARAM)
-   ========================================= */
+/* Configs */
 .profile-hero { display: flex; align-items: center; gap: 20px; padding: 10px; margin-bottom: 10px; }
 .profile-avatar-large { width: 70px; height: 70px; background: var(--surface-color); color: var(--primary-color); font-size: 28px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 .profile-info h2 { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
@@ -273,8 +287,29 @@ body.dark-mode .sub-status { background: rgba(22, 101, 52, 0.3); color: #86efac;
 .btn-logout:active { background: #fee2e2; border-color: #fee2e2; }
 .version-text { text-align: center; font-size: 11px; color: var(--text-secondary); opacity: 0.7; margin-top: 15px; }
 
-/* Themes & Lang Modals */
 .theme-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
 .theme-option { width: 45px; height: 45px; border-radius: 50%; margin: 0 auto; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 2px solid var(--surface-color); }
 .lang-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
 .lang-option { padding: 15px; background: var(--bg-color); border-radius: var(--radius-md); display: flex; align-items: center; gap: 15px; font-weight: 600; color: var(--text-primary); }
+
+/* =========================================
+   10. NOVO ANÚNCIO (SMART FORM)
+   ========================================= */
+.modal-step { display: none; animation: fadeIn 0.3s ease; }
+.modal-step.active { display: block; }
+.new-ad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 10px; }
+.new-ad-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 15px 5px; background: var(--bg-color); border-radius: 16px; border: 1px solid transparent; cursor: pointer; }
+.icon-box { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+
+.photo-upload-container { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
+.photo-box { width: 80px; height: 80px; background: var(--bg-color); border: 1px dashed var(--text-secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; color: var(--primary-color); font-size: 24px; transition: 0.2s; }
+.photo-box:active { background: var(--border-color); } .photo-box.has-image { border-style: solid; border-color: transparent; } .photo-box img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+
+.form-row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+.modal-form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.modal-input { width: 100%; padding: 12px; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; color: var(--text-primary); outline: none; transition: 0.3s; font-family: var(--font-family); }
+.modal-input:focus { border-color: var(--primary-color); background: var(--surface-color); }
+
+.btn-publish { width: 100%; padding: 16px; background: var(--primary-color); color: white; font-weight: 700; border-radius: 12px; font-size: 16px; margin-top: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+.btn-publish:active { transform: scale(0.98); opacity: 0.9; }
+.btn-back-modal { margin-right: 10px; color: var(--text-primary); font-size: 20px; cursor: pointer; display: none; }
