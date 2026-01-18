@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ffffff">
-    
     <title>Configurações | Koda White-Label</title>
-    
     <link rel="stylesheet" href="assets/css/style.css">
     
     <style>
+        /* ... (Estilos anteriores do profile-card mantidos) ... */
         .profile-card {
             background: var(--surface-color);
             padding: 24px;
@@ -17,18 +16,13 @@
             text-align: center;
             margin-bottom: 24px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: background 0.3s; /* Suaviza troca dark mode */
         }
         .profile-avatar-large {
-            width: 80px;
-            height: 80px;
-            background: var(--bg-color);
-            color: var(--primary-color);
-            font-size: 32px;
-            font-weight: 700;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 80px; height: 80px;
+            background: var(--bg-color); color: var(--primary-color);
+            font-size: 32px; font-weight: 700; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
             margin: 0 auto 15px auto;
             border: 3px solid var(--surface-color);
             box-shadow: 0 0 0 2px var(--primary-color);
@@ -36,106 +30,72 @@
         .profile-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
         .profile-email { font-size: 14px; color: var(--text-secondary); }
         .plan-badge {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 6px 12px;
-            background: rgba(0,0,0,0.05);
-            color: var(--text-primary);
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
+            display: inline-block; margin-top: 12px; padding: 6px 12px;
+            background: rgba(0,0,0,0.05); color: var(--text-primary);
+            border-radius: 20px; font-size: 12px; font-weight: 600;
         }
 
+        /* Estilos da Lista */
         .settings-group {
             background: var(--surface-color);
             border-radius: var(--radius-md);
-            overflow: hidden;
-            margin-bottom: 20px;
+            overflow: hidden; margin-bottom: 20px;
             border: 1px solid var(--border-color);
+            transition: background 0.3s;
         }
         .settings-item {
-            display: flex;
-            align-items: center;
-            padding: 16px;
+            display: flex; align-items: center; padding: 16px;
             border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: background 0.2s;
+            cursor: pointer; transition: background 0.2s;
         }
         .settings-item:last-child { border-bottom: none; }
         .settings-item:active { background: var(--bg-color); }
+        
         .settings-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: var(--bg-color);
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            margin-right: 15px;
+            width: 36px; height: 36px; border-radius: 8px;
+            background: var(--bg-color); color: var(--primary-color);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; margin-right: 15px;
         }
         .settings-text { flex: 1; font-size: 14px; font-weight: 500; }
-        .settings-arrow { color: #ccc; font-size: 16px; }
+        .settings-arrow { color: var(--text-secondary); font-size: 16px; }
+
+        /* Estilo da Chavinha (Toggle) */
+        .toggle-icon { font-size: 28px; color: var(--text-secondary); transition: 0.3s; }
+        .toggle-icon.active-toggle { color: var(--primary-color); }
 
         .btn-logout {
-            width: 100%;
-            padding: 16px;
-            background: #fee2e2;
-            color: #ef4444;
-            font-weight: 600;
-            border-radius: var(--radius-md);
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: 0.2s;
+            width: 100%; padding: 16px; background: #fee2e2; color: #ef4444;
+            font-weight: 600; border-radius: var(--radius-md); font-size: 14px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .btn-logout:active { background: #fecaca; }
-        .version-text { text-align: center; margin-top: 20px; font-size: 12px; color: #ccc; }
+        .version-text { text-align: center; margin-top: 20px; font-size: 12px; color: var(--text-secondary); }
 
-        /* Estilos dos Seletores de Tema e Idioma */
+        /* GRID DE CORES EXPANDIDA */
         .theme-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-top: 15px;
+            grid-template-columns: repeat(4, 1fr); /* 4 por linha */
+            gap: 15px; margin-top: 15px;
         }
         .theme-option {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin: 0 auto;
-            border: 3px solid transparent;
-            cursor: pointer;
+            width: 45px; height: 45px; border-radius: 50%;
+            margin: 0 auto; cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border: 2px solid var(--surface-color);
         }
         .theme-option:active { transform: scale(0.9); }
+        
+        /* Modal e Lang styles... */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: flex; align-items: flex-end; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .modal-content { background: var(--surface-color); width: 100%; max-width: 600px; margin: 0 auto; border-radius: var(--radius-lg) var(--radius-lg) 0 0; padding: 24px; transform: translateY(100%); transition: transform 0.3s; }
+        .modal-overlay.visible { opacity: 1; visibility: visible; }
+        .modal-overlay.visible .modal-content { transform: translateY(0); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn-icon { width: 32px; height: 32px; background: var(--bg-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-primary); }
 
-        .lang-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .lang-option {
-            padding: 15px;
-            background: var(--bg-color);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-weight: 600;
-            border: 2px solid transparent;
-        }
-        .lang-option.selected {
-            border-color: var(--primary-color);
-            background: var(--surface-color);
-            color: var(--primary-color);
-        }
+        .lang-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        .lang-option { padding: 15px; background: var(--bg-color); border-radius: var(--radius-md); display: flex; align-items: center; gap: 15px; font-weight: 600; color: var(--text-primary); }
     </style>
-    
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
@@ -152,48 +112,27 @@
             <div class="profile-avatar-large" id="config-avatar">--</div>
             <h2 class="profile-name" id="config-name">...</h2>
             <p class="profile-email">admin@kodashop.com</p>
-            <div class="plan-badge">
-                <i class="ph ph-crown-simple"></i> Enterprise
-            </div>
-        </div>
-
-        <h3 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; padding-left: 5px;" data-i18n="sec_account">Conta</h3>
-        <div class="settings-group">
-            <div class="settings-item">
-                <div class="settings-icon"><i class="ph ph-buildings"></i></div>
-                <div class="settings-text" data-i18n="item_company">Dados da Empresa</div>
-                <i class="ph ph-caret-right settings-arrow"></i>
-            </div>
-            <div class="settings-item">
-                <div class="settings-icon"><i class="ph ph-credit-card"></i></div>
-                <div class="settings-text" data-i18n="item_sub">Assinatura & Faturas</div>
-                <i class="ph ph-caret-right settings-arrow"></i>
-            </div>
+            <div class="plan-badge"><i class="ph ph-crown-simple"></i> Enterprise</div>
         </div>
 
         <h3 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; padding-left: 5px;" data-i18n="sec_app">Aplicativo</h3>
         <div class="settings-group">
-            <div class="settings-item">
-                <div class="settings-icon"><i class="ph ph-bell"></i></div>
-                <div class="settings-text" data-i18n="item_notif">Notificações</div>
-                <i class="ph ph-toggle-right" style="font-size: 24px; color: var(--primary-color);"></i>
+            
+            <div class="settings-item" onclick="toggleDarkMode()">
+                <div class="settings-icon"><i class="ph ph-moon"></i></div>
+                <div class="settings-text" data-i18n="item_darkmode">Modo Escuro</div>
+                <i id="dark-mode-toggle" class="ph ph-toggle-left toggle-icon"></i>
             </div>
 
             <div class="settings-item" onclick="toggleModal('modal-theme-select')">
                 <div class="settings-icon"><i class="ph ph-paint-bucket"></i></div>
-                <div class="settings-text" data-i18n="item_theme">Aparência (Tema)</div>
-                <div style="width: 20px; height: 20px; border-radius: 50%; background: var(--primary-color);"></div>
+                <div class="settings-text" data-i18n="item_theme">Cores de Detalhe</div>
+                <div style="width: 20px; height: 20px; border-radius: 50%; background: var(--primary-color); border: 1px solid #ccc;"></div>
             </div>
 
             <div class="settings-item" onclick="toggleModal('modal-lang-select')">
                 <div class="settings-icon"><i class="ph ph-globe"></i></div>
-                <div class="settings-text" data-i18n="item_lang">Idioma (Language)</div>
-                <i class="ph ph-caret-right settings-arrow"></i>
-            </div>
-            
-            <div class="settings-item">
-                <div class="settings-icon"><i class="ph ph-lifebuoy"></i></div>
-                <div class="settings-text" data-i18n="item_help">Ajuda e Suporte</div>
+                <div class="settings-text" data-i18n="item_lang">Idioma</div>
                 <i class="ph ph-caret-right settings-arrow"></i>
             </div>
         </div>
@@ -203,24 +142,24 @@
             <span data-i18n="btn_logout">Sair do Sistema</span>
         </button>
 
-        <p class="version-text">Versão MVP 1.0.0 • Koda System</p>
+        <p class="version-text">Versão MVP 1.1.0 • Koda System</p>
         <div class="spacer-bottom"></div>
     </main>
 
     <div id="modal-theme-select" class="modal-overlay hidden">
         <div class="modal-content bottom-sheet">
             <div class="modal-header">
-                <h2 data-i18n="modal_theme_title">Escolha um Tema</h2>
+                <h2 data-i18n="modal_theme_title">Escolha sua Vibe</h2>
                 <button class="btn-icon" onclick="toggleModal('modal-theme-select')"><i class="ph ph-x"></i></button>
             </div>
             <div class="modal-body">
-                <p class="helper-text">Selecione a cor principal do sistema:</p>
                 <div class="theme-grid">
-                    <div class="theme-option" style="background: #4D5D53;" onclick="changeAppTheme('#4D5D53'); toggleModal('modal-theme-select')"></div>
-                    <div class="theme-option" style="background: #2563EB;" onclick="changeAppTheme('#2563EB'); toggleModal('modal-theme-select')"></div>
-                    <div class="theme-option" style="background: #7C3AED;" onclick="changeAppTheme('#7C3AED'); toggleModal('modal-theme-select')"></div>
-                    <div class="theme-option" style="background: #EA580C;" onclick="changeAppTheme('#EA580C'); toggleModal('modal-theme-select')"></div>
-                </div>
+                    <div class="theme-option" style="background: #4D5D53;" onclick="changeAppTheme('#4D5D53')"></div>
+                    <div class="theme-option" style="background: #2563EB;" onclick="changeAppTheme('#2563EB')"></div>
+                    <div class="theme-option" style="background: #7C3AED;" onclick="changeAppTheme('#7C3AED')"></div>
+                    <div class="theme-option" style="background: #EA580C;" onclick="changeAppTheme('#EA580C')"></div>
+                    
+                    <div class="theme-option" style="background: #EF4444;" onclick="changeAppTheme('#EF4444')"></div> <div class="theme-option" style="background: #F59E0B;" onclick="changeAppTheme('#F59E0B')"></div> <div class="theme-option" style="background: #10B981;" onclick="changeAppTheme('#10B981')"></div> <div class="theme-option" style="background: #06B6D4;" onclick="changeAppTheme('#06B6D4')"></div> <div class="theme-option" style="background: #EC4899;" onclick="changeAppTheme('#EC4899')"></div> <div class="theme-option" style="background: #6366F1;" onclick="changeAppTheme('#6366F1')"></div> <div class="theme-option" style="background: #84CC16;" onclick="changeAppTheme('#84CC16')"></div> <div class="theme-option" style="background: #111827;" onclick="changeAppTheme('#111827')"></div> </div>
             </div>
         </div>
     </div>
@@ -233,32 +172,10 @@
             </div>
             <div class="modal-body">
                 <div class="lang-list">
-                    <button class="lang-option" onclick="changeAppLanguage('pt'); toggleModal('modal-lang-select')" data-lang="pt">
-                        <span style="font-size: 24px;">🇧🇷</span> Português
-                    </button>
-                    <button class="lang-option" onclick="changeAppLanguage('en'); toggleModal('modal-lang-select')" data-lang="en">
-                        <span style="font-size: 24px;">🇺🇸</span> English
-                    </button>
-                    <button class="lang-option" onclick="changeAppLanguage('es'); toggleModal('modal-lang-select')" data-lang="es">
-                        <span style="font-size: 24px;">🇪🇸</span> Español
-                    </button>
+                    <button class="lang-option" onclick="changeAppLanguage('pt'); toggleModal('modal-lang-select')">🇧🇷 Português</button>
+                    <button class="lang-option" onclick="changeAppLanguage('en'); toggleModal('modal-lang-select')">🇺🇸 English</button>
+                    <button class="lang-option" onclick="changeAppLanguage('es'); toggleModal('modal-lang-select')">🇪🇸 Español</button>
                 </div>
-            </div>
-        </div>
-    </div>
-    
-    <div id="modal-new-ad" class="modal-overlay hidden">
-        <div class="modal-content bottom-sheet">
-            <div class="modal-header">
-                <h2>Adicionar Novo Item</h2>
-                <button class="btn-icon" onclick="toggleModal('modal-new-ad')"><i class="ph ph-x"></i></button>
-            </div>
-            <div class="modal-body">
-                <div class="category-grid">
-                    <button class="cat-card" onclick="selectCategory('veiculos')">
-                        <div class="cat-icon"><i class="ph ph-car"></i></div><span>Veículos</span>
-                    </button>
-                    </div>
             </div>
         </div>
     </div>
@@ -269,31 +186,12 @@
     <script src="assets/js/mock_db.js"></script>
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/functions.js"></script>
-
+    
     <script>
-        // 1. Renderiza Barra
-        renderBottomNav('config'); 
-
-        // 2. Preenche dados do usuário
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof appConfig !== 'undefined') {
-                document.getElementById('config-name').textContent = appConfig.user.name;
-                document.getElementById('config-avatar').textContent = appConfig.user.avatarInitials;
-            }
-        });
-
-        // 3. Logout
+        renderBottomNav('config');
+        // A inicialização agora acontece automaticamente pelo initApp no functions.js
         function doLogout() {
-            // Usa tradução para o alerta também
-            const currentLang = localStorage.getItem('koda_lang') || 'pt';
-            const msgs = {
-                pt: "Tem certeza que deseja sair?",
-                en: "Are you sure you want to logout?",
-                es: "¿Estás seguro de que quieres cerrar sesión?"
-            };
-            if(confirm(msgs[currentLang])) {
-                window.location.href = "index.html";
-            }
+            if(confirm("Deseja realmente sair?")) window.location.href = "index.html";
         }
     </script>
 </body>
