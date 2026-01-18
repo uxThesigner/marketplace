@@ -12,168 +12,218 @@
 
     <style>
         body {
-            /* Centraliza tudo na tela */
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            padding: 20px;
             background-color: var(--bg-color);
         }
 
         .login-container {
             width: 100%;
             max-width: 400px;
-            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .brand-area {
             text-align: center;
+        }
+
+        .brand-logo {
+            height: 48px; /* Logo maior no login */
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .brand-tagline {
+            font-size: 14px;
+            color: var(--text-secondary);
         }
 
         .login-card {
             background: var(--surface-color);
-            padding: 30px 24px;
+            width: 100%;
+            padding: 30px;
             border-radius: var(--radius-lg);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-
-        .brand-logo-login {
-            height: 40px;
-            margin-bottom: 24px;
-            object-fit: contain;
-        }
-
-        .login-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .login-subtitle {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
         }
 
         .input-group {
-            margin-bottom: 16px;
-            text-align: left;
+            margin-bottom: 20px;
+            position: relative;
         }
 
-        .input-label {
+        .input-group label {
             display: block;
             font-size: 12px;
             font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-primary);
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .input-field {
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 14px;
+            font-size: 20px;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .form-input {
             width: 100%;
-            padding: 14px;
-            border: 1px solid var(--border-color);
+            padding: 14px 14px 14px 45px;
             border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
             background: var(--bg-color);
-            font-size: 14px;
+            font-family: inherit;
+            font-size: 15px;
             color: var(--text-primary);
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.3s;
         }
 
-        .input-field:focus {
+        .form-input:focus {
             border-color: var(--primary-color);
-            background: #fff;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+        }
+        
+        .form-input:focus + i {
+            color: var(--primary-color); /* Ícone muda de cor no foco */
         }
 
-        .btn-primary {
+        .btn-login {
             width: 100%;
             padding: 16px;
             background-color: var(--primary-color);
             color: white;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 700;
             border-radius: var(--radius-md);
-            font-size: 14px;
-            margin-top: 10px;
-            transition: background-color 0.2s, transform 0.1s;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .btn-primary:active {
+        .btn-login:active {
             transform: scale(0.98);
-            background-color: var(--primary-dark);
+            opacity: 0.9;
         }
 
-        .forgot-pass {
-            display: block;
-            margin-top: 20px;
+        .login-footer {
+            margin-top: 25px;
+            text-align: center;
             font-size: 13px;
             color: var(--text-secondary);
         }
-        
-        .powered-by {
-            margin-top: 40px;
-            font-size: 11px;
-            color: #ccc;
+
+        .login-footer a {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
+    <script>
+        (function() {
+            const savedMode = localStorage.getItem('koda_theme_mode');
+            if (savedMode === 'dark') document.body.classList.add('dark-mode');
+            
+            const savedColor = localStorage.getItem('koda_theme_color');
+            if (savedColor) {
+                document.documentElement.style.setProperty('--primary-color', savedColor);
+                document.documentElement.style.setProperty('--primary-dark', savedColor);
+            }
+        })();
+    </script>
+
     <div class="login-container">
         
-        <div class="login-card">
-            <img id="app-logo" src="" alt="Logo da Empresa" class="brand-logo-login">
-            
-            <h1 class="login-title">Bem-vindo de volta</h1>
-            <p class="login-subtitle">Acesse seu painel de controle unificado.</p>
+        <div class="brand-area">
+            <img id="app-logo" src="" alt="Koda" class="brand-logo">
+            <p class="brand-tagline">Gerencie seu negócio em um só lugar.</p>
+        </div>
 
+        <div class="login-card">
             <form onsubmit="handleLogin(event)">
                 <div class="input-group">
-                    <label class="input-label">E-mail</label>
-                    <input type="email" class="input-field" placeholder="exemplo@koda.com" value="paulo@kodashop.com">
+                    <label>E-mail</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-envelope-simple"></i>
+                        <input type="email" class="form-input" placeholder="seu@email.com" value="admin@koda.com" required>
+                    </div>
                 </div>
 
                 <div class="input-group">
-                    <label class="input-label">Senha</label>
-                    <input type="password" class="input-field" placeholder="••••••••" value="123456">
+                    <label>Senha</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-lock-key"></i>
+                        <input type="password" class="form-input" placeholder="Sua senha" value="123456" required>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn-primary">
-                    Entrar no Sistema
-                </button>
+                <button type="submit" class="btn-login">Entrar</button>
             </form>
 
-            <a href="#" class="forgot-pass">Esqueceu sua senha?</a>
+            <div class="login-footer">
+                <a href="#">Esqueceu a senha?</a>
+            </div>
         </div>
 
-        <div class="powered-by">
-            Tecnologia White-Label Koda System
-        </div>
+        <p style="font-size: 11px; color: var(--text-secondary); opacity: 0.6;">
+            Powered by <strong>Koda System</strong>
+        </p>
+
     </div>
 
-    <script src="assets/js/config.js"></script>
+    <script src="assets/js/config.js"></script> 
     <script src="assets/js/theme.js"></script>
+    <script src="assets/js/mock_db.js"></script>
+    <script src="assets/js/functions.js"></script>
 
     <script>
-        // Função simples para simular login
+        // Função simples de login (Mock)
         function handleLogin(e) {
-            e.preventDefault(); // Impede o formulário de recarregar a página
+            e.preventDefault();
             
-            const btn = document.querySelector('.btn-primary');
+            const btn = document.querySelector('.btn-login');
             const originalText = btn.innerText;
-
-            // Feedback visual de carregamento
+            
+            // Efeito de carregamento
             btn.innerText = "Autenticando...";
             btn.style.opacity = "0.7";
-
-            // Simula delay de rede (1.5 segundos)
+            
             setTimeout(() => {
                 // Redireciona para o Dashboard
                 window.location.href = "dashboard.html";
-            }, 1500);
+            }, 1000);
         }
 
-        // Garante que o tema seja aplicado
-        if (typeof applyTheme === 'function') {
-            applyTheme();
-        }
+        // Garante que o initApp rode para carregar a logo correta do tema
+        window.addEventListener('load', () => {
+            if(typeof initApp === 'function') initApp();
+        });
     </script>
+
 </body>
 </html>
