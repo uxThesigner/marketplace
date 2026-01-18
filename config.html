@@ -13,98 +13,6 @@
     <style>
         /* Ajuste fino de fundo */
         body { background-color: var(--bg-color); }
-
-        /* 1. HERO DO PERFIL */
-        .profile-hero {
-            display: flex; align-items: center; gap: 20px;
-            padding: 10px 10px 25px 10px;
-        }
-        .profile-avatar-large {
-            width: 70px; height: 70px;
-            background: var(--surface-color); color: var(--primary-color);
-            font-size: 28px; font-weight: 700; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            border: 2px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        .profile-info h2 { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
-        .profile-info p { font-size: 14px; color: var(--text-secondary); }
-        .plan-badge-mini {
-            display: inline-flex; align-items: center; gap: 4px; margin-top: 8px;
-            padding: 4px 10px; background: var(--primary-color); color: white;
-            border-radius: 100px; font-size: 11px; font-weight: 700; text-transform: uppercase;
-        }
-
-        /* 2. CARD DE ASSINATURA */
-        .subscription-card {
-            background: var(--surface-color); border-radius: var(--radius-lg);
-            padding: 20px; margin-bottom: 25px; border: 1px solid var(--border-color);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03); position: relative; overflow: hidden;
-        }
-        .subscription-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--primary-color);
-        }
-        .sub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .sub-title { font-size: 14px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 6px; }
-        .sub-status { font-size: 11px; font-weight: 700; color: #166534; background: #dcfce7; padding: 4px 8px; border-radius: 6px; }
-        body.dark-mode .sub-status { background: rgba(22, 101, 52, 0.3); color: #86efac; }
-        
-        .sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .sub-item label { display: block; font-size: 11px; color: var(--text-secondary); margin-bottom: 2px; }
-        .sub-item span { font-size: 13px; font-weight: 600; color: var(--text-primary); }
-
-        /* 3. GRUPOS DE CONFIGURAÇÃO */
-        .section-title {
-            font-size: 12px; font-weight: 600; color: var(--text-secondary);
-            margin: 20px 0 8px 10px; text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        .settings-group {
-            background: var(--surface-color); border-radius: var(--radius-md);
-            overflow: hidden; border: 1px solid var(--border-color);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-        }
-        .settings-item {
-            display: flex; align-items: center; padding: 14px 16px;
-            background: var(--surface-color); cursor: pointer; transition: background 0.2s; position: relative;
-        }
-        .settings-item:not(:last-child)::after {
-            content: ''; position: absolute; bottom: 0; left: 56px; right: 0;
-            height: 1px; background: var(--border-color); opacity: 0.5;
-        }
-        .settings-item:active { background: var(--bg-color); }
-        
-        .settings-icon {
-            width: 32px; height: 32px; border-radius: 8px;
-            background: var(--bg-color); color: var(--primary-color);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; margin-right: 14px; flex-shrink: 0;
-        }
-        .settings-text { flex: 1; font-size: 14px; font-weight: 500; color: var(--text-primary); }
-        .settings-arrow { color: var(--text-secondary); font-size: 14px; opacity: 0.7; }
-        .settings-value { font-size: 13px; color: var(--text-secondary); margin-right: 8px; }
-
-        /* Toggle Visual */
-        .toggle-switch-fake { font-size: 24px; color: var(--border-color); transition: 0.3s; }
-        .toggle-switch-fake.on { color: var(--primary-color); transform: scale(1.05); }
-
-        /* Logout */
-        .logout-area { margin-top: 30px; margin-bottom: 10px; }
-        .btn-logout {
-            width: 100%; padding: 14px; background: var(--surface-color); color: #ef4444;
-            font-weight: 600; font-size: 14px; border-radius: var(--radius-md);
-            border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; gap: 8px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-        }
-        .btn-logout:active { background: #fee2e2; border-color: #fee2e2; }
-        .version-text { text-align: center; font-size: 11px; color: var(--text-secondary); opacity: 0.7; margin-top: 15px; }
-
-        /* Cores Grid no Modal */
-        .theme-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
-        .theme-option { width: 45px; height: 45px; border-radius: 50%; margin: 0 auto; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 2px solid var(--surface-color); }
-        
-        /* Lista de Idiomas */
-        .lang-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-        .lang-option { padding: 15px; background: var(--bg-color); border-radius: var(--radius-md); display: flex; align-items: center; gap: 15px; font-weight: 600; color: var(--text-primary); }
     </style>
 </head>
 <body>
@@ -282,19 +190,53 @@
     <div id="modal-new-ad" class="modal-overlay hidden">
         <div class="modal-content bottom-sheet">
             <div class="modal-header">
-                <h2 data-i18n="modal_new_title">Criar Anúncio</h2>
-                <button class="btn-icon" onclick="toggleModal('modal-new-ad')"><i class="ph ph-x"></i></button>
-            </div>
-            <div class="modal-body">
-                <p class="helper-text" style="margin-bottom: 20px;" data-i18n="modal_new_sub">Selecione a categoria do produto:</p>
-                <div class="new-ad-grid">
-                   <div class="new-ad-item" onclick="selectCategory('veiculos')"><div class="icon-box style-car"><i class="ph ph-car-profile"></i></div><span class="new-ad-label">Veículos</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('imoveis')"><div class="icon-box style-house"><i class="ph ph-house-line"></i></div><span class="new-ad-label">Imóveis</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('eletronicos')"><div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div><span class="new-ad-label">Eletrônicos</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('agro')"><div class="icon-box style-agro"><i class="ph ph-plant"></i></div><span class="new-ad-label">Agro</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('servicos')"><div class="icon-box style-service"><i class="ph ph-wrench"></i></div><span class="new-ad-label">Serviços</span></div>
-                   <div class="new-ad-item" onclick="alert('Importar CSV')"><div class="icon-box style-import"><i class="ph ph-download-simple"></i></div><span class="new-ad-label">Importar</span></div>
+                <div style="display:flex; align-items:center;">
+                    <i id="btn-back-step" class="ph ph-arrow-left btn-back-modal" onclick="backToCategories()"></i>
+                    <h2 id="modal-title-text" data-i18n="modal_new_title">Criar Anúncio</h2>
                 </div>
+                <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                
+                <div id="step-category-select" class="modal-step active">
+                    <p class="helper-text" style="margin-bottom: 20px;" data-i18n="modal_new_sub">Selecione a categoria do produto:</p>
+                    <div class="new-ad-grid">
+                        <div class="new-ad-item" onclick="selectCategory('veiculos')"><div class="icon-box style-car"><i class="ph ph-car-profile"></i></div><span class="new-ad-label">Veículos</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('imoveis')"><div class="icon-box style-house"><i class="ph ph-house-line"></i></div><span class="new-ad-label">Imóveis</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('eletronicos')"><div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div><span class="new-ad-label">Eletrônicos</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('agro')"><div class="icon-box style-agro"><i class="ph ph-plant"></i></div><span class="new-ad-label">Agro</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('servicos')"><div class="icon-box style-service"><i class="ph ph-wrench"></i></div><span class="new-ad-label">Serviços</span></div>
+                        <div class="new-ad-item" onclick="alert('Importar via XML/CSV em breve.')"><div class="icon-box style-import"><i class="ph ph-download-simple"></i></div><span class="new-ad-label">Importar</span></div>
+                    </div>
+                </div>
+
+                <div id="step-ad-form" class="modal-step">
+                    <label class="modal-form-label">Fotos do Anúncio</label>
+                    <div class="photo-upload-container">
+                        <div class="photo-box"><i class="ph ph-camera-plus"></i></div>
+                        <div class="photo-box has-image"><img src="https://via.placeholder.com/150" alt="Thumb"></div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label class="modal-form-label">Título do Anúncio</label>
+                        <input type="text" class="modal-input" placeholder="Ex: Fiat Argo 1.0 Drive...">
+                    </div>
+
+                    <div id="dynamic-fields-area"></div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label class="modal-form-label">Descrição</label>
+                        <textarea class="modal-input" rows="3" placeholder="Detalhes adicionais..."></textarea>
+                    </div>
+
+                    <button class="btn-publish" onclick="toggleModal('modal-new-ad'); alert('Anúncio Criado com Sucesso!');">
+                        Publicar Agora
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
