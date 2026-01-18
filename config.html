@@ -18,7 +18,6 @@
             margin-bottom: 24px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
-
         .profile-avatar-large {
             width: 80px;
             height: 80px;
@@ -34,18 +33,8 @@
             border: 3px solid var(--surface-color);
             box-shadow: 0 0 0 2px var(--primary-color);
         }
-
-        .profile-name {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .profile-email {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
+        .profile-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+        .profile-email { font-size: 14px; color: var(--text-secondary); }
         .plan-badge {
             display: inline-block;
             margin-top: 12px;
@@ -57,7 +46,6 @@
             font-weight: 600;
         }
 
-        /* Listas de Menu */
         .settings-group {
             background: var(--surface-color);
             border-radius: var(--radius-md);
@@ -65,7 +53,6 @@
             margin-bottom: 20px;
             border: 1px solid var(--border-color);
         }
-
         .settings-item {
             display: flex;
             align-items: center;
@@ -74,15 +61,8 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-
-        .settings-item:last-child {
-            border-bottom: none;
-        }
-
-        .settings-item:active {
-            background: var(--bg-color);
-        }
-
+        .settings-item:last-child { border-bottom: none; }
+        .settings-item:active { background: var(--bg-color); }
         .settings-icon {
             width: 36px;
             height: 36px;
@@ -95,19 +75,9 @@
             font-size: 18px;
             margin-right: 15px;
         }
+        .settings-text { flex: 1; font-size: 14px; font-weight: 500; }
+        .settings-arrow { color: #ccc; font-size: 16px; }
 
-        .settings-text {
-            flex: 1;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .settings-arrow {
-            color: #ccc;
-            font-size: 16px;
-        }
-
-        /* Botão de Logout */
         .btn-logout {
             width: 100%;
             padding: 16px;
@@ -122,16 +92,47 @@
             gap: 8px;
             transition: 0.2s;
         }
+        .btn-logout:active { background: #fecaca; }
+        .version-text { text-align: center; margin-top: 20px; font-size: 12px; color: #ccc; }
 
-        .btn-logout:active {
-            background: #fecaca;
+        /* Estilos dos Seletores de Tema e Idioma */
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
         }
-        
-        .version-text {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #ccc;
+        .theme-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 auto;
+            border: 3px solid transparent;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .theme-option:active { transform: scale(0.9); }
+
+        .lang-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .lang-option {
+            padding: 15px;
+            background: var(--bg-color);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            border: 2px solid transparent;
+        }
+        .lang-option.selected {
+            border-color: var(--primary-color);
+            background: var(--surface-color);
+            color: var(--primary-color);
         }
     </style>
     
@@ -141,83 +142,123 @@
 
     <header class="app-header">
         <div class="header-left">
-            <span style="font-weight: 700; font-size: 18px; margin-left: 0;">Configurações</span>
+            <span style="font-weight: 700; font-size: 18px; margin-left: 0;" data-i18n="page_config_title">Configurações</span>
         </div>
-        </header>
+    </header>
 
     <main class="app-content" style="padding-top: 20px;">
         
         <div class="profile-card">
             <div class="profile-avatar-large" id="config-avatar">--</div>
-            <h2 class="profile-name" id="config-name">Carregando...</h2>
+            <h2 class="profile-name" id="config-name">...</h2>
             <p class="profile-email">admin@kodashop.com</p>
             <div class="plan-badge">
-                <i class="ph ph-crown-simple"></i> Plano Enterprise
+                <i class="ph ph-crown-simple"></i> Enterprise
             </div>
         </div>
 
-        <h3 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; padding-left: 5px;">Conta</h3>
+        <h3 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; padding-left: 5px;" data-i18n="sec_account">Conta</h3>
         <div class="settings-group">
-            <div class="settings-item" onclick="alert('Demo: Editar dados da empresa')">
+            <div class="settings-item">
                 <div class="settings-icon"><i class="ph ph-buildings"></i></div>
-                <div class="settings-text">Dados da Empresa</div>
+                <div class="settings-text" data-i18n="item_company">Dados da Empresa</div>
                 <i class="ph ph-caret-right settings-arrow"></i>
             </div>
-            <div class="settings-item" onclick="alert('Demo: Gerenciar assinatura')">
+            <div class="settings-item">
                 <div class="settings-icon"><i class="ph ph-credit-card"></i></div>
-                <div class="settings-text">Assinatura & Faturas</div>
+                <div class="settings-text" data-i18n="item_sub">Assinatura & Faturas</div>
                 <i class="ph ph-caret-right settings-arrow"></i>
             </div>
         </div>
 
-        <h3 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; padding-left: 5px;">Aplicativo</h3>
+        <h3 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; padding-left: 5px;" data-i18n="sec_app">Aplicativo</h3>
         <div class="settings-group">
             <div class="settings-item">
                 <div class="settings-icon"><i class="ph ph-bell"></i></div>
-                <div class="settings-text">Notificações</div>
+                <div class="settings-text" data-i18n="item_notif">Notificações</div>
                 <i class="ph ph-toggle-right" style="font-size: 24px; color: var(--primary-color);"></i>
             </div>
-            <div class="settings-item" onclick="alert('White-Label: Aqui o cliente muda a cor do sistema!')">
+
+            <div class="settings-item" onclick="toggleModal('modal-theme-select')">
                 <div class="settings-icon"><i class="ph ph-paint-bucket"></i></div>
-                <div class="settings-text">Aparência (Tema)</div>
+                <div class="settings-text" data-i18n="item_theme">Aparência (Tema)</div>
+                <div style="width: 20px; height: 20px; border-radius: 50%; background: var(--primary-color);"></div>
+            </div>
+
+            <div class="settings-item" onclick="toggleModal('modal-lang-select')">
+                <div class="settings-icon"><i class="ph ph-globe"></i></div>
+                <div class="settings-text" data-i18n="item_lang">Idioma (Language)</div>
                 <i class="ph ph-caret-right settings-arrow"></i>
             </div>
-            <div class="settings-item" onclick="alert('Demo: Suporte via WhatsApp')">
+            
+            <div class="settings-item">
                 <div class="settings-icon"><i class="ph ph-lifebuoy"></i></div>
-                <div class="settings-text">Ajuda e Suporte</div>
+                <div class="settings-text" data-i18n="item_help">Ajuda e Suporte</div>
                 <i class="ph ph-caret-right settings-arrow"></i>
             </div>
         </div>
 
         <button class="btn-logout" onclick="doLogout()">
             <i class="ph ph-sign-out"></i>
-            Sair do Sistema
+            <span data-i18n="btn_logout">Sair do Sistema</span>
         </button>
 
         <p class="version-text">Versão MVP 1.0.0 • Koda System</p>
-
         <div class="spacer-bottom"></div>
     </main>
 
+    <div id="modal-theme-select" class="modal-overlay hidden">
+        <div class="modal-content bottom-sheet">
+            <div class="modal-header">
+                <h2 data-i18n="modal_theme_title">Escolha um Tema</h2>
+                <button class="btn-icon" onclick="toggleModal('modal-theme-select')"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="helper-text">Selecione a cor principal do sistema:</p>
+                <div class="theme-grid">
+                    <div class="theme-option" style="background: #4D5D53;" onclick="changeAppTheme('#4D5D53'); toggleModal('modal-theme-select')"></div>
+                    <div class="theme-option" style="background: #2563EB;" onclick="changeAppTheme('#2563EB'); toggleModal('modal-theme-select')"></div>
+                    <div class="theme-option" style="background: #7C3AED;" onclick="changeAppTheme('#7C3AED'); toggleModal('modal-theme-select')"></div>
+                    <div class="theme-option" style="background: #EA580C;" onclick="changeAppTheme('#EA580C'); toggleModal('modal-theme-select')"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-lang-select" class="modal-overlay hidden">
+        <div class="modal-content bottom-sheet">
+            <div class="modal-header">
+                <h2 data-i18n="modal_lang_title">Selecione o Idioma</h2>
+                <button class="btn-icon" onclick="toggleModal('modal-lang-select')"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="lang-list">
+                    <button class="lang-option" onclick="changeAppLanguage('pt'); toggleModal('modal-lang-select')" data-lang="pt">
+                        <span style="font-size: 24px;">🇧🇷</span> Português
+                    </button>
+                    <button class="lang-option" onclick="changeAppLanguage('en'); toggleModal('modal-lang-select')" data-lang="en">
+                        <span style="font-size: 24px;">🇺🇸</span> English
+                    </button>
+                    <button class="lang-option" onclick="changeAppLanguage('es'); toggleModal('modal-lang-select')" data-lang="es">
+                        <span style="font-size: 24px;">🇪🇸</span> Español
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div id="modal-new-ad" class="modal-overlay hidden">
         <div class="modal-content bottom-sheet">
             <div class="modal-header">
                 <h2>Adicionar Novo Item</h2>
-                <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
-                    <i class="ph ph-x"></i>
-                </button>
+                <button class="btn-icon" onclick="toggleModal('modal-new-ad')"><i class="ph ph-x"></i></button>
             </div>
             <div class="modal-body">
                 <div class="category-grid">
                     <button class="cat-card" onclick="selectCategory('veiculos')">
-                        <div class="cat-icon"><i class="ph ph-car"></i></div>
-                        <span>Veículos</span>
+                        <div class="cat-icon"><i class="ph ph-car"></i></div><span>Veículos</span>
                     </button>
-                    <button class="cat-card" onclick="selectCategory('imoveis')">
-                        <div class="cat-icon"><i class="ph ph-house"></i></div>
-                        <span>Imóveis</span>
-                    </button>
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -230,13 +271,10 @@
     <script src="assets/js/functions.js"></script>
 
     <script>
-        // 1. Renderiza Barra (Marca 'config' como ativo)
+        // 1. Renderiza Barra
         renderBottomNav('config'); 
 
-        // 2. Aplica Tema
-        if (typeof applyTheme === 'function') applyTheme();
-
-        // 3. Preenche dados específicos desta página
+        // 2. Preenche dados do usuário
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof appConfig !== 'undefined') {
                 document.getElementById('config-name').textContent = appConfig.user.name;
@@ -244,9 +282,16 @@
             }
         });
 
-        // 4. Função de Logout
+        // 3. Logout
         function doLogout() {
-            if(confirm("Tem certeza que deseja sair?")) {
+            // Usa tradução para o alerta também
+            const currentLang = localStorage.getItem('koda_lang') || 'pt';
+            const msgs = {
+                pt: "Tem certeza que deseja sair?",
+                en: "Are you sure you want to logout?",
+                es: "¿Estás seguro de que quieres cerrar sesión?"
+            };
+            if(confirm(msgs[currentLang])) {
                 window.location.href = "index.html";
             }
         }
