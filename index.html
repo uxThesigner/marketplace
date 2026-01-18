@@ -34,6 +34,7 @@
 
         <div class="login-card">
             <form onsubmit="handleLogin(event)">
+                
                 <div class="input-group">
                     <label>E-mail</label>
                     <div class="input-wrapper">
@@ -70,13 +71,13 @@
     <script src="assets/js/functions.js"></script>
 
     <script>
-        // Simulação de Login
+        // Lógica de Login (Simulação)
         function handleLogin(e) {
             e.preventDefault();
             
             const btn = document.querySelector('.btn-login');
             
-            // Feedback Visual
+            // Feedback Visual no botão
             btn.innerText = "Autenticando...";
             btn.style.opacity = "0.7";
             btn.style.cursor = "wait";
@@ -86,11 +87,6 @@
                 window.location.href = "dashboard.html";
             }, 800);
         }
-
-        // Força a inicialização para carregar a logo correta do theme.js
-        window.addEventListener('load', () => {
-            if(typeof initApp === 'function') initApp();
-        });
     </script>
 
 </body>
