@@ -9,7 +9,6 @@
     <title>Dashboard | Koda White-Label</title>
     
     <link rel="stylesheet" href="assets/css/style.css">
-    
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
@@ -24,17 +23,17 @@
     </header>
 
     <main class="app-content">
-        
+
         <section class="welcome-section">
             <h1 class="page-title">Olá, <span id="user-first-name">...</span></h1>
-            <p class="subtitle">Visão geral dos seus negócios.</p>
+            <p class="subtitle" data-i18n="welcome_sub">Visão geral dos seus negócios.</p>
         </section>
 
         <section class="metrics-scroller">
             <div class="metric-card highlight">
                 <div class="card-icon"><i class="ph ph-currency-dollar"></i></div>
                 <div class="card-info">
-                    <span>Vendas Hoje</span>
+                    <span data-i18n="metric_sales">Vendas Hoje</span>
                     <strong id="kpi-sales">R$ 0,00</strong>
                 </div>
             </div>
@@ -42,7 +41,7 @@
             <div class="metric-card">
                 <div class="card-icon"><i class="ph ph-megaphone"></i></div>
                 <div class="card-info">
-                    <span>Anúncios Ativos</span>
+                    <span data-i18n="metric_active">Anúncios Ativos</span>
                     <strong id="kpi-active-ads">--</strong>
                 </div>
             </div>
@@ -50,7 +49,7 @@
             <div class="metric-card">
                 <div class="card-icon"><i class="ph ph-chat-centered-text"></i></div>
                 <div class="card-info">
-                    <span>Mensagens</span>
+                    <span data-i18n="metric_msgs">Mensagens</span>
                     <strong id="kpi-messages">0</strong>
                 </div>
             </div>
@@ -59,7 +58,7 @@
 
         <section class="performance-section">
             <div class="section-header">
-                <h3>Desempenho por Canal</h3>
+                <h3 data-i18n="chart_title">Desempenho por Canal</h3>
             </div>
             <div class="chart-card">
                 <div class="fake-chart-container">
@@ -85,12 +84,12 @@
 
         <section class="recent-feed">
             <div class="section-header">
-                <h3>Últimos Cadastrados</h3>
-                <a href="estoque.html" class="link-action">Ver todos</a>
+                <h3 data-i18n="feed_title">Últimos Cadastrados</h3>
+                <a href="estoque.html" class="link-action" data-i18n="feed_view_all">Ver todos</a>
             </div>
 
             <div id="dashboard-feed-list" class="feed-list">
-                <p class="loading-text">Carregando dados...</p>
+                <p class="loading-text" data-i18n="loading">Carregando dados...</p>
             </div>
         </section>
 
@@ -100,14 +99,14 @@
     <div id="modal-new-ad" class="modal-overlay hidden">
         <div class="modal-content bottom-sheet">
             <div class="modal-header">
-                <h2>O que vamos anunciar?</h2>
+                <h2 data-i18n="modal_new_title">Adicionar Novo Item</h2>
                 <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
                     <i class="ph ph-x"></i>
                 </button>
             </div>
             
             <div class="modal-body">
-                <p class="helper-text">Selecione a categoria para carregar o modelo.</p>
+                <p class="helper-text" data-i18n="modal_new_sub">O que você deseja cadastrar hoje?</p>
                 
                 <div class="category-grid">
                     <button class="cat-card" onclick="selectCategory('veiculos')">
@@ -141,9 +140,8 @@
     <script src="assets/js/functions.js"></script>
 
     <script>
-        // 1. Renderiza a barra de navegação marcando 'home' como ativo
-        // O resto (Theme, Config, Dados) será carregado automaticamente 
-        // pelo initApp() dentro do functions.js
+        // Renderiza a barra de navegação marcando 'home' como ativo
+        // O resto (Tradução, Tema, Dados) é carregado pelo initApp() no functions.js
         renderBottomNav('home');
     </script>
 
