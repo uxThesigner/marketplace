@@ -8,14 +8,16 @@
     <title>Anúncios | Koda White-Label</title>
 
     <link rel="stylesheet" href="assets/css/style.css">
+    
     <style>
         .search-bar-container {
             background: var(--surface-color);
             padding: 15px 20px;
             position: sticky;
-            top: var(--header-height); /* Cola logo abaixo do header */
-            z-index: 90;
+            top: var(--header-height);
+            z-index: 80;
             border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
         }
 
         .search-input-group {
@@ -39,7 +41,9 @@
             background: var(--bg-color);
             font-family: inherit;
             font-size: 14px;
+            color: var(--text-primary);
             outline: none;
+            transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
         }
 
         .filter-tabs {
@@ -53,11 +57,12 @@
         .filter-pill {
             padding: 8px 16px;
             border-radius: 100px;
-            background: #e5e7eb;
+            background: var(--bg-color);
             color: var(--text-secondary);
             font-size: 13px;
             font-weight: 600;
             border: 1px solid transparent;
+            transition: all 0.3s;
         }
 
         .filter-pill.active {
@@ -76,7 +81,7 @@
             <a href="dashboard.html">
                 <i class="ph ph-arrow-left" style="font-size: 24px; color: var(--text-primary);"></i>
             </a>
-            <span style="margin-left: 10px; font-weight: 700; font-size: 18px;">Anúncios</span>
+            <span style="margin-left: 10px; font-weight: 700; font-size: 18px;" data-i18n="ads_title">Meus Anúncios</span>
         </div>
         <div class="header-right">
             <div class="user-avatar-small" id="user-avatar-header">--</div>
@@ -88,19 +93,19 @@
         <div class="search-bar-container">
             <div class="search-input-group">
                 <i class="ph ph-magnifying-glass"></i>
-                <input type="text" class="search-input" placeholder="Buscar por placa, título ou código...">
+                <input type="text" class="search-input" data-i18n-placeholder="search_placeholder" placeholder="Buscar por placa, título ou código...">
             </div>
         </div>
 
         <div class="filter-tabs">
-            <button class="filter-pill active">Todos</button>
-            <button class="filter-pill">Ativos (3)</button>
-            <button class="filter-pill">Pausados (1)</button>
-            <button class="filter-pill">Sem Estoque</button>
+            <button class="filter-pill active" data-i18n="filter_all">Todos</button>
+            <button class="filter-pill" data-i18n="filter_active">Ativos</button>
+            <button class="filter-pill" data-i18n="filter_paused">Pausados</button>
+            <button class="filter-pill" data-i18n="filter_nostock">Sem Estoque</button>
         </div>
 
         <section class="feed-list" id="full-inventory-list" style="padding: 0 20px;">
-            <p class="loading-text">Carregando anúncios...</p>
+            <p class="loading-text" data-i18n="loading">Carregando estoque...</p>
         </section>
 
         <div class="spacer-bottom"></div>
@@ -109,13 +114,13 @@
     <div id="modal-new-ad" class="modal-overlay hidden">
         <div class="modal-content bottom-sheet">
             <div class="modal-header">
-                <h2>Adicionar Novo Item</h2>
+                <h2 data-i18n="modal_new_title">Adicionar Novo Item</h2>
                 <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
                     <i class="ph ph-x"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <p class="helper-text">O que você deseja cadastrar hoje?</p>
+                <p class="helper-text" data-i18n="modal_new_sub">O que você deseja cadastrar hoje?</p>
                 <div class="category-grid">
                     <button class="cat-card" onclick="selectCategory('veiculos')">
                         <div class="cat-icon"><i class="ph ph-car"></i></div>
@@ -146,24 +151,27 @@
     <script src="assets/js/functions.js"></script>
 
     <script>
-        // Inicialização Específica desta Página
-
-        // 1. Renderiza Barra (Marca 'estoque' como ativo)
+        // 1. Renderiza Barra
         renderBottomNav('estoque'); 
 
-        // 2. Aplica Tema
-        if (typeof applyTheme === 'function') applyTheme();
-
-        // 3. Função Específica para Carregar Lista
+        // 2. Função de Carregamento da Lista (Com Tradução)
         function loadFullInventory() {
             const listEl = document.getElementById('full-inventory-list');
 
             if (listEl && typeof productsDB !== 'undefined') {
                 listEl.innerHTML = ''; // Limpa
 
-                // 4. LÓGICA CORRIGIDA: Usa o productsDB direto (sem duplicar com ...fullList)
-                // Agora mostra apenas o que realmente existe no mock_db.js
                 productsDB.forEach(prod => {
+                    // Tenta traduzir textos dinâmicos
+                    // (getTrans é global do functions.js)
+                    let txtOn = "Em:";
+                    let statusLabel = prod.status;
+
+                    if (typeof getTrans === 'function') {
+                        txtOn = getTrans('txt_on');
+                        statusLabel = prod.status === 'active' ? getTrans('status_active') : getTrans('status_paused');
+                    }
+
                     const itemHTML = `
                         <div class="product-item">
                             <div class="prod-thumb">
@@ -172,14 +180,12 @@
                             <div class="prod-info">
                                 <div class="prod-title">${prod.title}</div>
                                 <div class="prod-price">R$ ${prod.price.toLocaleString('pt-BR')}</div>
-                                <div style="font-size: 11px; color: #999; margin-top: 4px;">
-                                    Em: ${prod.platforms.join(', ')}
+                                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
+                                    ${txtOn} ${prod.platforms.join(', ')}
                                 </div>
                             </div>
-                            <div class="actions">
-                                <button style="padding: 8px; color: var(--text-secondary);">
-                                    <i class="ph ph-dots-three-vertical" style="font-size: 20px;"></i>
-                                </button>
+                            <div class="prod-status ${prod.status === 'active' ? 'status-active' : 'status-paused'}">
+                                ${statusLabel}
                             </div>
                         </div>
                     `;
@@ -188,7 +194,7 @@
             }
         }
 
-        // Carrega a lista ao iniciar
+        // Carrega ao iniciar
         document.addEventListener('DOMContentLoaded', loadFullInventory);
 
     </script>
