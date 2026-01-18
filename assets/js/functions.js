@@ -23,7 +23,7 @@ function initApp() {
         
         console.log("✅ Tema Aplicado:", appTheme.colors.primary);
     } else {
-        console.error("❌ ERRO CRÍTICO: _theme.js não foi carregado!");
+        console.error("❌ ERRO CRÍTICO: theme.js não foi carregado!");
     }
 
     // B. Força a Aplicação da CONFIGURAÇÃO (Nome do Usuário)
@@ -36,7 +36,7 @@ function initApp() {
         
         console.log("✅ Configuração Aplicada:", appConfig.user.name);
     } else {
-        console.error("❌ ERRO CRÍTICO: _config.js não foi carregado!");
+        console.error("❌ ERRO CRÍTICO: config.js não foi carregado!");
     }
 
     // C. Carrega os DADOS (Dashboard)
@@ -97,18 +97,22 @@ function renderBottomNav(activePage) {
         <a href="dashboard.html" class="nav-item ${isActive('home')}">
             <i class="ph ph-house"></i><span>Início</span>
         </a>
+        
         <a href="estoque.html" class="nav-item ${isActive('estoque')}">
-            <i class="ph ph-package"></i><span>Estoque</span>
+            <i class="ph ph-package"></i><span>Anúncios</span>
         </a>
+        
         <div class="nav-fab-container">
             <button class="fab-button" onclick="toggleModal('modal-new-ad')">
                 <i class="ph ph-plus"></i>
             </button>
         </div>
+        
         <a href="leads.html" class="nav-item ${isActive('leads')}">
             <i class="ph ph-chat-circle"></i><span>Leads</span>
         </a>
-        <a href="#" class="nav-item ${isActive('config')}">
+        
+        <a href="config.html" class="nav-item ${isActive('config')}">
             <i class="ph ph-gear"></i><span>Config</span>
         </a>
     </nav>
