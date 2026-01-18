@@ -78,7 +78,7 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .fab-button:active { transform: scale(0.9); }
 
 /* =========================================
-   4. DASHBOARD
+   4. DASHBOARD (SCROLL ALINHADO)
    ========================================= */
 .welcome-section { margin-bottom: 24px; }
 .page-title { font-size: 22px; font-weight: 700; }
@@ -87,34 +87,25 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 .section-header h3 { font-size: 16px; font-weight: 600; }
 .link-action { color: var(--primary-color); font-size: 13px; font-weight: 500; }
 
-/* FIX: Scroll Alinhado à Esquerda */
 .metrics-scroller {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    /* Alinhamento exato com o padding da página */
-    padding: 10px 4px; 
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+    display: flex; gap: 15px; overflow-x: auto;
+    padding: 10px 4px; /* Alinhamento correto com a margem da página */
+    scroll-snap-type: x mandatory; scrollbar-width: none;
 }
 .metrics-scroller::-webkit-scrollbar { display: none; }
 .metrics-scroller::after { content: ''; display: block; min-width: 5px; height: 1px; }
 
 .metric-card {
-    flex: 0 0 auto; 
-    min-width: 160px; width: 160px;
+    flex: 0 0 auto; min-width: 160px; width: 160px;
     background: var(--surface-color); padding: 15px;
-    border-radius: var(--radius-md);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    scroll-snap-align: start;
-    display: flex; flex-direction: column; justify-content: space-between;
-    transition: background-color 0.4s ease, transform 0.2s;
-    min-height: 120px;
+    border-radius: var(--radius-md); box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    scroll-snap-align: start; display: flex; flex-direction: column; justify-content: space-between;
+    transition: background-color 0.4s ease, transform 0.2s; min-height: 120px;
     border: 1px solid transparent;
 }
 .metric-card:active { transform: scale(0.96); }
 
-/* Cards Styling */
+/* Card Styles */
 .metric-card.highlight { background: var(--primary-color); color: #fff; }
 .metric-card.highlight .card-info span { color: rgba(255,255,255, 0.8); }
 .card-icon-bg {
@@ -124,81 +115,34 @@ button { border: none; outline: none; background: none; font-family: inherit; cu
 }
 .metric-card.highlight .card-icon-bg { background: rgba(255,255,255,0.2); color: #fff; }
 .metric-card:not(.highlight) .card-icon-bg { background: var(--bg-color); color: var(--text-secondary); }
-
 .card-info { display: flex; flex-direction: column; }
 .card-info span { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
 .card-info strong { font-size: 18px; font-weight: 700; }
 .card-arrow { position: absolute; top: 15px; right: 15px; font-size: 14px; opacity: 0.5; }
 
-
 /* =========================================
-   5. GRÁFICO
+   5. GRÁFICO (BARRAS VISÍVEIS)
    ========================================= */
-.chart-card {
-    background: var(--surface-color); padding: 20px;
-    border-radius: var(--radius-md); box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-.fake-chart-container {
-    display: flex; justify-content: space-between; align-items: stretch; 
-    height: 150px; padding-top: 20px;
-}
-.chart-bar-group {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: flex-end; gap: 8px; width: 15%; height: 100%;
-}
+.chart-card { background: var(--surface-color); padding: 20px; border-radius: var(--radius-md); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.fake-chart-container { display: flex; justify-content: space-between; align-items: stretch; height: 150px; padding-top: 20px; }
+.chart-bar-group { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px; width: 15%; height: 100%; }
 .bar { width: 100%; border-radius: 6px 6px 0 0; opacity: 0.9; }
 .chart-bar-group span { font-size: 11px; color: var(--text-secondary); font-weight: 600; }
 
 
 /* =========================================
-   6. LEADS / CHAT (CORREÇÃO DAS BOLINHAS)
+   6. LEADS / CHAT (BOLINHAS CORRIGIDAS)
    ========================================= */
-.chat-filters { 
-    display: flex; gap: 12px; padding: 15px 20px; 
-    background: var(--surface-color); border-bottom: 1px solid var(--border-color); 
-    position: sticky; top: var(--header-height); z-index: 80; 
-    overflow-x: auto; scrollbar-width: none; 
-}
+.chat-filters { display: flex; gap: 12px; padding: 15px 20px; background: var(--surface-color); border-bottom: 1px solid var(--border-color); position: sticky; top: var(--header-height); z-index: 80; overflow-x: auto; scrollbar-width: none; }
 .chat-filters::-webkit-scrollbar { display: none; }
 .chat-pill { padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; background: var(--bg-color); color: var(--text-secondary); border: 1px solid transparent; white-space: nowrap; transition: 0.3s; }
 .chat-pill.active { background: var(--primary-color); color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-
 .chat-list { display: flex; flex-direction: column; padding-bottom: 20px; }
-.chat-item { 
-    display: flex; align-items: center; padding: 16px 20px; 
-    background: var(--surface-color); border-bottom: 1px solid var(--border-color); 
-    cursor: pointer; transition: 0.2s; 
-}
+.chat-item { display: flex; align-items: center; padding: 16px 20px; background: var(--surface-color); border-bottom: 1px solid var(--border-color); cursor: pointer; transition: 0.2s; }
 .chat-item:active { background-color: var(--bg-color); }
-
-/* --- FIX: BADGES DA PLATAFORMA --- */
-.chat-avatar-area { 
-    position: relative; /* Essencial para a bolinha flutuar */
-    width: 52px; height: 52px; 
-    margin-right: 16px; 
-    flex-shrink: 0; 
-}
-.chat-avatar { 
-    width: 100%; height: 100%; 
-    border-radius: 50%; 
-    background: var(--bg-color); object-fit: cover; 
-    border: 1px solid var(--border-color); 
-}
-.platform-badge {
-    position: absolute; /* Flutua sobre a foto */
-    bottom: -2px; 
-    right: -2px;
-    width: 22px; height: 22px; 
-    border-radius: 50%; /* Faz virar bolinha */
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 12px;
-    border: 2px solid var(--surface-color); /* Borda branca para destacar da foto */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    z-index: 5;
-}
-.platform-badge i { font-size: 12px; }
-
-/* Resto do Chat */
+.chat-avatar-area { position: relative; width: 52px; height: 52px; margin-right: 16px; flex-shrink: 0; }
+.chat-avatar { width: 100%; height: 100%; border-radius: 50%; background: var(--bg-color); object-fit: cover; border: 1px solid var(--border-color); }
+.platform-badge { position: absolute; bottom: -2px; right: -2px; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; border: 2px solid var(--surface-color); box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 5; }
 .chat-info { flex: 1; min-width: 0; }
 .chat-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
 .chat-name { font-size: 16px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.3px; }
@@ -210,11 +154,11 @@ body.dark-mode .chat-context { background: rgba(255, 255, 255, 0.05); }
 
 
 /* =========================================
-   7. DEMAIS PÁGINAS (Estoque, Config, Login, Modal)
+   7. ESTOQUE & DEMAIS
    ========================================= */
-/* Estoque */
 .sticky-header-area { position: sticky; top: var(--header-height); z-index: 80; background: var(--surface-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-.search-input { width: 100%; padding: 14px 14px 14px 50px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-color); font-size: 15px; color: var(--text-primary); outline: none; }
+.search-input { width: 100%; padding: 14px 14px 14px 50px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-color); font-size: 15px; color: var(--text-primary); outline: none; transition: 0.3s; }
+.search-input:focus { border-color: var(--primary-color); background: var(--surface-color); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 .filter-tabs { display: flex; gap: 10px; padding: 5px 20px 10px 20px; overflow-x: auto; scrollbar-width: none; }
 .filter-tabs::-webkit-scrollbar { display: none; }
 .filter-pill { padding: 8px 16px; border-radius: 100px; background: var(--bg-color); color: var(--text-secondary); font-size: 13px; font-weight: 600; border: 1px solid transparent; transition: 0.3s; cursor: pointer; white-space: nowrap; }
@@ -230,23 +174,33 @@ body.dark-mode .chat-context { background: rgba(255, 255, 255, 0.05); }
 body.dark-mode .status-active { background: rgba(34, 197, 94, 0.2); color: #86efac; } body.dark-mode .status-paused { background: rgba(234, 179, 8, 0.2); color: #fde047; } body.dark-mode .platform-tag { background: rgba(255,255,255,0.05); }
 .actions-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); border-radius: 50%; }
 
-/* Configs */
-.profile-hero { display: flex; align-items: center; gap: 20px; padding: 10px; }
-.profile-avatar-large { width: 70px; height: 70px; background: var(--surface-color); color: var(--primary-color); font-size: 28px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--border-color); }
-.subscription-card { background: var(--surface-color); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 25px; border: 1px solid var(--border-color); position: relative; overflow: hidden; }
-.subscription-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary-color); }
-.settings-group { background: var(--surface-color); border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); }
-.settings-item { display: flex; align-items: center; padding: 14px 16px; background: var(--surface-color); cursor: pointer; border-bottom: 1px solid var(--border-color); }
-.settings-item:last-child { border-bottom: none; }
-.settings-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--bg-color); color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-size: 18px; margin-right: 14px; }
-.toggle-switch-fake { font-size: 24px; color: var(--border-color); transition: 0.3s; } .toggle-switch-fake.on { color: var(--primary-color); transform: scale(1.05); }
-
-/* Login */
+/* =========================================
+   8. LOGIN (ESTILO RESTAURADO!)
+   ========================================= */
 .login-container { width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; gap: 30px; animation: fadeIn 0.6s ease-out; margin: 0 auto; padding: 40px 20px; }
+.brand-area { text-align: center; }
+.brand-logo { height: 48px; object-fit: contain; margin-bottom: 10px; }
+.brand-tagline { font-size: 14px; color: var(--text-secondary); }
 .login-card { background: var(--surface-color); width: 100%; padding: 30px; border-radius: var(--radius-lg); box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
-.btn-login { width: 100%; padding: 16px; background-color: var(--primary-color); color: white; font-size: 16px; font-weight: 700; border-radius: var(--radius-md); cursor: pointer; }
 
-/* Modais */
+/* Inputs e Labels */
+.input-group { margin-bottom: 20px; position: relative; }
+.input-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.input-wrapper { position: relative; display: flex; align-items: center; }
+.input-wrapper i { position: absolute; left: 14px; font-size: 20px; color: var(--text-secondary); pointer-events: none; }
+.form-input { width: 100%; padding: 14px 14px 14px 45px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-color); font-size: 15px; color: var(--text-primary); outline: none; transition: all 0.3s; }
+.form-input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0,0,0,0.05); background: var(--surface-color); }
+.form-input:focus + i { color: var(--primary-color); }
+
+.btn-login { width: 100%; padding: 16px; background-color: var(--primary-color); color: white; font-size: 16px; font-weight: 700; border-radius: var(--radius-md); cursor: pointer; transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.btn-login:active { transform: scale(0.98); opacity: 0.9; }
+.login-footer { margin-top: 25px; text-align: center; font-size: 13px; color: var(--text-secondary); }
+.login-footer a { color: var(--primary-color); font-weight: 600; }
+
+
+/* =========================================
+   9. MODAIS & CONFIGS
+   ========================================= */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: flex; align-items: flex-end; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
 .modal-content { background: var(--surface-color); width: 100%; max-width: 600px; margin: 0 auto; border-radius: var(--radius-lg) var(--radius-lg) 0 0; padding: 24px; transform: translateY(100%); transition: transform 0.3s; max-height: 85vh; overflow-y: auto; }
 .modal-overlay.visible { opacity: 1; visibility: visible; } .modal-overlay.visible .modal-content { transform: translateY(0); }
@@ -260,3 +214,15 @@ body.dark-mode .style-device { background: rgba(147, 51, 234, 0.2); color: #c084
 body.dark-mode .style-agro { background: rgba(22, 101, 52, 0.2); color: #86efac; }
 body.dark-mode .style-service { background: rgba(75, 85, 99, 0.3); color: #d1d5db; }
 body.dark-mode .style-import { background: rgba(220, 38, 38, 0.2); color: #fca5a5; }
+
+/* Configs */
+.profile-hero { display: flex; align-items: center; gap: 20px; padding: 10px; }
+.profile-avatar-large { width: 70px; height: 70px; background: var(--surface-color); color: var(--primary-color); font-size: 28px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--border-color); }
+.subscription-card { background: var(--surface-color); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 25px; border: 1px solid var(--border-color); position: relative; overflow: hidden; }
+.subscription-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary-color); }
+.settings-group { background: var(--surface-color); border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); }
+.settings-item { display: flex; align-items: center; padding: 14px 16px; background: var(--surface-color); cursor: pointer; border-bottom: 1px solid var(--border-color); }
+.settings-item:last-child { border-bottom: none; }
+.settings-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--bg-color); color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-size: 18px; margin-right: 14px; }
+.toggle-switch-fake { font-size: 24px; color: var(--border-color); transition: 0.3s; } .toggle-switch-fake.on { color: var(--primary-color); transform: scale(1.05); }
+.btn-logout { width: 100%; padding: 14px; background: var(--surface-color); color: #ef4444; font-weight: 600; font-size: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; gap: 8px; }
