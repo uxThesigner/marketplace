@@ -4,172 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ffffff">
+    
     <title>Configurações | Koda White-Label</title>
+    
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
     <style>
-        /* Ajuste fino para fundo de configurações (geralmente um pouco mais escuro que o card) */
-        body {
-            background-color: var(--bg-color);
-        }
+        /* Ajuste fino de fundo */
+        body { background-color: var(--bg-color); }
 
-        /* 1. HEADER DE PERFIL (Hero Section) */
+        /* 1. HERO DO PERFIL */
         .profile-hero {
-            display: flex;
-            align-items: center;
-            gap: 20px;
+            display: flex; align-items: center; gap: 20px;
             padding: 10px 10px 25px 10px;
         }
-
         .profile-avatar-large {
             width: 70px; height: 70px;
-            background: var(--surface-color);
-            color: var(--primary-color);
-            font-size: 28px;
-            font-weight: 700;
-            border-radius: 50%;
+            background: var(--surface-color); color: var(--primary-color);
+            font-size: 28px; font-weight: 700; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            border: 2px solid var(--border-color);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 2px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
-
         .profile-info h2 { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
         .profile-info p { font-size: 14px; color: var(--text-secondary); }
-        
         .plan-badge-mini {
-            display: inline-flex; align-items: center; gap: 4px;
-            margin-top: 8px;
-            padding: 4px 10px;
-            background: var(--primary-color);
-            color: white;
-            border-radius: 100px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
+            display: inline-flex; align-items: center; gap: 4px; margin-top: 8px;
+            padding: 4px 10px; background: var(--primary-color); color: white;
+            border-radius: 100px; font-size: 11px; font-weight: 700; text-transform: uppercase;
         }
 
-        /* 2. CARD DE ASSINATURA (Estilo Crédito) */
+        /* 2. CARD DE ASSINATURA */
         .subscription-card {
-            background: var(--surface-color);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            margin-bottom: 25px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            position: relative;
-            overflow: hidden;
+            background: var(--surface-color); border-radius: var(--radius-lg);
+            padding: 20px; margin-bottom: 25px; border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03); position: relative; overflow: hidden;
         }
-        
-        /* Detalhe decorativo no card */
         .subscription-card::before {
             content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
             background: var(--primary-color);
         }
-
         .sub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .sub-title { font-size: 14px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 6px; }
         .sub-status { font-size: 11px; font-weight: 700; color: #166534; background: #dcfce7; padding: 4px 8px; border-radius: 6px; }
-        
         body.dark-mode .sub-status { background: rgba(22, 101, 52, 0.3); color: #86efac; }
-
+        
         .sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .sub-item label { display: block; font-size: 11px; color: var(--text-secondary); margin-bottom: 2px; }
         .sub-item span { font-size: 13px; font-weight: 600; color: var(--text-primary); }
 
-        /* 3. GRUPOS DE CONFIGURAÇÃO (Estilo iOS) */
+        /* 3. GRUPOS DE CONFIGURAÇÃO */
         .section-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin: 20px 0 8px 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 12px; font-weight: 600; color: var(--text-secondary);
+            margin: 20px 0 8px 10px; text-transform: uppercase; letter-spacing: 0.5px;
         }
-
         .settings-group {
-            background: var(--surface-color);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            border: 1px solid var(--border-color);
+            background: var(--surface-color); border-radius: var(--radius-md);
+            overflow: hidden; border: 1px solid var(--border-color);
             box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         }
-
         .settings-item {
-            display: flex;
-            align-items: center;
-            padding: 14px 16px;
-            background: var(--surface-color);
-            cursor: pointer;
-            transition: background 0.2s;
-            position: relative;
+            display: flex; align-items: center; padding: 14px 16px;
+            background: var(--surface-color); cursor: pointer; transition: background 0.2s; position: relative;
         }
-
-        /* Linha divisória interna que não encosta na borda esquerda */
         .settings-item:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 56px; /* Pula o ícone */
-            right: 0;
-            height: 1px;
-            background: var(--border-color);
-            opacity: 0.5;
+            content: ''; position: absolute; bottom: 0; left: 56px; right: 0;
+            height: 1px; background: var(--border-color); opacity: 0.5;
         }
-
         .settings-item:active { background: var(--bg-color); }
-
+        
         .settings-icon {
-            width: 32px; height: 32px;
-            border-radius: 8px;
-            background: var(--bg-color);
-            color: var(--primary-color);
+            width: 32px; height: 32px; border-radius: 8px;
+            background: var(--bg-color); color: var(--primary-color);
             display: flex; align-items: center; justify-content: center;
-            font-size: 18px;
-            margin-right: 14px;
-            flex-shrink: 0;
+            font-size: 18px; margin-right: 14px; flex-shrink: 0;
         }
-
         .settings-text { flex: 1; font-size: 14px; font-weight: 500; color: var(--text-primary); }
         .settings-arrow { color: var(--text-secondary); font-size: 14px; opacity: 0.7; }
         .settings-value { font-size: 13px; color: var(--text-secondary); margin-right: 8px; }
 
-        /* Toggle Switch Visual */
-        .toggle-switch-fake {
-            font-size: 24px; color: var(--border-color); transition: 0.3s;
-        }
+        /* Toggle Visual */
+        .toggle-switch-fake { font-size: 24px; color: var(--border-color); transition: 0.3s; }
         .toggle-switch-fake.on { color: var(--primary-color); transform: scale(1.05); }
 
         /* Logout */
         .logout-area { margin-top: 30px; margin-bottom: 10px; }
         .btn-logout {
-            width: 100%; padding: 14px;
-            background: var(--surface-color);
-            color: #ef4444;
-            font-weight: 600; font-size: 14px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 14px; background: var(--surface-color); color: #ef4444;
+            font-weight: 600; font-size: 14px; border-radius: var(--radius-md);
+            border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; gap: 8px;
             box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         }
         .btn-logout:active { background: #fee2e2; border-color: #fee2e2; }
-
         .version-text { text-align: center; font-size: 11px; color: var(--text-secondary); opacity: 0.7; margin-top: 15px; }
 
-        /* Modais */
+        /* Cores Grid no Modal */
         .theme-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
         .theme-option { width: 45px; height: 45px; border-radius: 50%; margin: 0 auto; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 2px solid var(--surface-color); }
+        
+        /* Lista de Idiomas */
         .lang-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
         .lang-option { padding: 15px; background: var(--bg-color); border-radius: var(--radius-md); display: flex; align-items: center; gap: 15px; font-weight: 600; color: var(--text-primary); }
-        
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: flex; align-items: flex-end; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-        .modal-content { background: var(--surface-color); width: 100%; max-width: 600px; margin: 0 auto; border-radius: var(--radius-lg) var(--radius-lg) 0 0; padding: 24px; transform: translateY(100%); transition: transform 0.3s; }
-        .modal-overlay.visible { opacity: 1; visibility: visible; }
-        .modal-overlay.visible .modal-content { transform: translateY(0); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .btn-icon { width: 32px; height: 32px; background: var(--bg-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-primary); }
-
     </style>
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
 
@@ -197,7 +133,7 @@
             <div class="profile-avatar-large" id="config-avatar">--</div>
             <div class="profile-info">
                 <h2 id="config-name">...</h2>
-                <p>admin@kodashop.com</p>
+                <p>admin@kodasystem.com</p>
                 <div class="plan-badge-mini">
                     <i class="ph ph-crown-simple"></i> Enterprise
                 </div>
@@ -237,6 +173,7 @@
 
         <div class="section-title" data-i18n="sec_app">Personalização</div>
         <div class="settings-group">
+            
             <div class="settings-item" onclick="toggleDarkMode()">
                 <div class="settings-icon"><i class="ph ph-moon"></i></div>
                 <div class="settings-text" data-i18n="item_darkmode">Modo Escuro</div>
@@ -252,7 +189,7 @@
             <div class="settings-item" onclick="toggleModal('modal-lang-select')">
                 <div class="settings-icon"><i class="ph ph-globe"></i></div>
                 <div class="settings-text" data-i18n="item_lang">Idioma</div>
-                <div class="settings-value">PT-BR</div>
+                <div class="settings-value">PT/EN</div>
                 <i class="ph ph-caret-right settings-arrow"></i>
             </div>
         </div>
@@ -345,24 +282,18 @@
     <div id="modal-new-ad" class="modal-overlay hidden">
         <div class="modal-content bottom-sheet">
             <div class="modal-header">
-                <h2 data-i18n="modal_new_title">Adicionar Novo Item</h2>
+                <h2 data-i18n="modal_new_title">Criar Anúncio</h2>
                 <button class="btn-icon" onclick="toggleModal('modal-new-ad')"><i class="ph ph-x"></i></button>
             </div>
             <div class="modal-body">
-                <p class="helper-text" data-i18n="modal_new_sub">O que você deseja cadastrar hoje?</p>
-                <div class="category-grid">
-                    <button class="cat-card" onclick="selectCategory('veiculos')">
-                        <div class="cat-icon"><i class="ph ph-car"></i></div><span>Veículos</span>
-                    </button>
-                    <button class="cat-card" onclick="selectCategory('imoveis')">
-                        <div class="cat-icon"><i class="ph ph-house"></i></div><span>Imóveis</span>
-                    </button>
-                    <button class="cat-card" onclick="selectCategory('eletronicos')">
-                        <div class="cat-icon"><i class="ph ph-device-mobile"></i></div><span>Eletrônicos</span>
-                    </button>
-                    <button class="cat-card" onclick="selectCategory('agro')">
-                        <div class="cat-icon"><i class="ph ph-plant"></i></div><span>Agro</span>
-                    </button>
+                <p class="helper-text" style="margin-bottom: 20px;" data-i18n="modal_new_sub">Selecione a categoria do produto:</p>
+                <div class="new-ad-grid">
+                   <div class="new-ad-item" onclick="selectCategory('veiculos')"><div class="icon-box style-car"><i class="ph ph-car-profile"></i></div><span class="new-ad-label">Veículos</span></div>
+                   <div class="new-ad-item" onclick="selectCategory('imoveis')"><div class="icon-box style-house"><i class="ph ph-house-line"></i></div><span class="new-ad-label">Imóveis</span></div>
+                   <div class="new-ad-item" onclick="selectCategory('eletronicos')"><div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div><span class="new-ad-label">Eletrônicos</span></div>
+                   <div class="new-ad-item" onclick="selectCategory('agro')"><div class="icon-box style-agro"><i class="ph ph-plant"></i></div><span class="new-ad-label">Agro</span></div>
+                   <div class="new-ad-item" onclick="selectCategory('servicos')"><div class="icon-box style-service"><i class="ph ph-wrench"></i></div><span class="new-ad-label">Serviços</span></div>
+                   <div class="new-ad-item" onclick="alert('Importar CSV')"><div class="icon-box style-import"><i class="ph ph-download-simple"></i></div><span class="new-ad-label">Importar</span></div>
                 </div>
             </div>
         </div>
@@ -376,7 +307,9 @@
     <script src="assets/js/functions.js"></script>
     
     <script>
+        // Renderiza a barra marcando 'config' como ativo
         renderBottomNav('config');
+        
         function doLogout() {
             if(confirm("Deseja realmente sair?")) window.location.href = "index.html";
         }
