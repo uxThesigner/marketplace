@@ -19,6 +19,7 @@
             position: sticky;
             top: var(--header-height);
             z-index: 80;
+            transition: background-color 0.4s ease, border-color 0.4s ease;
         }
 
         .chat-pill {
@@ -29,10 +30,11 @@
             background: var(--bg-color);
             color: var(--text-secondary);
             border: 1px solid transparent;
+            transition: all 0.3s;
         }
 
         .chat-pill.active {
-            background: var(--text-primary);
+            background: var(--primary-color);
             color: white;
         }
 
@@ -48,7 +50,7 @@
             background: var(--surface-color);
             border-bottom: 1px solid var(--border-color);
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background-color 0.2s;
         }
 
         .chat-item:active {
@@ -139,7 +141,7 @@
             <a href="dashboard.html">
                 <i class="ph ph-arrow-left" style="font-size: 24px; color: var(--text-primary);"></i>
             </a>
-            <span style="margin-left: 10px; font-weight: 700; font-size: 18px;">Central de Leads</span>
+            <span style="margin-left: 10px; font-weight: 700; font-size: 18px;" data-i18n="leads_title">Central de Leads</span>
         </div>
         <div class="header-right">
             <i class="ph ph-magnifying-glass" style="font-size: 24px; color: var(--text-secondary);"></i>
@@ -149,9 +151,9 @@
     <main class="app-content" style="padding: 0; max-width: 100%;">
         
         <div class="chat-filters">
-            <button class="chat-pill active">Todos</button>
-            <button class="chat-pill">Não Lidos (3)</button>
-            <button class="chat-pill">Quentes 🔥</button>
+            <button class="chat-pill active" data-i18n="filter_all">Todos</button>
+            <button class="chat-pill" data-i18n="filter_unread">Não Lidos</button>
+            <button class="chat-pill" data-i18n="filter_hot">Quentes 🔥</button>
         </div>
 
         <div class="chat-list">
@@ -169,7 +171,9 @@
                         <span class="chat-time">10:42</span>
                     </div>
                     <p class="chat-preview">Bom dia, o Fiat Argo ainda está disponível? Tenho interesse...</p>
-                    <p class="chat-context">Interesse em: Fiat Argo 1.0</p>
+                    <p class="chat-context">
+                        <span data-i18n="ctx_interest">Interesse em:</span> Fiat Argo 1.0
+                    </p>
                 </div>
                 <div class="unread-badge"></div>
             </div>
@@ -187,7 +191,9 @@
                         <span class="chat-time">09:15</span>
                     </div>
                     <p class="chat-preview">Aceita troca em um MacBook Pro?</p>
-                    <p class="chat-context">Interesse em: iPhone 13 Pro</p>
+                    <p class="chat-context">
+                        <span data-i18n="ctx_interest">Interesse em:</span> iPhone 13 Pro
+                    </p>
                 </div>
                 <div class="unread-badge"></div>
             </div>
@@ -202,10 +208,12 @@
                 <div class="chat-info">
                     <div class="chat-header-row">
                         <span class="chat-name">Roberto Eng.</span>
-                        <span class="chat-time">Ontem</span>
+                        <span class="chat-time" data-i18n="time_yesterday">Ontem</span>
                     </div>
                     <p class="chat-preview">Qual o valor do m² nessa região?</p>
-                    <p class="chat-context">Interesse em: Terreno 10x30</p>
+                    <p class="chat-context">
+                        <span data-i18n="ctx_interest">Interesse em:</span> Terreno 10x30
+                    </p>
                 </div>
             </div>
 
@@ -219,10 +227,12 @@
                 <div class="chat-info">
                     <div class="chat-header-row">
                         <span class="chat-name">Carla Vendas</span>
-                        <span class="chat-time">Ontem</span>
+                        <span class="chat-time" data-i18n="time_yesterday">Ontem</span>
                     </div>
                     <p class="chat-preview">Disponível?</p>
-                    <p class="chat-context">Interesse em: Gado Nelore</p>
+                    <p class="chat-context">
+                        <span data-i18n="ctx_interest">Interesse em:</span> Gado Nelore
+                    </p>
                 </div>
             </div>
 
@@ -234,13 +244,13 @@
     <div id="modal-new-ad" class="modal-overlay hidden">
         <div class="modal-content bottom-sheet">
             <div class="modal-header">
-                <h2>Adicionar Novo Item</h2>
+                <h2 data-i18n="modal_new_title">Adicionar Novo Item</h2>
                 <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
                     <i class="ph ph-x"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <p class="helper-text">O que você deseja cadastrar hoje?</p>
+                <p class="helper-text" data-i18n="modal_new_sub">O que você deseja cadastrar hoje?</p>
                 <div class="category-grid">
                     <button class="cat-card" onclick="selectCategory('veiculos')">
                         <div class="cat-icon"><i class="ph ph-car"></i></div>
@@ -273,9 +283,7 @@
     <script>
         // 1. Renderiza Barra (Marca 'leads' como ativo)
         renderBottomNav('leads'); 
-
-        // 2. Aplica Tema (Isso vai pintar as bolinhas de "Não lido" com a cor da Koda)
-        if (typeof applyTheme === 'function') applyTheme();
+        // 2. A inicialização completa (Idioma, Tema) é feita pelo initApp() no functions.js
     </script>
 </body>
 </html>
