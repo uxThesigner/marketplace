@@ -10,131 +10,185 @@
     <link rel="stylesheet" href="assets/css/style.css">
     
     <style>
+        /* Filtros flutuantes com desfoque (Glassmorphism sutil) */
         .chat-filters {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             padding: 15px 20px;
+            background: var(--surface-color); /* Fallback */
             border-bottom: 1px solid var(--border-color);
-            background: var(--surface-color);
             position: sticky;
             top: var(--header-height);
             z-index: 80;
+            overflow-x: auto;
+            /* Esconde barra de rolagem */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
             transition: background-color 0.4s ease, border-color 0.4s ease;
         }
+        .chat-filters::-webkit-scrollbar { display: none; }
 
         .chat-pill {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
             font-weight: 600;
             background: var(--bg-color);
             color: var(--text-secondary);
             border: 1px solid transparent;
-            transition: all 0.3s;
+            white-space: nowrap;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
         }
+
+        .chat-pill:active { transform: scale(0.95); }
 
         .chat-pill.active {
             background: var(--primary-color);
             color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Sombra suave no ativo */
         }
 
+        /* Lista de Conversas */
         .chat-list {
             display: flex;
             flex-direction: column;
+            padding-bottom: 20px;
         }
 
         .chat-item {
             display: flex;
             align-items: center;
-            padding: 15px 20px;
+            padding: 16px 20px;
             background: var(--surface-color);
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color); /* Linha muito sutil */
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s ease;
+            position: relative;
         }
 
-        .chat-item:active {
-            background: var(--bg-color);
-        }
+        .chat-item:last-child { border-bottom: none; }
 
+        /* Efeito de hover (em desktop) e toque */
+        .chat-item:hover { background-color: rgba(0,0,0,0.02); }
+        .chat-item:active { background-color: var(--bg-color); }
+
+        /* Avatar e Badge */
         .chat-avatar-area {
             position: relative;
-            margin-right: 15px;
+            margin-right: 16px;
+            flex-shrink: 0;
         }
 
         .chat-avatar {
-            width: 48px;
-            height: 48px;
+            width: 52px; /* Ligeiramente maior */
+            height: 52px;
             border-radius: 50%;
-            background: #eee;
+            background: var(--bg-color);
             object-fit: cover;
+            border: 1px solid var(--border-color);
         }
 
-        /* O ícone da plataforma flutuando sobre o avatar */
         .platform-badge {
             position: absolute;
             bottom: -2px;
             right: -2px;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 10px;
+            font-size: 11px;
             border: 2px solid var(--surface-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Pop-out visual */
+            transition: border-color 0.4s;
         }
 
+        /* Tipografia e Layout do Texto */
         .chat-info {
             flex: 1;
+            min-width: 0; /* Impede que texto quebre o layout */
         }
 
         .chat-header-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 4px;
         }
 
         .chat-name {
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 700;
             color: var(--text-primary);
+            letter-spacing: -0.3px;
         }
 
         .chat-time {
             font-size: 11px;
+            font-weight: 500;
             color: var(--text-secondary);
+            white-space: nowrap;
+            margin-left: 8px;
         }
 
         .chat-preview {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-secondary);
             display: -webkit-box;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            line-height: 1.4;
         }
 
+        /* Contexto (Produto) com estilo de "Tag" */
         .chat-context {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 6px;
             font-size: 11px;
+            font-weight: 600;
             color: var(--primary-color);
-            margin-top: 4px;
-            font-weight: 500;
+            background: rgba(128, 128, 128, 0.08); /* Fundo muito sutil */
+            padding: 2px 8px;
+            border-radius: 6px;
         }
-
+        
+        /* Bolinha de não lido */
         .unread-badge {
             width: 10px;
             height: 10px;
-            background: var(--primary-color); /* Muda com o tema */
+            background: var(--primary-color);
             border-radius: 50%;
-            margin-left: 10px;
+            margin-left: 12px;
+            flex-shrink: 0;
+            box-shadow: 0 0 0 2px var(--surface-color); /* Anel externo para destaque */
+        }
+
+        /* Ajuste Dark Mode específico para o contexto */
+        body.dark-mode .chat-context {
+            background: rgba(255, 255, 255, 0.05);
         }
     </style>
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
+
+    <script>
+        (function() {
+            const savedMode = localStorage.getItem('koda_theme_mode');
+            if (savedMode === 'dark') document.body.classList.add('dark-mode');
+            const savedColor = localStorage.getItem('koda_theme_color');
+            if (savedColor) {
+                document.documentElement.style.setProperty('--primary-color', savedColor);
+                document.documentElement.style.setProperty('--primary-dark', savedColor);
+            }
+        })();
+    </script>
 
     <header class="app-header">
         <div class="header-left">
@@ -144,7 +198,9 @@
             <span style="margin-left: 10px; font-weight: 700; font-size: 18px;" data-i18n="leads_title">Central de Leads</span>
         </div>
         <div class="header-right">
-            <i class="ph ph-magnifying-glass" style="font-size: 24px; color: var(--text-secondary);"></i>
+            <button style="padding: 8px;">
+                <i class="ph ph-magnifying-glass" style="font-size: 24px; color: var(--text-secondary);"></i>
+            </button>
         </div>
     </header>
 
@@ -154,11 +210,11 @@
             <button class="chat-pill active" data-i18n="filter_all">Todos</button>
             <button class="chat-pill" data-i18n="filter_unread">Não Lidos</button>
             <button class="chat-pill" data-i18n="filter_hot">Quentes 🔥</button>
-        </div>
+            <button class="chat-pill">Arquivados</button> </div>
 
         <div class="chat-list">
             
-            <div class="chat-item" onclick="alert('Demo: Abriria o chat completo.')">
+            <div class="chat-item" onclick="alert('Demo: Abrir chat do Marcos')">
                 <div class="chat-avatar-area">
                     <img src="https://i.pravatar.cc/150?u=1" class="chat-avatar" alt="User">
                     <div class="platform-badge" style="background: #25D366;">
@@ -170,15 +226,15 @@
                         <span class="chat-name">Marcos Silva</span>
                         <span class="chat-time">10:42</span>
                     </div>
-                    <p class="chat-preview">Bom dia, o Fiat Argo ainda está disponível? Tenho interesse...</p>
-                    <p class="chat-context">
-                        <span data-i18n="ctx_interest">Interesse em:</span> Fiat Argo 1.0
-                    </p>
+                    <p class="chat-preview" style="font-weight: 600; color: var(--text-primary);">Bom dia, o Fiat Argo ainda está disponível?</p>
+                    <div class="chat-context">
+                        <span data-i18n="ctx_interest">Interesse em:</span>&nbsp;Fiat Argo 1.0
+                    </div>
                 </div>
                 <div class="unread-badge"></div>
             </div>
 
-            <div class="chat-item">
+            <div class="chat-item" onclick="alert('Demo: Abrir chat da Julia')">
                 <div class="chat-avatar-area">
                     <img src="https://i.pravatar.cc/150?u=2" class="chat-avatar" alt="User">
                     <div class="platform-badge" style="background: var(--color-insta);">
@@ -190,10 +246,10 @@
                         <span class="chat-name">Julia Design</span>
                         <span class="chat-time">09:15</span>
                     </div>
-                    <p class="chat-preview">Aceita troca em um MacBook Pro?</p>
-                    <p class="chat-context">
-                        <span data-i18n="ctx_interest">Interesse em:</span> iPhone 13 Pro
-                    </p>
+                    <p class="chat-preview" style="font-weight: 600; color: var(--text-primary);">Aceita troca em um MacBook Pro?</p>
+                    <div class="chat-context">
+                        <span data-i18n="ctx_interest">Interesse em:</span>&nbsp;iPhone 13 Pro
+                    </div>
                 </div>
                 <div class="unread-badge"></div>
             </div>
@@ -211,9 +267,9 @@
                         <span class="chat-time" data-i18n="time_yesterday">Ontem</span>
                     </div>
                     <p class="chat-preview">Qual o valor do m² nessa região?</p>
-                    <p class="chat-context">
-                        <span data-i18n="ctx_interest">Interesse em:</span> Terreno 10x30
-                    </p>
+                    <div class="chat-context">
+                        <span data-i18n="ctx_interest">Interesse em:</span>&nbsp;Terreno 10x30
+                    </div>
                 </div>
             </div>
 
@@ -230,9 +286,28 @@
                         <span class="chat-time" data-i18n="time_yesterday">Ontem</span>
                     </div>
                     <p class="chat-preview">Disponível?</p>
-                    <p class="chat-context">
-                        <span data-i18n="ctx_interest">Interesse em:</span> Gado Nelore
-                    </p>
+                    <div class="chat-context">
+                        <span data-i18n="ctx_interest">Interesse em:</span>&nbsp;Gado Nelore
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-item">
+                <div class="chat-avatar-area">
+                    <img src="https://i.pravatar.cc/150?u=5" class="chat-avatar" alt="User">
+                    <div class="platform-badge" style="background: #25D366;">
+                        <i class="ph ph-whatsapp-logo"></i>
+                    </div>
+                </div>
+                <div class="chat-info">
+                    <div class="chat-header-row">
+                        <span class="chat-name">Felipe Empreiteiro</span>
+                        <span class="chat-time">Segunda</span>
+                    </div>
+                    <p class="chat-preview">Vou querer ver o terreno.</p>
+                    <div class="chat-context">
+                        <span data-i18n="ctx_interest">Interesse em:</span>&nbsp;Terreno 10x30
+                    </div>
                 </div>
             </div>
 
@@ -253,20 +328,16 @@
                 <p class="helper-text" data-i18n="modal_new_sub">O que você deseja cadastrar hoje?</p>
                 <div class="category-grid">
                     <button class="cat-card" onclick="selectCategory('veiculos')">
-                        <div class="cat-icon"><i class="ph ph-car"></i></div>
-                        <span>Veículos</span>
+                        <div class="cat-icon"><i class="ph ph-car"></i></div><span>Veículos</span>
                     </button>
                     <button class="cat-card" onclick="selectCategory('imoveis')">
-                        <div class="cat-icon"><i class="ph ph-house"></i></div>
-                        <span>Imóveis</span>
+                        <div class="cat-icon"><i class="ph ph-house"></i></div><span>Imóveis</span>
                     </button>
                     <button class="cat-card" onclick="selectCategory('eletronicos')">
-                        <div class="cat-icon"><i class="ph ph-device-mobile"></i></div>
-                        <span>Eletrônicos</span>
+                        <div class="cat-icon"><i class="ph ph-device-mobile"></i></div><span>Eletrônicos</span>
                     </button>
                     <button class="cat-card" onclick="selectCategory('agro')">
-                        <div class="cat-icon"><i class="ph ph-plant"></i></div>
-                        <span>Agro</span>
+                        <div class="cat-icon"><i class="ph ph-plant"></i></div><span>Agro</span>
                     </button>
                 </div>
             </div>
@@ -281,9 +352,8 @@
     <script src="assets/js/functions.js"></script>
 
     <script>
-        // 1. Renderiza Barra (Marca 'leads' como ativo)
         renderBottomNav('leads'); 
-        // 2. A inicialização completa (Idioma, Tema) é feita pelo initApp() no functions.js
+        // Lógica de tema e idioma via functions.js
     </script>
 </body>
 </html>
