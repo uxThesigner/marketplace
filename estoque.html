@@ -11,85 +11,23 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
     <style>
+        /* Ajustes Específicos para a área fixa do Estoque */
         .sticky-header-area {
             position: sticky; top: var(--header-height); z-index: 80;
             background: var(--surface-color); border-bottom: 1px solid var(--border-color);
             transition: background-color 0.4s ease, border-color 0.4s ease; padding-bottom: 10px;
         }
-
-        .search-bar-container { padding: 15px 20px 10px 20px; }
-        .search-input-group { position: relative; display: flex; align-items: center; }
-        .search-input-group i { position: absolute; left: 16px; color: var(--text-secondary); font-size: 20px; pointer-events: none; }
-        .search-input {
-            width: 100%; padding: 14px 14px 14px 50px;
-            border-radius: var(--radius-md); border: 1px solid var(--border-color);
-            background: var(--bg-color); font-size: 15px; color: var(--text-primary);
-            outline: none; transition: all 0.3s;
-        }
-        .search-input:focus { border-color: var(--primary-color); background: var(--surface-color); }
-
-        .filter-tabs {
-            display: flex; gap: 10px; padding: 5px 20px 10px 20px;
-            overflow-x: auto; scrollbar-width: none;
-        }
-        .filter-tabs::-webkit-scrollbar { display: none; }
         
-        .filter-pill {
-            padding: 8px 16px; border-radius: 100px;
-            background: var(--bg-color); color: var(--text-secondary);
-            font-size: 13px; font-weight: 600; border: 1px solid transparent;
-            transition: all 0.3s; cursor: pointer; white-space: nowrap;
-        }
-        .filter-pill:active { transform: scale(0.95); }
-        .filter-pill.active {
-            background: var(--primary-color); color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        /* Lista Clean */
-        .feed-list { padding: 0; min-height: 200px; }
-        .product-item {
-            background: var(--surface-color); padding: 16px 20px;
-            display: flex; align-items: center; gap: 16px;
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.2s;
-        }
-        .product-item:last-child { border-bottom: none; }
-        .product-item:active { background-color: var(--bg-color); }
-
-        .prod-thumb {
-            width: 56px; height: 56px; background-color: var(--bg-color);
-            border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            font-size: 26px; color: var(--text-secondary); flex-shrink: 0;
-        }
-        .prod-info { flex: 1; min-width: 0; }
-        .prod-title { 
-            font-size: 15px; font-weight: 600; margin-bottom: 4px;
-            color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
-        .prod-price { font-size: 14px; color: var(--primary-color); font-weight: 700; margin-bottom: 6px; }
-
-        .platform-tag {
-            display: inline-flex; align-items: center; font-size: 11px; 
-            color: var(--text-secondary); background: var(--bg-color);
-            padding: 3px 8px; border-radius: 6px; font-weight: 500;
-        }
+        /* Lista com altura mínima para não colapsar */
+        .feed-list { min-height: 300px; }
         
-        .prod-status { font-size: 11px; padding: 5px 10px; border-radius: 8px; font-weight: 600; text-transform: capitalize; }
-        .status-active { background: rgba(34, 197, 94, 0.1); color: #166534; }
-        .status-paused { background: rgba(234, 179, 8, 0.1); color: #854d0e; }
-        body.dark-mode .status-active { background: rgba(34, 197, 94, 0.2); color: #86efac; }
-        body.dark-mode .status-paused { background: rgba(234, 179, 8, 0.2); color: #fde047; }
-        body.dark-mode .platform-tag { background: rgba(255,255,255,0.05); }
-
-        .actions-btn {
-            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-            color: var(--text-secondary); border-radius: 50%;
-        }
-        .actions-btn:active { background: var(--bg-color); }
-        
+        /* Estado vazio */
         .empty-state {
-            padding: 40px 20px; text-align: center; color: var(--text-secondary); font-size: 14px;
+            padding: 40px 20px; 
+            text-align: center; 
+            color: var(--text-secondary); 
+            font-size: 14px;
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
         }
     </style>
 </head>
@@ -122,6 +60,7 @@
     <main class="app-content" style="padding: 0; max-width: 100%;">
 
         <div class="sticky-header-area">
+            
             <div class="search-bar-container">
                 <div class="search-input-group">
                     <i class="ph ph-magnifying-glass"></i>
@@ -149,20 +88,56 @@
 
     <div id="modal-new-ad" class="modal-overlay hidden">
         <div class="modal-content bottom-sheet">
+            
             <div class="modal-header">
-                <h2 data-i18n="modal_new_title">Criar Anúncio</h2>
-                <button class="btn-icon" onclick="toggleModal('modal-new-ad')"><i class="ph ph-x"></i></button>
-            </div>
-            <div class="modal-body">
-                <p class="helper-text" style="margin-bottom: 20px;" data-i18n="modal_new_sub">Selecione a categoria:</p>
-                <div class="new-ad-grid">
-                   <div class="new-ad-item" onclick="selectCategory('veiculos')"><div class="icon-box style-car"><i class="ph ph-car-profile"></i></div><span class="new-ad-label">Veículos</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('imoveis')"><div class="icon-box style-house"><i class="ph ph-house-line"></i></div><span class="new-ad-label">Imóveis</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('eletronicos')"><div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div><span class="new-ad-label">Eletrônicos</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('agro')"><div class="icon-box style-agro"><i class="ph ph-plant"></i></div><span class="new-ad-label">Agro</span></div>
-                   <div class="new-ad-item" onclick="selectCategory('servicos')"><div class="icon-box style-service"><i class="ph ph-wrench"></i></div><span class="new-ad-label">Serviços</span></div>
-                   <div class="new-ad-item" onclick="alert('Importar CSV')"><div class="icon-box style-import"><i class="ph ph-download-simple"></i></div><span class="new-ad-label">Importar</span></div>
+                <div style="display:flex; align-items:center;">
+                    <i id="btn-back-step" class="ph ph-arrow-left btn-back-modal" onclick="backToCategories()"></i>
+                    <h2 id="modal-title-text" data-i18n="modal_new_title">Criar Anúncio</h2>
                 </div>
+                <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                
+                <div id="step-category-select" class="modal-step active">
+                    <p class="helper-text" style="margin-bottom: 20px;" data-i18n="modal_new_sub">Selecione a categoria do produto:</p>
+                    <div class="new-ad-grid">
+                        <div class="new-ad-item" onclick="selectCategory('veiculos')"><div class="icon-box style-car"><i class="ph ph-car-profile"></i></div><span class="new-ad-label">Veículos</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('imoveis')"><div class="icon-box style-house"><i class="ph ph-house-line"></i></div><span class="new-ad-label">Imóveis</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('eletronicos')"><div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div><span class="new-ad-label">Eletrônicos</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('agro')"><div class="icon-box style-agro"><i class="ph ph-plant"></i></div><span class="new-ad-label">Agro</span></div>
+                        <div class="new-ad-item" onclick="selectCategory('servicos')"><div class="icon-box style-service"><i class="ph ph-wrench"></i></div><span class="new-ad-label">Serviços</span></div>
+                        <div class="new-ad-item" onclick="alert('Importar via XML/CSV em breve.')"><div class="icon-box style-import"><i class="ph ph-download-simple"></i></div><span class="new-ad-label">Importar</span></div>
+                    </div>
+                </div>
+
+                <div id="step-ad-form" class="modal-step">
+                    
+                    <label class="modal-form-label">Fotos do Anúncio</label>
+                    <div class="photo-upload-container">
+                        <div class="photo-box"><i class="ph ph-camera-plus"></i></div>
+                        <div class="photo-box has-image"><img src="https://via.placeholder.com/150" alt="Thumb"></div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label class="modal-form-label">Título do Anúncio</label>
+                        <input type="text" class="modal-input" placeholder="Ex: Fiat Argo 1.0 Drive...">
+                    </div>
+
+                    <div id="dynamic-fields-area"></div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label class="modal-form-label">Descrição</label>
+                        <textarea class="modal-input" rows="3" placeholder="Detalhes adicionais..."></textarea>
+                    </div>
+
+                    <button class="btn-publish" onclick="toggleModal('modal-new-ad'); alert('Anúncio Criado com Sucesso!');">
+                        Publicar Agora
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -175,96 +150,15 @@
     <script src="assets/js/functions.js"></script>
 
     <script>
+        // Renderiza a barra marcando 'estoque' como ativo
         renderBottomNav('estoque'); 
-
-        // --- LÓGICA DE FILTRO E BUSCA ---
         
-        let currentFilter = 'all'; // Estado atual do filtro
-
-        // 1. Chamada ao clicar nos botões de filtro
-        function setFilter(filterType) {
-            currentFilter = filterType;
-            
-            // Atualiza visual dos botões (Toggle classe .active)
-            document.querySelectorAll('.filter-pill').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-filter-${filterType}`).classList.add('active');
-
-            // Reaplica a lógica de renderização
-            applyInventoryFilters();
-        }
-
-        // 2. O Cérebro da Filtragem (Combina Busca + Status)
-        function applyInventoryFilters() {
-            const listEl = document.getElementById('full-inventory-list');
-            const searchInput = document.getElementById('inventory-search');
-            
-            if (!listEl || typeof productsDB === 'undefined') return;
-            
-            const searchTerm = searchInput.value.toLowerCase();
-            listEl.innerHTML = ''; // Limpa a lista atual
-
-            // Filtra o array original (productsDB)
-            const filteredData = productsDB.filter(prod => {
-                // Filtro de Status
-                let matchesStatus = false;
-                if (currentFilter === 'all') matchesStatus = true;
-                else if (currentFilter === 'active' && prod.status === 'active') matchesStatus = true;
-                else if (currentFilter === 'paused' && prod.status === 'paused') matchesStatus = true;
-                else if (currentFilter === 'nostock' && prod.status === 'nostock') matchesStatus = true; // Se existir no DB
-
-                // Filtro de Busca (Título)
-                const matchesSearch = prod.title.toLowerCase().includes(searchTerm);
-
-                return matchesStatus && matchesSearch;
-            });
-
-            // Renderiza o resultado
-            if (filteredData.length === 0) {
-                listEl.innerHTML = `<div class="empty-state"><i class="ph ph-magnifying-glass" style="font-size:32px; margin-bottom:10px; display:block;"></i>Nenhum item encontrado.</div>`;
-                return;
-            }
-
-            filteredData.forEach(prod => {
-                // Traduções internas
-                let txtOn = "Em:";
-                let statusLabel = prod.status;
-                if (typeof getTrans === 'function') {
-                    txtOn = getTrans('txt_on');
-                    statusLabel = prod.status === 'active' ? getTrans('status_active') : getTrans('status_paused');
-                }
-
-                const itemHTML = `
-                    <div class="product-item">
-                        <div class="prod-thumb">
-                            <i class="ph ${prod.image}"></i>
-                        </div>
-                        <div class="prod-info">
-                            <div class="prod-title">${prod.title}</div>
-                            <div class="prod-price">R$ ${prod.price.toLocaleString('pt-BR')}</div>
-                            <div class="platform-tag">
-                                ${txtOn} ${prod.platforms.join(', ')}
-                            </div>
-                        </div>
-                        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
-                            <div class="prod-status ${prod.status === 'active' ? 'status-active' : 'status-paused'}">
-                                ${statusLabel}
-                            </div>
-                            <div class="actions-btn">
-                                <i class="ph ph-dots-three-vertical" style="font-size: 22px;"></i>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                listEl.innerHTML += itemHTML;
-            });
-        }
-
-        // Carrega inicialmente
+        // Garante que a lista carregue ao abrir a página
         document.addEventListener('DOMContentLoaded', () => {
-            // Pequeno delay para garantir que o functions.js carregou as traduções
-            setTimeout(applyInventoryFilters, 50);
+            if(typeof applyInventoryFilters === 'function') {
+                applyInventoryFilters();
+            }
         });
-
     </script>
 </body>
 </html>
