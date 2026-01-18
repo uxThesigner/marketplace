@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ffffff">
+    
+    <title>Configurações | Koda White-Label</title>
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        .profile-card {
+            background: var(--surface-color);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .profile-avatar-large {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-color);
+            color: var(--primary-color);
+            font-size: 32px;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            border: 3px solid var(--surface-color);
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .plan-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.05);
+            color: var(--text-primary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Listas de Menu */
+        .settings-group {
+            background: var(--surface-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-item:active {
+            background: var(--bg-color);
+        }
+
+        .settings-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 15px;
+        }
+
+        .settings-text {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .settings-arrow {
+            color: #ccc;
+            font-size: 16px;
+        }
+
+        /* Botão de Logout */
+        .btn-logout {
+            width: 100%;
+            padding: 16px;
+            background: #fee2e2;
+            color: #ef4444;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .btn-logout:active {
+            background: #fecaca;
+        }
+        
+        .version-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #ccc;
+        }
+    </style>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-left">
+            <span style="font-weight: 700; font-size: 18px; margin-left: 0;">Configurações</span>
+        </div>
+        </header>
+
+    <main class="app-content" style="padding-top: 20px;">
+        
+        <div class="profile-card">
+            <div class="profile-avatar-large" id="config-avatar">--</div>
+            <h2 class="profile-name" id="config-name">Carregando...</h2>
+            <p class="profile-email">admin@kodashop.com</p>
+            <div class="plan-badge">
+                <i class="ph ph-crown-simple"></i> Plano Enterprise
+            </div>
+        </div>
+
+        <h3 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; padding-left: 5px;">Conta</h3>
+        <div class="settings-group">
+            <div class="settings-item" onclick="alert('Demo: Editar dados da empresa')">
+                <div class="settings-icon"><i class="ph ph-buildings"></i></div>
+                <div class="settings-text">Dados da Empresa</div>
+                <i class="ph ph-caret-right settings-arrow"></i>
+            </div>
+            <div class="settings-item" onclick="alert('Demo: Gerenciar assinatura')">
+                <div class="settings-icon"><i class="ph ph-credit-card"></i></div>
+                <div class="settings-text">Assinatura & Faturas</div>
+                <i class="ph ph-caret-right settings-arrow"></i>
+            </div>
+        </div>
+
+        <h3 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; padding-left: 5px;">Aplicativo</h3>
+        <div class="settings-group">
+            <div class="settings-item">
+                <div class="settings-icon"><i class="ph ph-bell"></i></div>
+                <div class="settings-text">Notificações</div>
+                <i class="ph ph-toggle-right" style="font-size: 24px; color: var(--primary-color);"></i>
+            </div>
+            <div class="settings-item" onclick="alert('White-Label: Aqui o cliente muda a cor do sistema!')">
+                <div class="settings-icon"><i class="ph ph-paint-bucket"></i></div>
+                <div class="settings-text">Aparência (Tema)</div>
+                <i class="ph ph-caret-right settings-arrow"></i>
+            </div>
+            <div class="settings-item" onclick="alert('Demo: Suporte via WhatsApp')">
+                <div class="settings-icon"><i class="ph ph-lifebuoy"></i></div>
+                <div class="settings-text">Ajuda e Suporte</div>
+                <i class="ph ph-caret-right settings-arrow"></i>
+            </div>
+        </div>
+
+        <button class="btn-logout" onclick="doLogout()">
+            <i class="ph ph-sign-out"></i>
+            Sair do Sistema
+        </button>
+
+        <p class="version-text">Versão MVP 1.0.0 • Koda System</p>
+
+        <div class="spacer-bottom"></div>
+    </main>
+
+    <div id="modal-new-ad" class="modal-overlay hidden">
+        <div class="modal-content bottom-sheet">
+            <div class="modal-header">
+                <h2>Adicionar Novo Item</h2>
+                <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="category-grid">
+                    <button class="cat-card" onclick="selectCategory('veiculos')">
+                        <div class="cat-icon"><i class="ph ph-car"></i></div>
+                        <span>Veículos</span>
+                    </button>
+                    <button class="cat-card" onclick="selectCategory('imoveis')">
+                        <div class="cat-icon"><i class="ph ph-house"></i></div>
+                        <span>Imóveis</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bottom-nav-container"></div>
+
+    <script src="assets/js/config.js"></script> 
+    <script src="assets/js/mock_db.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/functions.js"></script>
+
+    <script>
+        // 1. Renderiza Barra (Marca 'config' como ativo)
+        renderBottomNav('config'); 
+
+        // 2. Aplica Tema
+        if (typeof applyTheme === 'function') applyTheme();
+
+        // 3. Preenche dados específicos desta página
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof appConfig !== 'undefined') {
+                document.getElementById('config-name').textContent = appConfig.user.name;
+                document.getElementById('config-avatar').textContent = appConfig.user.avatarInitials;
+            }
+        });
+
+        // 4. Função de Logout
+        function doLogout() {
+            if(confirm("Tem certeza que deseja sair?")) {
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+</body>
+</html>
