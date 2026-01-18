@@ -8,186 +8,90 @@
     <title>Anúncios | Koda White-Label</title>
 
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
     <style>
-        /* Área de Busca e Filtros Fixa */
         .sticky-header-area {
-            position: sticky;
-            top: var(--header-height);
-            z-index: 80;
-            background: var(--surface-color);
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.4s ease, border-color 0.4s ease;
-            padding-bottom: 10px;
+            position: sticky; top: var(--header-height); z-index: 80;
+            background: var(--surface-color); border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.4s ease, border-color 0.4s ease; padding-bottom: 10px;
         }
 
-        /* Busca Refinada */
-        .search-bar-container {
-            padding: 15px 20px 10px 20px;
-        }
-
-        .search-input-group {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-input-group i {
-            position: absolute;
-            left: 16px;
-            color: var(--text-secondary);
-            font-size: 20px;
-            pointer-events: none;
-        }
-
+        .search-bar-container { padding: 15px 20px 10px 20px; }
+        .search-input-group { position: relative; display: flex; align-items: center; }
+        .search-input-group i { position: absolute; left: 16px; color: var(--text-secondary); font-size: 20px; pointer-events: none; }
         .search-input {
-            width: 100%;
-            padding: 14px 14px 14px 50px; /* Mais espaço para o ícone */
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            background: var(--bg-color);
-            font-family: inherit;
-            font-size: 15px;
-            color: var(--text-primary);
-            outline: none;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            width: 100%; padding: 14px 14px 14px 50px;
+            border-radius: var(--radius-md); border: 1px solid var(--border-color);
+            background: var(--bg-color); font-size: 15px; color: var(--text-primary);
+            outline: none; transition: all 0.3s;
         }
+        .search-input:focus { border-color: var(--primary-color); background: var(--surface-color); }
 
-        .search-input:focus {
-            border-color: var(--primary-color);
-            background: var(--surface-color);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        /* Filtros (Pills) */
         .filter-tabs {
-            display: flex;
-            gap: 10px;
-            padding: 5px 20px 10px 20px;
-            overflow-x: auto;
-            white-space: nowrap;
-            /* Esconde scrollbar */
-            scrollbar-width: none; -ms-overflow-style: none;
+            display: flex; gap: 10px; padding: 5px 20px 10px 20px;
+            overflow-x: auto; scrollbar-width: none;
         }
         .filter-tabs::-webkit-scrollbar { display: none; }
-
+        
         .filter-pill {
-            padding: 8px 16px;
-            border-radius: 100px;
-            background: var(--bg-color);
-            color: var(--text-secondary);
-            font-size: 13px;
-            font-weight: 600;
-            border: 1px solid transparent;
-            transition: all 0.3s;
-            cursor: pointer;
+            padding: 8px 16px; border-radius: 100px;
+            background: var(--bg-color); color: var(--text-secondary);
+            font-size: 13px; font-weight: 600; border: 1px solid transparent;
+            transition: all 0.3s; cursor: pointer; white-space: nowrap;
         }
-
         .filter-pill:active { transform: scale(0.95); }
-
         .filter-pill.active {
-            background: var(--primary-color);
-            color: white;
+            background: var(--primary-color); color: white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
-        /* Lista de Produtos (Visual Clean) */
-        .feed-list {
-            padding: 0; /* Remove padding lateral do container */
-        }
-
+        /* Lista Clean */
+        .feed-list { padding: 0; min-height: 200px; }
         .product-item {
-            background: var(--surface-color);
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
+            background: var(--surface-color); padding: 16px 20px;
+            display: flex; align-items: center; gap: 16px;
             border-bottom: 1px solid var(--border-color);
             transition: background-color 0.2s;
-            border-radius: 0; /* Remove bordas arredondadas para virar lista contínua */
-            box-shadow: none; /* Remove sombra individual */
         }
-
         .product-item:last-child { border-bottom: none; }
         .product-item:active { background-color: var(--bg-color); }
 
         .prod-thumb {
-            width: 56px;
-            height: 56px;
-            background-color: var(--bg-color);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            color: var(--text-secondary);
-            flex-shrink: 0;
-            transition: all 0.3s;
+            width: 56px; height: 56px; background-color: var(--bg-color);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 26px; color: var(--text-secondary); flex-shrink: 0;
         }
-        
-        /* Ícone colorido quando ativo (opcional, mas fica bonito) */
-        .product-item:hover .prod-thumb {
-            color: var(--primary-color);
-        }
-
         .prod-info { flex: 1; min-width: 0; }
-        
         .prod-title { 
-            font-size: 15px; 
-            font-weight: 600; 
-            margin-bottom: 4px;
-            color: var(--text-primary);
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            font-size: 15px; font-weight: 600; margin-bottom: 4px;
+            color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        
-        .prod-price { 
-            font-size: 14px; 
-            color: var(--primary-color); 
-            font-weight: 700; 
-            margin-bottom: 6px;
-        }
+        .prod-price { font-size: 14px; color: var(--primary-color); font-weight: 700; margin-bottom: 6px; }
 
-        /* Tag de Plataformas */
         .platform-tag {
-            display: inline-flex;
-            align-items: center;
-            font-size: 11px; 
-            color: var(--text-secondary);
-            background: var(--bg-color);
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-weight: 500;
+            display: inline-flex; align-items: center; font-size: 11px; 
+            color: var(--text-secondary); background: var(--bg-color);
+            padding: 3px 8px; border-radius: 6px; font-weight: 500;
         }
         
-        .prod-status {
-            font-size: 11px;
-            padding: 5px 10px;
-            border-radius: 8px;
-            text-transform: capitalize; /* Não gritando em maiúsculo */
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-        
-        /* Status mais suaves */
+        .prod-status { font-size: 11px; padding: 5px 10px; border-radius: 8px; font-weight: 600; text-transform: capitalize; }
         .status-active { background: rgba(34, 197, 94, 0.1); color: #166534; }
         .status-paused { background: rgba(234, 179, 8, 0.1); color: #854d0e; }
-        
-        /* Ajuste Dark Mode */
         body.dark-mode .status-active { background: rgba(34, 197, 94, 0.2); color: #86efac; }
         body.dark-mode .status-paused { background: rgba(234, 179, 8, 0.2); color: #fde047; }
         body.dark-mode .platform-tag { background: rgba(255,255,255,0.05); }
 
         .actions-btn {
-            width: 32px; height: 32px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text-secondary);
-            border-radius: 50%;
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); border-radius: 50%;
         }
         .actions-btn:active { background: var(--bg-color); }
-
+        
+        .empty-state {
+            padding: 40px 20px; text-align: center; color: var(--text-secondary); font-size: 14px;
+        }
     </style>
-
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
 
@@ -221,15 +125,18 @@
             <div class="search-bar-container">
                 <div class="search-input-group">
                     <i class="ph ph-magnifying-glass"></i>
-                    <input type="text" class="search-input" data-i18n-placeholder="search_placeholder" placeholder="Buscar por placa, título ou código...">
+                    <input type="text" id="inventory-search" class="search-input" 
+                           data-i18n-placeholder="search_placeholder" 
+                           placeholder="Buscar por placa, título ou código..."
+                           onkeyup="applyInventoryFilters()">
                 </div>
             </div>
 
             <div class="filter-tabs">
-                <button class="filter-pill active" data-i18n="filter_all">Todos</button>
-                <button class="filter-pill" data-i18n="filter_active">Ativos</button>
-                <button class="filter-pill" data-i18n="filter_paused">Pausados</button>
-                <button class="filter-pill" data-i18n="filter_nostock">Sem Estoque</button>
+                <button id="btn-filter-all" class="filter-pill active" onclick="setFilter('all')" data-i18n="filter_all">Todos</button>
+                <button id="btn-filter-active" class="filter-pill" onclick="setFilter('active')" data-i18n="filter_active">Ativos</button>
+                <button id="btn-filter-paused" class="filter-pill" onclick="setFilter('paused')" data-i18n="filter_paused">Pausados</button>
+                <button id="btn-filter-nostock" class="filter-pill" onclick="setFilter('nostock')" data-i18n="filter_nostock">Sem Estoque</button>
             </div>
         </div>
 
@@ -243,30 +150,18 @@
     <div id="modal-new-ad" class="modal-overlay hidden">
         <div class="modal-content bottom-sheet">
             <div class="modal-header">
-                <h2 data-i18n="modal_new_title">Adicionar Novo Item</h2>
-                <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
-                    <i class="ph ph-x"></i>
-                </button>
+                <h2 data-i18n="modal_new_title">Criar Anúncio</h2>
+                <button class="btn-icon" onclick="toggleModal('modal-new-ad')"><i class="ph ph-x"></i></button>
             </div>
             <div class="modal-body">
-                <p class="helper-text" data-i18n="modal_new_sub">O que você deseja cadastrar hoje?</p>
-                <div class="category-grid">
-                    <button class="cat-card" onclick="selectCategory('veiculos')">
-                        <div class="cat-icon"><i class="ph ph-car"></i></div>
-                        <span>Veículos</span>
-                    </button>
-                    <button class="cat-card" onclick="selectCategory('imoveis')">
-                        <div class="cat-icon"><i class="ph ph-house"></i></div>
-                        <span>Imóveis</span>
-                    </button>
-                    <button class="cat-card" onclick="selectCategory('eletronicos')">
-                        <div class="cat-icon"><i class="ph ph-device-mobile"></i></div>
-                        <span>Eletrônicos</span>
-                    </button>
-                    <button class="cat-card" onclick="selectCategory('agro')">
-                        <div class="cat-icon"><i class="ph ph-plant"></i></div>
-                        <span>Agro</span>
-                    </button>
+                <p class="helper-text" style="margin-bottom: 20px;" data-i18n="modal_new_sub">Selecione a categoria:</p>
+                <div class="new-ad-grid">
+                   <div class="new-ad-item" onclick="selectCategory('veiculos')"><div class="icon-box style-car"><i class="ph ph-car-profile"></i></div><span class="new-ad-label">Veículos</span></div>
+                   <div class="new-ad-item" onclick="selectCategory('imoveis')"><div class="icon-box style-house"><i class="ph ph-house-line"></i></div><span class="new-ad-label">Imóveis</span></div>
+                   <div class="new-ad-item" onclick="selectCategory('eletronicos')"><div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div><span class="new-ad-label">Eletrônicos</span></div>
+                   <div class="new-ad-item" onclick="selectCategory('agro')"><div class="icon-box style-agro"><i class="ph ph-plant"></i></div><span class="new-ad-label">Agro</span></div>
+                   <div class="new-ad-item" onclick="selectCategory('servicos')"><div class="icon-box style-service"><i class="ph ph-wrench"></i></div><span class="new-ad-label">Serviços</span></div>
+                   <div class="new-ad-item" onclick="alert('Importar CSV')"><div class="icon-box style-import"><i class="ph ph-download-simple"></i></div><span class="new-ad-label">Importar</span></div>
                 </div>
             </div>
         </div>
@@ -280,55 +175,95 @@
     <script src="assets/js/functions.js"></script>
 
     <script>
-        // 1. Renderiza Barra
         renderBottomNav('estoque'); 
 
-        // 2. Função de Carregamento da Lista (Com Design Novo e Tradução)
-        function loadFullInventory() {
-            const listEl = document.getElementById('full-inventory-list');
+        // --- LÓGICA DE FILTRO E BUSCA ---
+        
+        let currentFilter = 'all'; // Estado atual do filtro
 
-            if (listEl && typeof productsDB !== 'undefined') {
-                listEl.innerHTML = ''; // Limpa
+        // 1. Chamada ao clicar nos botões de filtro
+        function setFilter(filterType) {
+            currentFilter = filterType;
+            
+            // Atualiza visual dos botões (Toggle classe .active)
+            document.querySelectorAll('.filter-pill').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-filter-${filterType}`).classList.add('active');
 
-                productsDB.forEach(prod => {
-                    // Tradução Dinâmica
-                    let txtOn = "Em:";
-                    let statusLabel = prod.status;
-
-                    if (typeof getTrans === 'function') {
-                        txtOn = getTrans('txt_on');
-                        statusLabel = prod.status === 'active' ? getTrans('status_active') : getTrans('status_paused');
-                    }
-
-                    const itemHTML = `
-                        <div class="product-item">
-                            <div class="prod-thumb">
-                                <i class="ph ${prod.image}"></i>
-                            </div>
-                            <div class="prod-info">
-                                <div class="prod-title">${prod.title}</div>
-                                <div class="prod-price">R$ ${prod.price.toLocaleString('pt-BR')}</div>
-                                <div class="platform-tag">
-                                    ${txtOn} ${prod.platforms.join(', ')}
-                                </div>
-                            </div>
-                            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
-                                <div class="prod-status ${prod.status === 'active' ? 'status-active' : 'status-paused'}">
-                                    ${statusLabel}
-                                </div>
-                                <div class="actions-btn">
-                                    <i class="ph ph-dots-three-vertical" style="font-size: 22px;"></i>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    listEl.innerHTML += itemHTML;
-                });
-            }
+            // Reaplica a lógica de renderização
+            applyInventoryFilters();
         }
 
-        // Carrega ao iniciar
-        document.addEventListener('DOMContentLoaded', loadFullInventory);
+        // 2. O Cérebro da Filtragem (Combina Busca + Status)
+        function applyInventoryFilters() {
+            const listEl = document.getElementById('full-inventory-list');
+            const searchInput = document.getElementById('inventory-search');
+            
+            if (!listEl || typeof productsDB === 'undefined') return;
+            
+            const searchTerm = searchInput.value.toLowerCase();
+            listEl.innerHTML = ''; // Limpa a lista atual
+
+            // Filtra o array original (productsDB)
+            const filteredData = productsDB.filter(prod => {
+                // Filtro de Status
+                let matchesStatus = false;
+                if (currentFilter === 'all') matchesStatus = true;
+                else if (currentFilter === 'active' && prod.status === 'active') matchesStatus = true;
+                else if (currentFilter === 'paused' && prod.status === 'paused') matchesStatus = true;
+                else if (currentFilter === 'nostock' && prod.status === 'nostock') matchesStatus = true; // Se existir no DB
+
+                // Filtro de Busca (Título)
+                const matchesSearch = prod.title.toLowerCase().includes(searchTerm);
+
+                return matchesStatus && matchesSearch;
+            });
+
+            // Renderiza o resultado
+            if (filteredData.length === 0) {
+                listEl.innerHTML = `<div class="empty-state"><i class="ph ph-magnifying-glass" style="font-size:32px; margin-bottom:10px; display:block;"></i>Nenhum item encontrado.</div>`;
+                return;
+            }
+
+            filteredData.forEach(prod => {
+                // Traduções internas
+                let txtOn = "Em:";
+                let statusLabel = prod.status;
+                if (typeof getTrans === 'function') {
+                    txtOn = getTrans('txt_on');
+                    statusLabel = prod.status === 'active' ? getTrans('status_active') : getTrans('status_paused');
+                }
+
+                const itemHTML = `
+                    <div class="product-item">
+                        <div class="prod-thumb">
+                            <i class="ph ${prod.image}"></i>
+                        </div>
+                        <div class="prod-info">
+                            <div class="prod-title">${prod.title}</div>
+                            <div class="prod-price">R$ ${prod.price.toLocaleString('pt-BR')}</div>
+                            <div class="platform-tag">
+                                ${txtOn} ${prod.platforms.join(', ')}
+                            </div>
+                        </div>
+                        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
+                            <div class="prod-status ${prod.status === 'active' ? 'status-active' : 'status-paused'}">
+                                ${statusLabel}
+                            </div>
+                            <div class="actions-btn">
+                                <i class="ph ph-dots-three-vertical" style="font-size: 22px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listEl.innerHTML += itemHTML;
+            });
+        }
+
+        // Carrega inicialmente
+        document.addEventListener('DOMContentLoaded', () => {
+            // Pequeno delay para garantir que o functions.js carregou as traduções
+            setTimeout(applyInventoryFilters, 50);
+        });
 
     </script>
 </body>
