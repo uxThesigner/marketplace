@@ -4,163 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ffffff">
-    
     <title>Dashboard | Koda White-Label</title>
-    
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <style>
-        /* Ajuste para os Cards serem Links Clicáveis e Mais Largos */
-        .metrics-scroller {
-            padding: 10px 20px;
-            gap: 15px;
-        }
-
-        .metric-card {
-            flex: 0 0 160px; /* Mais largo (era 140px) */
-            text-decoration: none; /* Remove sublinhado do link */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 110px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid transparent;
-        }
-
-        /* Efeito de clique */
-        .metric-card:active {
-            transform: scale(0.96);
-        }
-
-        /* Ícone com fundo suave */
-        .card-icon-bg {
-            width: 38px; height: 38px;
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        /* Cores específicas por card (opcional, ou usa o padrão) */
-        .card-sales .card-icon-bg { background: rgba(255,255,255,0.2); color: #fff; }
-        .card-ads .card-icon-bg { background: var(--bg-color); color: var(--primary-color); }
-        .card-msgs .card-icon-bg { background: var(--bg-color); color: var(--color-fb); }
-
-        /* Seta indicativa de "clique" no canto */
-        .card-arrow {
-            position: absolute; top: 15px; right: 15px;
-            font-size: 14px; opacity: 0.5;
-        }
-        
-        /* Ajuste do Gráfico */
-        .chart-card {
-            border: 1px solid var(--border-color);
-            box-shadow: none; /* Mais clean */
-        }
-        .bar {
-            border-radius: 6px 6px 0 0; /* Mais arredondado */
-        }
-    </style>
 </head>
 <body>
-
     <script>
         (function() {
             const savedMode = localStorage.getItem('koda_theme_mode');
             if (savedMode === 'dark') document.body.classList.add('dark-mode');
-            
             const savedColor = localStorage.getItem('koda_theme_color');
-            if (savedColor) {
-                document.documentElement.style.setProperty('--primary-color', savedColor);
-                document.documentElement.style.setProperty('--primary-dark', savedColor);
-            }
+            if (savedColor) document.documentElement.style.setProperty('--primary-color', savedColor);
         })();
     </script>
 
     <header class="app-header">
-        <div class="header-left">
-            <img id="app-logo" src="" alt="Logo" class="app-logo-img">
-        </div>
-        <div class="header-right">
-            <div class="user-avatar-small" id="user-avatar-header">--</div>
-        </div>
+        <div class="header-left"><img id="app-logo" src="" alt="Logo" class="app-logo-img"></div>
+        <div class="header-right"><div class="user-avatar-small" id="user-avatar-header">--</div></div>
     </header>
 
     <main class="app-content">
-
         <section class="welcome-section">
             <h1 class="page-title">Olá, <span id="user-first-name">...</span></h1>
             <p class="subtitle" data-i18n="welcome_sub">Visão geral dos seus negócios.</p>
         </section>
 
         <section class="metrics-scroller">
-            
-            <a href="metrics.html" class="metric-card highlight card-sales">
+            <a href="metrics.html" class="metric-card highlight">
                 <i class="ph ph-caret-right card-arrow" style="color: white;"></i>
                 <div class="card-icon-bg"><i class="ph ph-currency-dollar"></i></div>
-                <div class="card-info">
-                    <span data-i18n="metric_sales">Vendas Hoje</span>
-                    <strong id="kpi-sales">R$ 0,00</strong>
-                </div>
+                <div class="card-info"><span data-i18n="metric_sales">Vendas Hoje</span><strong id="kpi-sales">R$ 0,00</strong></div>
             </a>
-
-            <a href="estoque.html" class="metric-card card-ads">
+            <a href="estoque.html" class="metric-card">
                 <i class="ph ph-caret-right card-arrow"></i>
-                <div class="card-icon-bg"><i class="ph ph-megaphone"></i></div>
-                <div class="card-info">
-                    <span data-i18n="metric_active">Anúncios Ativos</span>
-                    <strong id="kpi-active-ads">--</strong>
-                </div>
+                <div class="card-icon-bg"><i class="ph ph-package"></i></div>
+                <div class="card-info"><span data-i18n="metric_active">Anúncios Ativos</span><strong id="kpi-active-ads">--</strong></div>
             </a>
-
-            <a href="leads.html" class="metric-card card-msgs">
+            <a href="leads.html" class="metric-card">
                 <i class="ph ph-caret-right card-arrow"></i>
                 <div class="card-icon-bg"><i class="ph ph-chat-centered-text"></i></div>
-                <div class="card-info">
-                    <span data-i18n="metric_msgs">Mensagens</span>
-                    <strong id="kpi-messages">0</strong>
-                </div>
+                <div class="card-info"><span data-i18n="metric_msgs">Mensagens</span><strong id="kpi-messages">0</strong></div>
             </a>
-
         </section>
 
         <section class="performance-section">
-            <div class="section-header">
-                <h3 data-i18n="chart_title">Desempenho por Canal</h3>
-            </div>
+            <div class="section-header"><h3 data-i18n="chart_title">Desempenho por Canal</h3></div>
             <div class="chart-card">
                 <div class="fake-chart-container">
-                    <div class="chart-bar-group">
-                        <div class="bar" style="height: 40%; background-color: var(--color-olx)"></div>
-                        <span>OLX</span>
-                    </div>
-                    <div class="chart-bar-group">
-                        <div class="bar" style="height: 75%; background-color: var(--color-fb)"></div>
-                        <span>Face</span>
-                    </div>
-                    <div class="chart-bar-group">
-                        <div class="bar" style="height: 30%; background-color: var(--color-ml)"></div>
-                        <span>ML</span>
-                    </div>
-                    <div class="chart-bar-group">
-                        <div class="bar" style="height: 60%; background-color: var(--color-insta)"></div>
-                        <span>Insta</span>
-                    </div>
+                    <div class="chart-bar-group"><div class="bar" style="height: 40%; background-color: var(--color-olx)"></div><span>OLX</span></div>
+                    <div class="chart-bar-group"><div class="bar" style="height: 75%; background-color: var(--color-fb)"></div><span>Face</span></div>
+                    <div class="chart-bar-group"><div class="bar" style="height: 30%; background-color: var(--color-ml)"></div><span>ML</span></div>
+                    <div class="chart-bar-group"><div class="bar" style="height: 60%; background-color: var(--color-insta)"></div><span>Insta</span></div>
                 </div>
             </div>
         </section>
 
         <section class="recent-feed">
-            <div class="section-header">
-                <h3 data-i18n="feed_title">Últimos Cadastrados</h3>
-                <a href="estoque.html" class="link-action" data-i18n="feed_view_all">Ver todos</a>
-            </div>
-
-            <div id="dashboard-feed-list" class="feed-list">
-                <p class="loading-text" data-i18n="loading">Carregando dados...</p>
-            </div>
+            <div class="section-header"><h3 data-i18n="feed_title">Últimos Cadastrados</h3><a href="estoque.html" class="link-action" data-i18n="feed_view_all">Ver todos</a></div>
+            <div id="dashboard-feed-list" class="feed-list"><p class="loading-text" data-i18n="loading">Carregando dados...</p></div>
         </section>
 
         <div class="spacer-bottom"></div>
@@ -170,56 +71,26 @@
         <div class="modal-content bottom-sheet">
             <div class="modal-header">
                 <h2 data-i18n="modal_new_title">Criar Anúncio</h2>
-                <button class="btn-icon" onclick="toggleModal('modal-new-ad')">
-                    <i class="ph ph-x"></i>
-                </button>
+                <button class="btn-icon" onclick="toggleModal('modal-new-ad')"><i class="ph ph-x"></i></button>
             </div>
-            
             <div class="modal-body">
-                <p class="helper-text" style="margin-bottom: 20px;" data-i18n="modal_new_sub">Selecione a categoria do produto:</p>
-                
                 <div class="new-ad-grid">
-                    <div class="new-ad-item" onclick="selectCategory('veiculos')">
-                        <div class="icon-box style-car"><i class="ph ph-car-profile"></i></div>
-                        <span class="new-ad-label">Veículos</span>
-                    </div>
-                    <div class="new-ad-item" onclick="selectCategory('imoveis')">
-                        <div class="icon-box style-house"><i class="ph ph-house-line"></i></div>
-                        <span class="new-ad-label">Imóveis</span>
-                    </div>
-                    <div class="new-ad-item" onclick="selectCategory('eletronicos')">
-                        <div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div>
-                        <span class="new-ad-label">Eletrônicos</span>
-                    </div>
-                    <div class="new-ad-item" onclick="selectCategory('agro')">
-                        <div class="icon-box style-agro"><i class="ph ph-plant"></i></div>
-                        <span class="new-ad-label">Agro</span>
-                    </div>
-                    <div class="new-ad-item" onclick="selectCategory('servicos')">
-                        <div class="icon-box style-service"><i class="ph ph-wrench"></i></div>
-                        <span class="new-ad-label">Serviços</span>
-                    </div>
-                    <div class="new-ad-item" onclick="alert('Importar CSV')">
-                        <div class="icon-box style-import"><i class="ph ph-download-simple"></i></div>
-                        <span class="new-ad-label">Importar</span>
-                    </div>
+                    <div class="new-ad-item" onclick="selectCategory('veiculos')"><div class="icon-box style-car"><i class="ph ph-car-profile"></i></div><span class="new-ad-label">Veículos</span></div>
+                    <div class="new-ad-item" onclick="selectCategory('imoveis')"><div class="icon-box style-house"><i class="ph ph-house-line"></i></div><span class="new-ad-label">Imóveis</span></div>
+                    <div class="new-ad-item" onclick="selectCategory('eletronicos')"><div class="icon-box style-device"><i class="ph ph-device-mobile-camera"></i></div><span class="new-ad-label">Eletrônicos</span></div>
+                    <div class="new-ad-item" onclick="selectCategory('agro')"><div class="icon-box style-agro"><i class="ph ph-plant"></i></div><span class="new-ad-label">Agro</span></div>
+                    <div class="new-ad-item" onclick="selectCategory('servicos')"><div class="icon-box style-service"><i class="ph ph-wrench"></i></div><span class="new-ad-label">Serviços</span></div>
+                    <div class="new-ad-item" onclick="alert('Importar')"><div class="icon-box style-import"><i class="ph ph-download-simple"></i></div><span class="new-ad-label">Importar</span></div>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="bottom-nav-container"></div>
-
-
     <script src="assets/js/config.js"></script> 
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/mock_db.js"></script>
     <script src="assets/js/functions.js"></script>
-
-    <script>
-        // Renderiza a barra de navegação marcando 'home' como ativo
-        renderBottomNav('home');
-    </script>
-
+    <script>renderBottomNav('home');</script>
 </body>
 </html>
